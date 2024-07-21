@@ -34,6 +34,7 @@ import { StatusbarEntryItem } from 'vs/workbench/browser/parts/statusbar/statusb
 import { StatusBarFocused } from 'vs/workbench/common/contextkeys';
 import { Emitter, Event } from 'vs/base/common/event';
 import { IView } from 'vs/base/browser/ui/grid/grid';
+import { STATUS_BAR_HEIGHT } from 'vs/workbench/browser/parts/statusbar/consts';
 
 export interface IStatusbarEntryContainer extends IDisposable {
 
@@ -111,7 +112,7 @@ interface IPendingStatusbarEntry {
 
 class StatusbarPart extends Part implements IStatusbarEntryContainer {
 
-	static readonly HEIGHT = 22;
+	static readonly HEIGHT = STATUS_BAR_HEIGHT;
 
 	//#region IView
 
