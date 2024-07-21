@@ -29,6 +29,7 @@ import { mainWindow } from '../../../../base/browser/window.js';
 import { IContextMenuService } from '../../../../platform/contextview/browser/contextView.js';
 import { DropdownMenuActionViewItem } from '../../../../base/browser/ui/dropdown/dropdownActionViewItem.js';
 import { AccessibilitySignal, IAccessibilitySignalService } from '../../../../platform/accessibilitySignal/browser/accessibilitySignalService.js';
+import { STATUS_BAR_HEIGHT } from '../statusbar/consts.js';
 
 export class NotificationsCenter extends Themable implements INotificationsCenterController {
 
@@ -354,7 +355,7 @@ export class NotificationsCenter extends Themable implements INotificationsCente
 				// Make sure notifications are not exceeding available height
 				availableHeight = this.workbenchDimensions.height - 35 /* header */;
 				if (this.layoutService.isVisible(Parts.STATUSBAR_PART, mainWindow)) {
-					availableHeight -= 22; // adjust for status bar
+					availableHeight -= STATUS_BAR_HEIGHT; // adjust for status bar
 				}
 
 				if (this.layoutService.isVisible(Parts.TITLEBAR_PART, mainWindow)) {
