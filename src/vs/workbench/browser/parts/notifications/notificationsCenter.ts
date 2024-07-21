@@ -34,6 +34,7 @@ import { AccessibilitySignal, IAccessibilitySignalService } from '../../../../pl
 import { IConfigurationService } from '../../../../platform/configuration/common/configuration.js';
 import { DEFAULT_CUSTOM_TITLEBAR_HEIGHT } from '../../../../platform/window/common/window.js';
 import { ThemeIcon } from '../../../../base/common/themables.js';
+import { STATUS_BAR_HEIGHT } from '../statusbar/consts.js';
 
 export class NotificationsCenter extends Themable implements INotificationsCenterController {
 
@@ -424,7 +425,7 @@ export class NotificationsCenter extends Themable implements INotificationsCente
 				// Make sure notifications are not exceeding available height
 				availableHeight = this.workbenchDimensions.height - 35 /* header */;
 				if (this.layoutService.isVisible(Parts.STATUSBAR_PART, mainWindow)) {
-					availableHeight -= 22; // adjust for status bar
+					availableHeight -= STATUS_BAR_HEIGHT; // adjust for status bar
 				}
 
 				if (this.layoutService.isVisible(Parts.TITLEBAR_PART, mainWindow)) {
