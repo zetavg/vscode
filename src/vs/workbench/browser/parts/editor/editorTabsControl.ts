@@ -101,6 +101,7 @@ export abstract class EditorTabsControl extends Themable implements IEditorTabsC
 
 	private static readonly EDITOR_TAB_HEIGHT = {
 		normal: 35 as const,
+		themed: 28 as const, // [ZP-6108] adjust EDITOR_TAB_HEIGHT
 		compact: 22 as const
 	};
 
@@ -548,7 +549,9 @@ export abstract class EditorTabsControl extends Themable implements IEditorTabsC
 	}
 
 	protected get tabHeight() {
-		return this.groupsView.partOptions.tabHeight !== 'compact' ? EditorTabsControl.EDITOR_TAB_HEIGHT.normal : EditorTabsControl.EDITOR_TAB_HEIGHT.compact;
+		// [ZP-6108] adjust EDITOR_TAB_HEIGHT
+		// return this.groupsView.partOptions.tabHeight !== 'compact' ? EditorTabsControl.EDITOR_TAB_HEIGHT.normal : EditorTabsControl.EDITOR_TAB_HEIGHT.compact;
+		return this.groupsView.partOptions.tabHeight !== 'compact' ? EditorTabsControl.EDITOR_TAB_HEIGHT.themed : EditorTabsControl.EDITOR_TAB_HEIGHT.compact;
 	}
 
 	protected getHoverTitle(editor: EditorInput): string | IManagedHoverTooltipMarkdownString {
