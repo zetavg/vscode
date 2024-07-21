@@ -36,6 +36,7 @@ import { StatusBarFocused } from '../../../common/contextkeys.js';
 import { Emitter, Event } from '../../../../base/common/event.js';
 import { IView } from '../../../../base/browser/ui/grid/grid.js';
 import { isManagedHoverTooltipHTMLElement, isManagedHoverTooltipMarkdownString } from '../../../../base/browser/ui/hover/hover.js';
+import { STATUS_BAR_HEIGHT } from './consts.js';
 
 export interface IStatusbarEntryContainer extends IDisposable {
 
@@ -118,7 +119,7 @@ interface IPendingStatusbarEntry {
 
 class StatusbarPart extends Part implements IStatusbarEntryContainer {
 
-	static readonly HEIGHT = 22;
+	static readonly HEIGHT = STATUS_BAR_HEIGHT;
 
 	//#region IView
 
