@@ -1,3 +1,69 @@
+# zetavg/vscode
+
+This is a fork of [Visual Studio Code](https://github.com/microsoft/vscode) with various patches and customizations.
+
+## Download
+
+Built binaries can be found in the [Releases page of the zetavg/vscode-build repo](https://github.com/zetavg/vscode-build/releases). You may need to click `Show all ... assets` to see all available downloads.
+
+You may need to click on "Show all ... assets" to find the one you need.
+
+> [!NOTE]
+> Note that the downloads there are basically VSCodium releases, which are not quite the same as Microsoft's Visual Studio Code. You may need to check VSCodium's documentation for help. Some topics in [Troubleshooting](https://github.com/VSCodium/vscodium/blob/master/docs/troubleshooting.md) related to [Remote SSH](https://github.com/VSCodium/vscodium/blob/c7b5ab02b1d76f75beca55ea2c7a3b232afdec4d/docs/troubleshooting.md#remote-ssh-doesnt-work), [`Apple cannot check it for malicious software`](https://github.com/VSCodium/vscodium/blob/c7b5ab02b1d76f75beca55ea2c7a3b232afdec4d/docs/troubleshooting.md#app-cant-be-opened-because-apple-cannot-check-it-for-malicious-software) or [`app is damaged and can’t be opened`](https://github.com/VSCodium/vscodium/blob/c7b5ab02b1d76f75beca55ea2c7a3b232afdec4d/docs/troubleshooting.md#macos-quarantine) errors might be useful.
+
+
+### Extensions
+
+Some extensions (e.g., GitHub Copilot and GitHub Copilot Chat) aren’t available on Open VSX, so you need to install them manually.
+Download Visual Studio Code with the same version number (links [here](https://stackoverflow.com/a/76018303/3416647)), install the required extensions there, then export them as VSIX files.
+Finally, install those VSIX files in your editor.
+
+
+## Development
+
+> [!WARNING]
+>
+> **Do NOT merge or sync `main` with `microsoft:main`.**
+> Doing so can break services that automatically build the latest stable VS Code (from a release tag) with this repository’s `main` branch merged into it. This may introduce merge conflicts and pull in code intended for a future release.
+>
+> Instead, rebase main onto the commit where microsoft:main and the latest stable release branch diverged (i.e. the common ancestor commit).
+> To find that common ancestor, check the parent commit of the first commit in:
+> `https://github.com/microsoft/vscode/compare/main...release/x.xx`, or use `git merge-base upstream/main upstream/release/x.xx` (replace `x.xx` with the latest stable release version, such as `1.108`).
+
+> [!TIP]
+> See https://github.com/microsoft/vscode/wiki/How-to-Contribute#build-and-run for more information.
+
+You'll need to have a Node.js version manager that supports `.nvmrc` installed.
+
+After cloning the repository, run the following commands:
+
+```bash
+npm install
+npm run compile
+npm run watch
+```
+
+Wait for `npm run watch` to finish the initial compilation. You should see `Finished compilation with 0 errors`. If you see `Finished compilation extensions with 0 errors` instead, the compilation is not yet complete.
+
+Then, in another terminal:
+
+```bash
+./scripts/code.sh
+```
+
+> [!NOTE]
+> While developing with [Open Remote - SSH](https://github.com/jeanp413/open-remote-ssh), note that it will [load product info from the `product.json` file directly](https://github.com/jeanp413/open-remote-ssh/blob/v0.0.45/src/serverConfig.ts#L8), and [use that info to compose the installation script](https://github.com/jeanp413/open-remote-ssh/blob/v0.0.45/src/serverSetup.ts#L208-L211). So by default it may not work during development, and you'll see error messages such as `Could not establish connection`, `Couldn't install vscode server on remote server`, `server contents are corrupted`.
+>
+> To workaround this, you'll need to edit the `product.json` file in the project root to add a `"commit"` field, and change the `"serverApplicationName"` field from `"code-server-oss"` to `"codium-server"`, also the `"serverDataFolderName"` field from `".vscode-server-oss"` to `".vscodium-server"`.
+
+
+---
+
+Below is the original README of the Microsoft Visual Studio Code repository.
+
+---
+
+
 # Visual Studio Code - Open Source ("Code - OSS")
 [![Feature Requests](https://img.shields.io/github/issues/microsoft/vscode/feature-request.svg)](https://github.com/microsoft/vscode/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc)
 [![Bugs](https://img.shields.io/github/issues/microsoft/vscode/bug.svg)](https://github.com/microsoft/vscode/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Abug)
