@@ -1,3 +1,45 @@
+# zetavg/vscode
+
+This is a fork of [Visual Studio Code](https://github.com/microsoft/vscode) with various patches and customizations.
+
+## Download
+
+Built binaries can be found in the [Releases of the zetavg/vscodium repo](https://github.com/zetavg/vscodium/releases).
+
+> [!NOTE]
+> Note that the downloads there are basically VSCodium releases, which are not quite the same as Microsoft's Visual Studio Code. You may need to check VSCodium's documentation for topics such as [how to use Microsoft's VS Code Marketplace](https://github.com/VSCodium/vscodium/blob/master/docs/index.md#extensions-marketplace).
+
+## Development
+
+> [!WARNING]
+> Do NOT sync the `main` branch with `microsoft:main` as it might break services which will automatically build the latest stable VSCode with this `main` branch merged into it - we may have merge conflicts and the build will contain code that should be in a future release.
+>
+> Instead, the `main` branch should be continuously rebased onto the common ancestor commit of the release branch of the latest released stable release. To find the common ancestor commit, you can check the parent commit of the first commit in `https://github.com/microsoft/vscode/compare/main...release/x.xx` (replace `x.xx` with the latest stable release version).
+
+You'll need to have a Node.js version manager that supports `.nvmrc` installed, and [Corepack enabled](https://nodejs.org/api/corepack.html#enabling-the-feature).
+
+After cloning the repository, run the following commands:
+
+```bash
+yarn install
+yarn compile
+yarn watch
+```
+
+Wait for `yarn watch` to complete the initial compilation. Then, in another terminal:
+
+```bash
+./scripts/code.sh
+```
+
+
+---
+
+Below is the original README of the Microsoft Visual Studio Code repository.
+
+---
+
+
 # Visual Studio Code - Open Source ("Code - OSS")
 
 [![Feature Requests](https://img.shields.io/github/issues/microsoft/vscode/feature-request.svg)](https://github.com/microsoft/vscode/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc)
