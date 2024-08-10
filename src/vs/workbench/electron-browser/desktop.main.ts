@@ -71,6 +71,10 @@ import { IWorkbenchModeService } from '../services/layout/common/workbenchModeSe
 // [ZP-D03B] Globally accessible configuration service.
 import { setConfigurationService } from '../../z-customizations/configurationService.js';
 
+// [ZP-F39A] Customizable commit hash for REH.
+import { registerConfiguration as registerCustomizableREHCommitConfiguration } from '../../z-customizations/customizable-commit-for-reh/register-configuration.js';
+registerCustomizableREHCommitConfiguration();
+
 export class DesktopMain extends Disposable {
 
 	constructor(
