@@ -62,6 +62,9 @@ import { IConfigurationService } from 'vs/platform/configuration/common/configur
 import { applyZoom } from 'vs/platform/window/electron-sandbox/window';
 import { mainWindow } from 'vs/base/browser/window';
 
+// [ZP-D03B] Globally accessible configuration service.
+import { setConfigurationService } from 'vs/z-customizations/configurationService';
+
 export class DesktopMain extends Disposable {
 
 	constructor(
@@ -306,6 +309,9 @@ export class DesktopMain extends Disposable {
 				return service;
 			})
 		]);
+
+		// [ZP-D03B] Globally accessible configuration service.
+		setConfigurationService(configurationService);
 
 		// Workspace Trust Service
 		const workspaceTrustEnablementService = new WorkspaceTrustEnablementService(configurationService, environmentService);

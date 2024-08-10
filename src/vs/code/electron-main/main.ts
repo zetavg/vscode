@@ -73,6 +73,9 @@ import { SaveStrategy, StateService } from 'vs/platform/state/node/stateService'
 import { FileUserDataProvider } from 'vs/platform/userData/common/fileUserDataProvider';
 import { addUNCHostToAllowlist, getUNCHost } from 'vs/base/node/unc';
 
+// [ZP-D03B] Globally accessible configuration service.
+import { setConfigurationService } from 'vs/z-customizations/configurationService';
+
 /**
  * The main VS Code entry point.
  *
@@ -206,6 +209,9 @@ class CodeMain {
 		// Configuration
 		const configurationService = new ConfigurationService(userDataProfilesMainService.defaultProfile.settingsResource, fileService, policyService, logService);
 		services.set(IConfigurationService, configurationService);
+
+		// [ZP-D03B] Globally accessible configuration service.
+		setConfigurationService(configurationService);
 
 		// Lifecycle
 		services.set(ILifecycleMainService, new SyncDescriptor(LifecycleMainService, undefined, false));
