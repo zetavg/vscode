@@ -144,6 +144,9 @@ import { AgentNetworkFilterService } from '../../../platform/networkFilter/commo
 import { ILocalGitService } from '../../../platform/git/common/localGitService.js';
 import { LocalGitService } from '../../../platform/git/node/localGitService.js';
 
+// [ZP-D03B] Globally accessible configuration service.
+import { setConfigurationService } from '../../../z-customizations/configurationService.js';
+
 class SharedProcessMain extends Disposable implements IClientConnectionFilter {
 
 	private readonly server = this._register(new UtilityProcessMessagePortServer(this));
@@ -282,6 +285,9 @@ class SharedProcessMain extends Disposable implements IClientConnectionFilter {
 		// Configuration
 		const configurationService = this._register(new ConfigurationService(userDataProfilesService.defaultProfile.settingsResource, fileService, policyService, logService));
 		services.set(IConfigurationService, configurationService);
+
+		// [ZP-D03B] Globally accessible configuration service.
+		setConfigurationService(configurationService);
 
 		// Storage (global access only)
 		const storageService = new RemoteStorageService(undefined, { defaultProfile: userDataProfilesService.defaultProfile, currentProfile: userDataProfilesService.defaultProfile }, mainProcessService, environmentService);
