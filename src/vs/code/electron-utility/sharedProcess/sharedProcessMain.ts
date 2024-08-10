@@ -133,6 +133,9 @@ import { AllowedMcpServersService } from '../../../platform/mcp/common/allowedMc
 import { IMcpGalleryManifestService } from '../../../platform/mcp/common/mcpGalleryManifest.js';
 import { McpGalleryManifestIPCService } from '../../../platform/mcp/common/mcpGalleryManifestServiceIpc.js';
 
+// [ZP-D03B] Globally accessible configuration service.
+import { setConfigurationService } from 'vs/z-customizations/configurationService';
+
 class SharedProcessMain extends Disposable implements IClientConnectionFilter {
 
 	private readonly server = this._register(new UtilityProcessMessagePortServer(this));
@@ -268,6 +271,9 @@ class SharedProcessMain extends Disposable implements IClientConnectionFilter {
 		// Configuration
 		const configurationService = this._register(new ConfigurationService(userDataProfilesService.defaultProfile.settingsResource, fileService, policyService, logService));
 		services.set(IConfigurationService, configurationService);
+
+		// [ZP-D03B] Globally accessible configuration service.
+		setConfigurationService(configurationService);
 
 		// Storage (global access only)
 		const storageService = new RemoteStorageService(undefined, { defaultProfile: userDataProfilesService.defaultProfile, currentProfile: userDataProfilesService.defaultProfile }, mainProcessService, environmentService);
