@@ -76,6 +76,10 @@ import { registerConfiguration as registerDisablePatchesConfiguration } from '..
 import '../../z-customizations/disable-patches/disablePatchesContribution.js';
 registerDisablePatchesConfiguration();
 
+// [ZP-F39A] Customizable commit hash for REH.
+import { registerConfiguration as registerCustomizableREHCommitConfiguration } from '../../z-customizations/customizable-commit-for-reh/register-configuration.js';
+registerCustomizableREHCommitConfiguration();
+
 export class DesktopMain extends Disposable {
 
 	constructor(
