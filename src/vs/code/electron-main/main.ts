@@ -75,6 +75,9 @@ import { addUNCHostToAllowlist, getUNCHost } from '../../base/node/unc.js';
 import { ThemeMainService } from '../../platform/theme/electron-main/themeMainServiceImpl.js';
 import { LINUX_SYSTEM_POLICY_FILE_PATH } from '../../base/common/policy.js';
 
+// [ZP-D03B] Globally accessible configuration service.
+import { setConfigurationService } from '../../z-customizations/configurationService.js';
+
 /**
  * The main VS Code entry point.
  *
@@ -225,6 +228,9 @@ class CodeMain {
 		// Configuration
 		const configurationService = new ConfigurationService(userDataProfilesMainService.defaultProfile.settingsResource, fileService, policyService, logService);
 		services.set(IConfigurationService, configurationService);
+
+		// [ZP-D03B] Globally accessible configuration service.
+		setConfigurationService(configurationService);
 
 		// Lifecycle
 		services.set(ILifecycleMainService, new SyncDescriptor(LifecycleMainService, undefined, false));
