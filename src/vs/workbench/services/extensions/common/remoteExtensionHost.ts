@@ -28,6 +28,9 @@ import { IExtensionHostInitData, MessageType, UIKind, createMessageOfType, isMes
 import { RemoteRunningLocation } from 'vs/workbench/services/extensions/common/extensionRunningLocation';
 import { ExtensionHostExtensions, ExtensionHostStartup, IExtensionHost } from 'vs/workbench/services/extensions/common/extensions';
 
+// [ZP-F39A] Customizable commit hash for REH.
+import { getCustomizedREHCommit } from 'vs/z-customizations/customizable-commit-for-reh/getCustomizedREHCommit';
+
 export interface IRemoteExtensionHostInitData {
 	readonly connectionData: IRemoteConnectionData | null;
 	readonly pid: number;
@@ -205,7 +208,9 @@ export class RemoteExtensionHost extends Disposable implements IExtensionHost {
 		this.extensions = remoteInitData.extensions;
 		const workspace = this._contextService.getWorkspace();
 		return {
-			commit: this._productService.commit,
+			// [ZP-F39A] Customizable commit hash for REH.
+			// commit: this._productService.commit,
+			commit: getCustomizedREHCommit() || this._productService.commit,
 			version: this._productService.version,
 			quality: this._productService.quality,
 			parentPid: remoteInitData.pid,

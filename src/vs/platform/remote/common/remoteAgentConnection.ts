@@ -21,6 +21,9 @@ import { RemoteAuthorityResolverError, RemoteConnection } from 'vs/platform/remo
 import { IRemoteSocketFactoryService } from 'vs/platform/remote/common/remoteSocketFactoryService';
 import { ISignService } from 'vs/platform/sign/common/sign';
 
+// [ZP-F39A] Customizable commit hash for REH.
+import { getCustomizedREHCommit } from 'vs/z-customizations/customizable-commit-for-reh/getCustomizedREHCommit';
+
 const RECONNECT_TIMEOUT = 30 * 1000 /* 30s */;
 
 export const enum ConnectionType {
@@ -283,7 +286,9 @@ async function connectToRemoteExtensionHostAgent<T extends RemoteConnection>(opt
 		const signed = await raceWithTimeoutCancellation(options.signService.sign(msg.data), timeoutCancellationToken);
 		const connTypeRequest: ConnectionTypeRequest = {
 			type: 'connectionType',
-			commit: options.commit,
+			// [ZP-F39A] Customizable commit hash for REH.
+			// commit: options.commit,
+			commit: getCustomizedREHCommit() || options.commit,
 			signedData: signed,
 			desiredConnectionType: connectionType
 		};
@@ -390,7 +395,9 @@ export interface IConnectionOptions<T extends RemoteConnection = RemoteConnectio
 async function resolveConnectionOptions<T extends RemoteConnection>(options: IConnectionOptions<T>, reconnectionToken: string, reconnectionProtocol: PersistentProtocol | null): Promise<ISimpleConnectionOptions<T>> {
 	const { connectTo, connectionToken } = await options.addressProvider.getAddress();
 	return {
-		commit: options.commit,
+		// [ZP-F39A] Customizable commit hash for REH.
+		// commit: options.commit,
+		commit: getCustomizedREHCommit() || options.commit,
 		quality: options.quality,
 		connectTo,
 		connectionToken: connectionToken,
