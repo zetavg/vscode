@@ -68,6 +68,9 @@ import { MultiplexPolicyService } from '../services/policies/common/multiplexPol
 import { WorkbenchModeService } from '../services/layout/browser/workbenchModeService.js';
 import { IWorkbenchModeService } from '../services/layout/common/workbenchModeService.js';
 
+// [ZP-D03B] Globally accessible configuration service.
+import { setConfigurationService } from '../../z-customizations/configurationService.js';
+
 export class DesktopMain extends Disposable {
 
 	constructor(
@@ -333,6 +336,9 @@ export class DesktopMain extends Disposable {
 		} catch (error) {
 			logService.error('Error while initializing workbench mode service', error);
 		}
+
+		// [ZP-D03B] Globally accessible configuration service.
+		setConfigurationService(configurationService);
 
 		// Workspace Trust Service
 		const workspaceTrustEnablementService = new WorkspaceTrustEnablementService(configurationService, environmentService);
