@@ -65,6 +65,9 @@ import { DefaultAccountService, IDefaultAccountService } from '../services/accou
 import { AccountPolicyService } from '../services/policies/common/accountPolicyService.js';
 import { MultiplexPolicyService } from '../services/policies/common/multiplexPolicyService.js';
 
+// [ZP-D03B] Globally accessible configuration service.
+import { setConfigurationService } from 'vs/z-customizations/configurationService';
+
 export class DesktopMain extends Disposable {
 
 	constructor(
@@ -320,6 +323,9 @@ export class DesktopMain extends Disposable {
 				return service;
 			})
 		]);
+
+		// [ZP-D03B] Globally accessible configuration service.
+		setConfigurationService(configurationService);
 
 		// Workspace Trust Service
 		const workspaceTrustEnablementService = new WorkspaceTrustEnablementService(configurationService, environmentService);

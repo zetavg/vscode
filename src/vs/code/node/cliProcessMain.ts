@@ -73,6 +73,9 @@ import { McpManagementService } from '../../platform/mcp/common/mcpManagementSer
 import { IMcpResourceScannerService, McpResourceScannerService } from '../../platform/mcp/common/mcpResourceScannerService.js';
 import { McpGalleryService } from '../../platform/mcp/common/mcpGalleryService.js';
 
+// [ZP-D03B] Globally accessible configuration service.
+import { setConfigurationService } from 'vs/z-customizations/configurationService';
+
 class CliMain extends Disposable {
 
 	constructor(
@@ -184,6 +187,9 @@ class CliMain extends Disposable {
 		// Configuration
 		const configurationService = this._register(new ConfigurationService(userDataProfilesService.defaultProfile.settingsResource, fileService, policyService, logService));
 		services.set(IConfigurationService, configurationService);
+
+		// [ZP-D03B] Globally accessible configuration service.
+		setConfigurationService(configurationService);
 
 		// Initialize
 		await Promise.all([
