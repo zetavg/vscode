@@ -68,6 +68,10 @@ import { MultiplexPolicyService } from '../services/policies/common/multiplexPol
 // [ZP-D03B] Globally accessible configuration service.
 import { setConfigurationService } from 'vs/z-customizations/configurationService';
 
+// [ZP-F39A] Customizable commit hash for REH.
+import { registerConfiguration as registerCustomizableREHCommitConfiguration } from 'vs/z-customizations/customizable-commit-for-reh/register-configuration';
+registerCustomizableREHCommitConfiguration();
+
 export class DesktopMain extends Disposable {
 
 	constructor(
