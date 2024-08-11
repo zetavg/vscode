@@ -212,6 +212,12 @@ Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration)
 					},
 				},
 				default: {
+					// [ZP-86CE] Make some extensions, such as GitHub Copilot ones run on the local machine by default.
+					// See: https://github.com/orgs/community/discussions/6942#discussioncomment-8234637, https://github.com/orgs/community/discussions/52369#discussioncomment-9156988
+					// Note that this might break `@workspace` (https://docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide#chat-participants) in remote.
+					'GitHub.copilot': ['ui'],
+					'GitHub.copilot-chat': ['ui'],
+					// 'streetsidesoftware.code-spell-checker': ['ui'], // Seems to not work if not installed in remote.
 					'pub.name': ['ui']
 				}
 			},
