@@ -6,6 +6,8 @@ This is a fork of [Visual Studio Code](https://github.com/microsoft/vscode) with
 
 Built binaries can be found in the [Releases page of the zetavg/vscodium repo](https://github.com/zetavg/vscodium/releases). You may need to click `Show all ... assets` to see all available downloads.
 
+You may need to click on "Show all ... assets" to find the one you need.
+
 > [!NOTE]
 > Note that the downloads there are basically VSCodium releases, which are not quite the same as Microsoft's Visual Studio Code. You may need to check VSCodium's documentation for topics such as [how to use Microsoft's VS Code Marketplace](https://github.com/VSCodium/vscodium/blob/master/docs/index.md#extensions-marketplace). Some topics in [Troubleshooting](https://github.com/VSCodium/vscodium/blob/master/docs/troubleshooting.md) related to Remote SSH, `Apple cannot check it for malicious software` or `app is damaged and can’t be opened` errors might be useful.
 
