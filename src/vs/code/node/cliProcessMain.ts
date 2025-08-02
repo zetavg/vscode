@@ -79,7 +79,7 @@ import { McpGalleryManifestService } from '../../platform/mcp/common/mcpGalleryM
 import { LINUX_SYSTEM_POLICY_FILE_PATH } from '../../base/common/policy.js';
 
 // [ZP-D03B] Globally accessible configuration service.
-import { setConfigurationService } from 'vs/z-customizations/configurationService';
+import { setConfigurationService } from '../../z-customizations/configurationService.js';
 
 class CliMain extends Disposable {
 

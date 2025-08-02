@@ -3,7 +3,7 @@
 // [ZP-D03B] Globally accessible configuration service.
 // This simplifies access to the configuration service for other patches, eliminating the need to figure out how to pass it through the app.
 
-import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
+import { IConfigurationService } from '../platform/configuration/common/configuration.js';
 
 // This is to make configurationService globally accessible.
 
