@@ -22,7 +22,7 @@ import { IRemoteSocketFactoryService } from './remoteSocketFactoryService.js';
 import { ISignService } from '../../sign/common/sign.js';
 
 // [ZP-F39A] Customizable commit hash for REH.
-import { getCustomizedREHCommit } from 'vs/z-customizations/customizable-commit-for-reh/getCustomizedREHCommit';
+import { getCustomizedREHCommit } from '../../../z-customizations/customizable-commit-for-reh/getCustomizedREHCommit.js';
 
 const RECONNECT_TIMEOUT = 30 * 1000 /* 30s */;
 

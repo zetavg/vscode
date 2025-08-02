@@ -1,7 +1,7 @@
 /* eslint-disable header/header */
 
-import { getConfigurationService } from 'vs/z-customizations/configurationService';
-import { REMOTE_EXTENSION_HOST_COMMIT_KEY } from './consts';
+import { getConfigurationService } from '../../z-customizations/configurationService.js';
+import { REMOTE_EXTENSION_HOST_COMMIT_KEY } from './consts.js';
 
 export function getCustomizedREHCommit() {
 	const configurationService = getConfigurationService();

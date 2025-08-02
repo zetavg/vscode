@@ -29,7 +29,7 @@ import { RemoteRunningLocation } from './extensionRunningLocation.js';
 import { ExtensionHostExtensions, ExtensionHostStartup, IExtensionHost } from './extensions.js';
 
 // [ZP-F39A] Customizable commit hash for REH.
-import { getCustomizedREHCommit } from 'vs/z-customizations/customizable-commit-for-reh/getCustomizedREHCommit';
+import { getCustomizedREHCommit } from '../../../../z-customizations/customizable-commit-for-reh/getCustomizedREHCommit.js';
 
 export interface IRemoteExtensionHostInitData {
 	readonly connectionData: IRemoteConnectionData | null;
