@@ -566,7 +566,9 @@ export class RemoteStatusIndicator extends Disposable implements IWorkbenchContr
 			name: nls.localize('remoteHost', "Remote Host"),
 			kind: this.networkState === 'offline' ? 'offline' : text !== RemoteStatusIndicator.DEFAULT_REMOTE_STATUS_LABEL ? 'remote' : undefined, // only emphasize when applicable
 			ariaLabel,
-			text,
+			// [ZP-804C] Hide remote icon on status bar if not using remote.
+			// text,
+			text: text === '$(remote)' ? '' : text, // If only the remote icon ('$(remote)') is shown, which is the case when the remote is not connected, don't show anything.
 			showProgress,
 			tooltip,
 			command: command ?? RemoteStatusIndicator.REMOTE_ACTIONS_COMMAND_ID

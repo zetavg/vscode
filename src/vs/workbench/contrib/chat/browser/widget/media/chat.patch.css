@@ -1,0 +1,8 @@
+.interactive-item-container .monaco-toolbar .action-item:not(.disabled):hover .codicon,
+.interactive-item-container .monaco-toolbar .action-item:not(.disabled):active .codicon {
+	color: color-mix(in srgb, var(--vscode-foreground) 50%, var(--vscode-icon-foreground) 50%) !important;
+}
+
+.interactive-item-container .monaco-toolbar .action-item:not(.disabled):active .codicon {
+	color: color-mix(in srgb, var(--vscode-foreground) 80%, var(--vscode-icon-foreground) 20%) !important;
+}

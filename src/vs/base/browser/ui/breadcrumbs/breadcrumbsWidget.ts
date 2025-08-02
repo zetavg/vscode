@@ -13,6 +13,7 @@ import { Emitter, Event } from '../../../common/event.js';
 import { DisposableStore, dispose, IDisposable } from '../../../common/lifecycle.js';
 import { ScrollbarVisibility } from '../../../common/scrollable.js';
 import './breadcrumbsWidget.css';
+import './breadcrumbsWidget.patch.css';
 
 export abstract class BreadcrumbsItem {
 	abstract dispose(): void;

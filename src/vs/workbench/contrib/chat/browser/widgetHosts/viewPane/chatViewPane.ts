@@ -31,7 +31,7 @@ import { IOpenerService } from '../../../../../../platform/opener/common/opener.
 import { IStorageService, StorageScope, StorageTarget } from '../../../../../../platform/storage/common/storage.js';
 import { ITelemetryService } from '../../../../../../platform/telemetry/common/telemetry.js';
 import { defaultButtonStyles } from '../../../../../../platform/theme/browser/defaultStyles.js';
-import { editorBackground } from '../../../../../../platform/theme/common/colorRegistry.js';
+import { editorBackground, registerColor } from '../../../../../../platform/theme/common/colorRegistry.js';
 import { ChatViewTitleControl } from './chatViewTitleControl.js';
 import { IThemeService } from '../../../../../../platform/theme/common/themeService.js';
 import { IViewPaneOptions, ViewPane } from '../../../../../browser/parts/views/viewPane.js';
@@ -67,6 +67,9 @@ import { IChatEntitlementService } from '../../../../../services/chat/common/cha
 import { toErrorMessage } from '../../../../../../base/common/errorMessage.js';
 import { IWorkbenchEnvironmentService } from '../../../../../services/environment/common/environmentService.js';
 import { IHostService } from '../../../../../services/host/browser/host.js';
+
+// [ZP-A612] Allow customizing the chat content color (when the chat is in a plane, such as in the sidebar).
+export const chatForeground = registerColor('chat.foreground', SIDE_BAR_FOREGROUND, '');
 
 interface IChatViewPaneState extends Partial<IChatModelInputState> {
 	/**
@@ -543,7 +546,9 @@ export class ChatViewPane extends ViewPane implements IViewWelcomeDelegate {
 				isSessionsWindow: this.workbenchEnvironmentService.isSessionsWindow,
 			},
 			{
-				listForeground: SIDE_BAR_FOREGROUND,
+				// [ZP-A612]
+				// listForeground: SIDE_BAR_FOREGROUND,
+				listForeground: chatForeground,
 				listBackground: locationBasedColors.background,
 				overlayBackground: locationBasedColors.overlayBackground,
 				inputEditorBackground: locationBasedColors.background,

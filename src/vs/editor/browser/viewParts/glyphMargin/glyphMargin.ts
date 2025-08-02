@@ -6,6 +6,7 @@
 import { FastDomNode, createFastDomNode } from '../../../../base/browser/fastDomNode.js';
 import { ArrayQueue } from '../../../../base/common/arrays.js';
 import './glyphMargin.css';
+import './glyphMargin.patch.css';
 import { IGlyphMarginWidget, IGlyphMarginWidgetPosition } from '../../editorBrowser.js';
 import { DynamicViewOverlay } from '../../view/dynamicViewOverlay.js';
 import { RenderingContext, RestrictedRenderingContext } from '../../view/renderingContext.js';
@@ -268,7 +269,10 @@ export class GlyphMarginWidgets extends ViewPart {
 			for (let lineNumber = startLineNumber; lineNumber <= endLineNumber; lineNumber++) {
 				const modelPosition = this._context.viewModel.coordinatesConverter.convertViewPositionToModelPosition(new Position(lineNumber, 0));
 				const laneIndex = this._context.viewModel.glyphLanes.getLanesAtLine(modelPosition.lineNumber).indexOf(lane);
-				requests.push(new DecorationBasedGlyphRenderRequest(lineNumber, laneIndex, zIndex, glyphMarginClassName));
+				// [ZP-8E77] Include the description in the class name so that we can customize it with CSS.
+				// `d.options.description` will be something like "exthost-api-alefragnani.Bookmarks", so we can customize it with CSS like `.monaco-editor .glyph-margin-widgets .cgmr.exthost-api-alefragnani\.Bookmarks { /* ... */ }`.
+				// requests.push(new DecorationBasedGlyphRenderRequest(lineNumber, laneIndex, zIndex, glyphMarginClassName));
+				requests.push(new DecorationBasedGlyphRenderRequest(lineNumber, laneIndex, zIndex, glyphMarginClassName + ' ' + d.options.description));
 			}
 		}
 	}

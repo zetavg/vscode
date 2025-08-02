@@ -1,0 +1,54 @@
+/* [ZP-FID7] Font. */
+.monaco-workbench.mac { font-family: "Input Sans Narrow", -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 300; }
+.monaco-workbench.mac:lang(zh-Hans) { font-family: "Input Sans Narrow", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", sans-serif; }
+.monaco-workbench.mac:lang(zh-Hant) { font-family: "Input Sans Narrow", -apple-system, BlinkMacSystemFont, "PingFang TC", sans-serif; }
+.monaco-workbench.mac:lang(ja) { font-family: "Input Sans Narrow", -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic Pro", sans-serif; }
+.monaco-workbench.mac:lang(ko) { font-family: "Input Sans Narrow", -apple-system, BlinkMacSystemFont, "Nanum Gothic", "Apple SD Gothic Neo", "AppleGothic", sans-serif; }
+.monaco-workbench.windows { font-family: "Input Sans Narrow", "Segoe WPC", "Segoe UI", sans-serif; font-weight: 300; }
+.monaco-workbench.windows:lang(zh-Hans) { font-family: "Input Sans Narrow", "Segoe WPC", "Segoe UI", "Microsoft YaHei", sans-serif; }
+.monaco-workbench.windows:lang(zh-Hant) { font-family: "Input Sans Narrow", "Segoe WPC", "Segoe UI", "Microsoft Jhenghei", sans-serif; }
+.monaco-workbench.windows:lang(ja) { font-family: "Input Sans Narrow", "Segoe WPC", "Segoe UI", "Yu Gothic UI", "Meiryo UI", sans-serif; }
+.monaco-workbench.windows:lang(ko) { font-family: "Input Sans Narrow", "Segoe WPC", "Segoe UI", "Malgun Gothic", "Dotom", sans-serif; }
+/* Linux: add `system-ui` as first font and not `Ubuntu` to allow other distribution pick their standard OS font */
+.monaco-workbench.linux { font-family: "Input Sans Narrow", system-ui, "Ubuntu", "Droid Sans", sans-serif; font-weight: 300; }
+.monaco-workbench.linux:lang(zh-Hans) { font-family: "Input Sans Narrow", system-ui, "Ubuntu", "Droid Sans", "Source Han Sans SC", "Source Han Sans CN", "Source Han Sans", sans-serif; }
+.monaco-workbench.linux:lang(zh-Hant) { font-family: "Input Sans Narrow", system-ui, "Ubuntu", "Droid Sans", "Source Han Sans TC", "Source Han Sans TW", "Source Han Sans", sans-serif; }
+.monaco-workbench.linux:lang(ja) { font-family: "Input Sans Narrow", system-ui, "Ubuntu", "Droid Sans", "Source Han Sans J", "Source Han Sans JP", "Source Han Sans", sans-serif; }
+.monaco-workbench.linux:lang(ko) { font-family: "Input Sans Narrow", system-ui, "Ubuntu", "Droid Sans", "Source Han Sans K", "Source Han Sans JR", "Source Han Sans", "UnDotum", "FBaekmuk Gulim", sans-serif; }
+.monaco-workbench.mac { --monaco-monospace-font: "Input Mono Narrow", "SF Mono", Monaco, Menlo, Courier, monospace; }
+.monaco-workbench.windows { --monaco-monospace-font: "Input Mono Narrow", Consolas, "Courier New", monospace; }
+.monaco-workbench.linux { --monaco-monospace-font: "Input Mono Narrow", "Ubuntu Mono", "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace; }
+.monaco-workbench.mac { --monaco-compressed-font: "Input Sans Compressed", "SF Mono", Monaco, Menlo, Courier, monospace; }
+.monaco-workbench.windows { --monaco-compressed-font: "Input Sans Compressed", Consolas, "Courier New", monospace; }
+.monaco-workbench.linux { --monaco-compressed-font: "Input Sans Compressed", "Ubuntu Mono", "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace; }
+.monaco-workbench.mac { --monaco-condensed-font: "Input Sans Condensed", "SF Mono", Monaco, Menlo, Courier, monospace; }
+.monaco-workbench.windows { --monaco-condensed-font: "Input Sans Condensed", Consolas, "Courier New", monospace; }
+.monaco-workbench.linux { --monaco-condensed-font: "Input Sans Condensed", "Ubuntu Mono", "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace; }
+.monaco-workbench.mac { --monaco-narrow-font: "Input Sans Narrow", "SF Mono", Monaco, Menlo, Courier, monospace; }
+.monaco-workbench.windows { --monaco-narrow-font: "Input Sans Narrow", Consolas, "Courier New", monospace; }
+.monaco-workbench.linux { --monaco-narrow-font: "Input Sans Narrow", "Ubuntu Mono", "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace; }
+
+.monaco-workbench .monaco-action-bar:not(.vertical) .action-label.codicon-close:not(.disabled):hover,
+.monaco-workbench .monaco-action-bar:not(.vertical) .action-label.codicon-pinned:not(.disabled):hover {
+	background-color: transparent;
+	color: var(--vscode-errorForeground) !important;
+}
+
+/* Except titlebar */
+.monaco-workbench .part.sidebar,
+.monaco-workbench .part.editor,
+.monaco-workbench .part.auxiliarybar {
+	.monaco-action-bar:not(.vertical) .action-label:not(.disabled):hover,
+	.monaco-action-bar:not(.vertical) .monaco-dropdown-with-primary:not(.disabled):hover {
+		background-color: transparent;
+		color: color-mix(in srgb, var(--vscode-foreground) 50%, var(--vscode-icon-foreground) 50%);
+	}
+
+	.monaco-action-bar:not(.vertical) .action-label:not(.disabled):active,
+	.monaco-action-bar:not(.vertical) .monaco-dropdown-with-primary:not(.disabled):active,
+	.monaco-action-bar:not(.vertical) .action-item.active .action-label:not(.disabled),
+	.monaco-action-bar:not(.vertical) .monaco-dropdown.active .action-label:not(.disabled) {
+		background-color: transparent;
+		color: var(--vscode-foreground);
+	}
+}
