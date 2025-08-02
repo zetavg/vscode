@@ -1,9 +1,9 @@
 /* eslint-disable header/header */
 
-import { ConfigurationScope, Extensions, IConfigurationRegistry } from 'vs/platform/configuration/common/configurationRegistry';
-import { Registry } from 'vs/platform/registry/common/platform';
+import { ConfigurationScope, Extensions, IConfigurationRegistry } from '../../platform/configuration/common/configurationRegistry.js';
+import { Registry } from '../../platform/registry/common/platform.js';
 
-import { REMOTE_EXTENSION_HOST_COMMIT_KEY } from './consts';
+import { REMOTE_EXTENSION_HOST_COMMIT_KEY } from './consts.js';
 
 
 export function registerConfiguration() {
