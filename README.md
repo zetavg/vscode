@@ -44,7 +44,9 @@ yarn compile
 yarn watch
 ```
 
-Wait for `yarn watch` to complete the initial compilation. Then, in another terminal:
+Wait for `yarn watch` to finish the initial compilation. You should see `Finished compilation with 0 errors`. If you see `Finished compilation extensions with 0 errors`, it means the compilation is not yet complete.
+
+Then, in another terminal:
 
 ```bash
 ./scripts/code.sh
