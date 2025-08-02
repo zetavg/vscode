@@ -276,7 +276,7 @@ export class WebWorkerExtensionHost extends Disposable implements IExtensionHost
 			nlsUrlWithDetails = URI.joinPath(URI.parse(nlsBaseUrl), this._productService.commit, this._productService.version, platform.Language.value());
 		}
 		return {
-			commit: this._productService.commit,
+			commit: this._productService.commit, // HERE HERE!!
 			version: this._productService.version,
 			quality: this._productService.quality,
 			parentPid: 0,

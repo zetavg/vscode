@@ -41,7 +41,7 @@ import { fromExtractError, getManifest } from 'vs/platform/extensionManagement/n
 import { ExtensionsManifestCache } from 'vs/platform/extensionManagement/node/extensionsManifestCache';
 import { DidChangeProfileExtensionsEvent, ExtensionsWatcher } from 'vs/platform/extensionManagement/node/extensionsWatcher';
 import { ExtensionType, IExtension, IExtensionManifest, TargetPlatform } from 'vs/platform/extensions/common/extensions';
-import { isEngineValid } from 'vs/platform/extensions/common/extensionValidator';
+// import { isEngineValid } from 'vs/platform/extensions/common/extensionValidator';
 import { FileChangesEvent, FileChangeType, FileOperationResult, IFileService, toFileOperationResult } from 'vs/platform/files/common/files';
 import { IInstantiationService, refineServiceDecorator } from 'vs/platform/instantiation/common/instantiation';
 import { ILogService } from 'vs/platform/log/common/log';
@@ -146,9 +146,9 @@ export class ExtensionManagementService extends AbstractExtensionManagementServi
 		try {
 			const manifest = await getManifest(path.resolve(location.fsPath));
 			const extensionId = getGalleryExtensionId(manifest.publisher, manifest.name);
-			if (manifest.engines && manifest.engines.vscode && !isEngineValid(manifest.engines.vscode, this.productService.version, this.productService.date)) {
-				throw new Error(nls.localize('incompatible', "Unable to install extension '{0}' as it is not compatible with VS Code '{1}'.", extensionId, this.productService.version));
-			}
+			// if (manifest.engines && manifest.engines.vscode && !isEngineValid(manifest.engines.vscode, this.productService.version, this.productService.date)) {
+			// 	throw new Error(nls.localize('incompatible', "Unable to install extension '{0}' as it is not compatible with VS Code '{1}'.", extensionId, this.productService.version));
+			// }
 
 			const results = await this.installExtensions([{ manifest, extension: location, options }]);
 			const result = results.find(({ identifier }) => areSameExtensions(identifier, { id: extensionId }));

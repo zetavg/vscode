@@ -10,8 +10,8 @@
 	"serverGreeting": [],
 	"serverLicense": [],
 	"serverLicensePrompt": "",
-	"serverApplicationName": "code-server-oss",
-	"serverDataFolderName": ".vscode-server-oss",
+	"serverApplicationName": "codium-server",
+	"serverDataFolderName": ".vscodium-server",
 	"tunnelApplicationName": "code-tunnel-oss",
 	"win32DirName": "Microsoft Code OSS",
 	"win32NameVersion": "Microsoft Code OSS",
@@ -31,6 +31,7 @@
 	"nodejsRepository": "https://nodejs.org",
 	"urlProtocol": "code-oss",
 	"webviewContentExternalBaseUrlTemplate": "https://{{uuid}}.vscode-cdn.net/insider/ef65ac1ba57f57f2a3961bfe94aa20481caca4c6/out/vs/workbench/contrib/webview/browser/pre/",
+	"commit": "asdf",
 	"builtInExtensions": [
 		{
 			"name": "ms-vscode.js-debug-companion",
