@@ -26,7 +26,7 @@ import { ILogService } from '../../../../../../platform/log/common/log.js';
 import { IOpenerService } from '../../../../../../platform/opener/common/opener.js';
 import { IStorageService, StorageScope, StorageTarget } from '../../../../../../platform/storage/common/storage.js';
 import { ITelemetryService } from '../../../../../../platform/telemetry/common/telemetry.js';
-import { editorBackground } from '../../../../../../platform/theme/common/colorRegistry.js';
+import { editorBackground, registerColor } from '../../../../../../platform/theme/common/colorRegistry.js';
 import { ChatViewTitleControl } from './chatViewTitleControl.js';
 import { IThemeService } from '../../../../../../platform/theme/common/themeService.js';
 import { IViewPaneOptions, ViewPane } from '../../../../../browser/parts/views/viewPane.js';
@@ -57,6 +57,9 @@ import { AgentSessionsFilter } from '../../agentSessions/agentSessionsFilter.js'
 import { IAgentSessionsService } from '../../agentSessions/agentSessionsService.js';
 import { HoverPosition } from '../../../../../../base/browser/ui/hover/hoverWidget.js';
 import { IAgentSession } from '../../agentSessions/agentSessionsModel.js';
+
+// [ZP-A612] Allow customizing the chat content color (when the chat is in a plane, such as in the sidebar).
+export const chatForeground = registerColor('chat.foreground', SIDE_BAR_FOREGROUND, '');
 
 interface IChatViewPaneState extends Partial<IChatModelInputState> {
 	sessionId?: string;
@@ -574,7 +577,9 @@ export class ChatViewPane extends ViewPane implements IViewWelcomeDelegate {
 				supportsChangingModes: true,
 			},
 			{
-				listForeground: SIDE_BAR_FOREGROUND,
+				// [ZP-A612]
+				// listForeground: SIDE_BAR_FOREGROUND,
+				listForeground: chatForeground,
 				listBackground: locationBasedColors.background,
 				overlayBackground: locationBasedColors.overlayBackground,
 				inputEditorBackground: locationBasedColors.background,

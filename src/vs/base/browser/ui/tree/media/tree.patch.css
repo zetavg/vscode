@@ -1,0 +1,41 @@
+/* [ZP-73AF] Note that we only apply opacity to sidebar so it will not affect things like the quick input list (command palette). */
+/* .part.sidebar .monaco-tl-contents .monaco-icon-label .monaco-icon-name-container, */
+.part.sidebar .monaco-tl-contents .outline-element-icon,
+.part.sidebar .monaco-tl-contents .monaco-icon-label::before,
+.part.sidebar .monaco-tl-contents .monaco-icon-label::after,
+.part.sidebar .monaco-tl-contents .codicon::before,
+.part.sidebar .monaco-tl-contents .codicon::after,
+.part.auxiliarybar .monaco-tl-contents .outline-element-icon,
+.part.auxiliarybar .monaco-tl-contents .monaco-icon-label::before,
+.part.auxiliarybar .monaco-tl-contents .monaco-icon-label::after,
+.part.auxiliarybar .monaco-tl-contents .codicon::before,
+.part.auxiliarybar .monaco-tl-contents .codicon::after,
+.open-editors .monaco-list-row .monaco-icon-label::before,
+.open-editors .monaco-list-row .monaco-icon-label::after {
+	opacity: 0.9 !important;
+}
+/* .vs-dark .part.sidebar .monaco-tl-contents .monaco-icon-label .monaco-icon-name-container, */
+.vs-dark .part.sidebar .monaco-tl-contents .outline-element-icon,
+.vs-dark .part.sidebar .monaco-tl-contents .monaco-icon-label::before,
+.vs-dark .part.sidebar .monaco-tl-contents .monaco-icon-label::after,
+.vs-dark .part.sidebar .monaco-tl-contents .codicon::before,
+.vs-dark .part.sidebar .monaco-tl-contents .codicon::after,
+.vs-dark .part.auxiliarybar .monaco-tl-contents .outline-element-icon,
+.vs-dark .part.auxiliarybar .monaco-tl-contents .monaco-icon-label::before,
+.vs-dark .part.auxiliarybar .monaco-tl-contents .monaco-icon-label::after,
+.vs-dark .part.auxiliarybar .monaco-tl-contents .codicon::before,
+.vs-dark .part.auxiliarybar .monaco-tl-contents .codicon::after,
+.vs-dark .open-editors .monaco-list-row .monaco-icon-label::before,
+.vs-dark .open-editors .monaco-list-row .monaco-icon-label::after {
+	opacity: 0.6 !important;
+}
+
+.part.sidebar .monaco-tl-contents .monaco-icon-label::after,
+.part.auxiliarybar .monaco-tl-contents .monaco-icon-label::after {
+	opacity: 0.6 !important;
+}
+
+/* [ZP-0782] No pointer. */
+.monaco-list .monaco-scrollable-element .monaco-tree-sticky-container .monaco-tree-sticky-row:hover {
+	cursor: default;
+}

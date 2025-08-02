@@ -14,6 +14,7 @@ import { hash } from '../../../../base/common/hash.js';
 import { Disposable, DisposableStore, IDisposable, dispose } from '../../../../base/common/lifecycle.js';
 import { Schemas } from '../../../../base/common/network.js';
 import './editor.css';
+import './editor.patch.css';
 import { applyFontInfo } from '../../config/domFontInfo.js';
 import { EditorConfiguration, IEditorConstructionOptions } from '../../config/editorConfiguration.js';
 import { TabFocus } from '../../config/tabFocus.js';

@@ -1,0 +1,4 @@
+/* [ZP-0782] No pointer. */
+.monaco-editor .find-widget .button {
+	cursor: default;
+}

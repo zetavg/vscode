@@ -1,0 +1,22 @@
+/* [ZP-162E] Dotted indent guides. */
+.monaco-editor .lines-content .core-guide-indent,
+.monaco-editor .lines-content .core-guide-indent.indent-active {
+	box-shadow: none !important;
+}
+.monaco-editor .lines-content .core-guide-indent::after {
+	content: '';
+	position: absolute;
+	width: 2px;
+	top: 0;
+	bottom: 0;
+	border-left: 1px dotted var(--indent-color);
+}
+.monaco-editor .lines-content .core-guide-indent.indent-active::after {
+	border-left: 1px dotted var(--indent-color-active);
+}
+.monaco-editor .lines-content .view-overlays > div:nth-child(2n) .core-guide-indent {
+	&::after {
+		top: 1px;
+		bottom: 1px;
+	}
+}

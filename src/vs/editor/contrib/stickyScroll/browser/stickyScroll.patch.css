@@ -1,0 +1,4 @@
+/* [ZP-0782] No pointer. */
+.monaco-editor .sticky-widget .sticky-line-content:hover {
+	cursor: default;
+}

@@ -1,0 +1,26 @@
+.monaco-list.mouse-support .monaco-list-row {
+	cursor: default;
+}
+
+.part.sidebar .monaco-list-row,
+.part.auxiliarybar .monaco-list-row {
+	font-family: var(--monaco-condensed-font);
+	font-weight: 300;
+	font-size: 11px;
+}
+
+.part.sidebar .extensions-list .monaco-list-row,
+.part.auxiliarybar .extensions-list .monaco-list-row {
+	font-size: 12px;
+}
+
+.part.sidebar .extensions-list .monaco-list-row .name,
+.part.auxiliarybar .extensions-list .monaco-list-row .name {
+	font-size: 13px;
+}
+
+/* Copilot Chat */
+.part.sidebar .interactive-session .monaco-list-row,
+.part.auxiliarybar .interactive-session .monaco-list-row {
+	font-size: 13px;
+}
