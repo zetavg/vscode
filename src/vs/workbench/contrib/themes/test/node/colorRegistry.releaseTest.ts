@@ -19,6 +19,7 @@ import { mock } from 'vs/base/test/common/mock';
 import { INativeEnvironmentService } from 'vs/platform/environment/common/environment';
 import { FileAccess } from 'vs/base/common/network';
 import { TestLoggerService } from 'vs/workbench/test/common/workbenchTestServices';
+import { defaultsToString, isConsideredRequired } from './utils';
 
 interface ColorInfo {
 	description: string;
@@ -83,6 +84,41 @@ suite('Color Registry', function () {
 
 			assert.fail(`\n\Updating ${path.normalize(varFilePath)}.\nPlease verify and commit.\n\n${errorText}\n`);
 		}
+	});
+
+	test(`update colors in colors.ts`, async function () {
+		const varFilePath = FileAccess.asFileUri('vs/../../src/vs/workbench/contrib/themes/colors.ts').fsPath;
+		const fileContentLines = [
+			'// THIS FILE IS AUTO GENERATED. DO NOT EDIT!',
+			'// Run `scripts/test-documentation.sh` to update this file.',
+			'',
+		];
+
+		fileContentLines.push('/* eslint-disable header/header */');
+		fileContentLines.push('');
+
+		fileContentLines.push('export type ThemeColors<T = string> = {');
+
+		const themingRegistry = Registry.as<IColorRegistry>(Extensions.ColorContribution);
+
+		for (const color of themingRegistry.getColors()) {
+			const isRequired = isConsideredRequired(color);
+			fileContentLines.push(`	/**`);
+			fileContentLines.push(`	* ${color.description}${color.deprecationMessage ? (color.description ? ' ' : '') + 'Note: ' + color.deprecationMessage : ''}`);
+			if (!isRequired) {
+				fileContentLines.push(`	*`);
+				fileContentLines.push(`	* Optional.`);
+			}
+			fileContentLines.push(`	*`);
+			fileContentLines.push(`	* Defaults: \`${defaultsToString(color)}\`.`);
+			fileContentLines.push(`	*/`);
+			fileContentLines.push(`	'${color.id}'${isRequired ? '' : '?'}: T;`);
+		}
+
+		fileContentLines.push('};');
+		fileContentLines.push('');
+
+		await pfs.Promises.writeFile(varFilePath, fileContentLines.join('\n'));
 	});
 
 	test('all colors listed in theme-color.md', async function () {
