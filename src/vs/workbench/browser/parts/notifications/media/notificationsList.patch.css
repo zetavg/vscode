@@ -1,0 +1,13 @@
+/* [ZP-FID7] */
+.monaco-workbench .notifications-list-container .notification-list-item .notification-list-item-buttons-container .monaco-text-button {
+	padding: 4px 14px 2px !important;
+}
+
+.monaco-workbench .notifications-list-container .notification-list-item .notification-list-item-message {
+	font-weight: 300;
+}
+
+.monaco-workbench .notifications-list-container .notification-list-item .notification-list-item-source {
+	opacity: 0.5;
+	font-weight: 200;
+}

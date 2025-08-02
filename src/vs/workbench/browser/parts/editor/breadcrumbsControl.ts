@@ -47,6 +47,7 @@ import { BreadcrumbsFilePicker, BreadcrumbsOutlinePicker, BreadcrumbsPicker } fr
 import { IEditorGroupView } from './editor.js';
 import './media/breadcrumbscontrol.css';
 import { ScrollbarVisibility } from '../../../../base/common/scrollable.js';
+import './media/breadcrumbscontrol.patch.css';
 
 class OutlineItem extends BreadcrumbsItem {
 

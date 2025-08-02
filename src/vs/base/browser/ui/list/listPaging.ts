@@ -10,6 +10,7 @@ import { Disposable, IDisposable } from '../../../common/lifecycle.js';
 import { IPagedModel } from '../../../common/paging.js';
 import { ScrollbarVisibility } from '../../../common/scrollable.js';
 import './list.css';
+import './list.patch.css';
 import { IListContextMenuEvent, IListElementRenderDetails, IListEvent, IListMouseEvent, IListRenderer, IListVirtualDelegate } from './list.js';
 import { IListAccessibilityProvider, IListOptions, IListOptionsUpdate, IListStyles, List, TypeNavigationMode } from './listWidget.js';
 import { isActiveElement } from '../../dom.js';

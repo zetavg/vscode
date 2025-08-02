@@ -81,6 +81,7 @@ import { ISerializedTestTreeCollapseState } from './explorerProjections/testingV
 import { TreeProjection } from './explorerProjections/treeProjection.js';
 import * as icons from './icons.js';
 import './media/testing.css';
+import './media/testing.patch.css';
 import { DebugLastRun, ReRunLastRun } from './testExplorerActions.js';
 import { TestingExplorerFilter } from './testingExplorerFilter.js';
 

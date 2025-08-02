@@ -1,0 +1,42 @@
+{
+  "name": "theme-spacegray",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "categories": [
+    "Themes"
+  ],
+  "version": "1.0.0",
+  "publisher": "vscode",
+  "license": "MIT",
+  "engines": {
+    "vscode": "*"
+  },
+  "contributes": {
+    "themes": [
+      {
+        "label": "Spacegray Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/spacegray-dark-color-theme.json"
+      },
+      {
+        "label": "Spacegray Light",
+        "uiTheme": "vs",
+        "path": "./themes/spacegray-light-color-theme.json"
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "spacegray",
+        "label": "Spacegray",
+        "path": "./file-icons/spacegray.json"
+      }
+    ],
+    "productIconThemes": [
+      {
+        "id": "spacegray-icons-carbon",
+        "label": "Carbon Icons (Spacegray)",
+        "path": "./product-icons/icons-carbon.json"
+      }
+    ]
+  }
+}
