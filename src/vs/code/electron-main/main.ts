@@ -75,7 +75,7 @@ import { addUNCHostToAllowlist, getUNCHost } from '../../base/node/unc.js';
 import { ThemeMainService } from '../../platform/theme/electron-main/themeMainServiceImpl.js';
 
 // [ZP-D03B] Globally accessible configuration service.
-import { setConfigurationService } from 'vs/z-customizations/configurationService';
+import { setConfigurationService } from '../../z-customizations/configurationService.js';
 
 /**
  * The main VS Code entry point.
