@@ -1,0 +1,24 @@
+/* [ZP-A5E9] Dim the toggle icon when it's not active (using the activeBorder color as the inactive color). */
+.monaco-custom-toggle.codicon {
+	border: 0 !important;
+	color: var(--vscode-inputOption-activeBorder) !important;
+}
+.monaco-custom-toggle.codicon:hover {
+	background-color: transparent;
+	color: var(--vscode-inputOption-activeForeground) !important;
+	opacity: 0.5 !important;
+}
+.monaco-custom-toggle.codicon.checked {
+	color: var(--vscode-inputOption-activeForeground) !important;
+	opacity: 0.8 !important;
+}
+.monaco-custom-toggle.codicon.checked:hover {
+	background-color: transparent;
+	color: var(--vscode-inputOption-activeForeground) !important;
+	opacity: 1 !important;
+}
+
+/* [ZP-0782] No pointer. */
+.monaco-custom-toggle {
+	cursor: default;
+}

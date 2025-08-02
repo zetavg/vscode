@@ -2904,6 +2904,9 @@ export class EditorLayoutInfoComputer extends ComputedEditorOption<EditorOption.
 
 		const remainingWidth = outerWidth - glyphMarginWidth - lineNumbersWidth - lineDecorationsWidth;
 
+		// [ZP-E30D]
+		glyphMarginLeft += 4;
+
 		let isWordWrapMinified = false;
 		let isViewportWrapping = false;
 		let wrappingColumn = -1;
@@ -3414,7 +3417,9 @@ class EditorMinimap extends BaseEditorOption<EditorOption.minimap, IEditorMinima
 			enabled: true,
 			size: 'proportional',
 			side: 'right',
-			showSlider: 'mouseover',
+			// [ZP-64AF] Default settings.
+			// showSlider: 'mouseover',
+			showSlider: 'always',
 			autohide: 'none',
 			renderCharacters: true,
 			maxColumn: 120,
@@ -4144,10 +4149,11 @@ class EditorScrollbar extends BaseEditorOption<EditorOption.scrollbar, IEditorSc
 			useShadows: true,
 			verticalHasArrows: false,
 			horizontalHasArrows: false,
-			horizontalScrollbarSize: 12,
-			horizontalSliderSize: 12,
-			verticalScrollbarSize: 14,
-			verticalSliderSize: 14,
+			// [ZP-????]
+			horizontalScrollbarSize: 4,
+			horizontalSliderSize: 4,
+			verticalScrollbarSize: 4,
+			verticalSliderSize: 4,
 			handleMouseWheel: true,
 			alwaysConsumeMouseWheel: true,
 			scrollByPage: false,
@@ -6519,7 +6525,9 @@ export const EditorOptions = {
 	)),
 	renderLineHighlight: register(new EditorStringEnumOption(
 		EditorOption.renderLineHighlight, 'renderLineHighlight',
-		'line' as 'none' | 'gutter' | 'line' | 'all',
+		// [ZP-35AB]
+		// 'line' as 'none' | 'gutter' | 'line' | 'all',
+		'gutter' as 'none' | 'gutter' | 'line' | 'all',
 		['none', 'gutter', 'line', 'all'] as const,
 		{
 			enumDescriptions: [

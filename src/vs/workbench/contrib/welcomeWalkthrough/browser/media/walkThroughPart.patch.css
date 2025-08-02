@@ -1,0 +1,6 @@
+/* [ZP-FB7D] Content typenology. */
+.monaco-workbench .part.editor > .content .walkThroughContent h1,
+.monaco-workbench .part.editor > .content .walkThroughContent h2,
+.monaco-workbench .part.editor > .content .walkThroughContent h3 {
+	font-weight: bolder;
+}

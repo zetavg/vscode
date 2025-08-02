@@ -5,6 +5,7 @@
 
 import '../common/walkThroughUtils.js';
 import './media/walkThroughPart.css';
+import './media/walkThroughPart.patch.css';
 import { DomScrollableElement } from '../../../../base/browser/ui/scrollbar/scrollableElement.js';
 import { EventType as TouchEventType, GestureEvent, Gesture } from '../../../../base/browser/touch.js';
 import { ScrollbarVisibility } from '../../../../base/common/scrollable.js';

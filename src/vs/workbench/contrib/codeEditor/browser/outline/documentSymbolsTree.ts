@@ -31,6 +31,7 @@ import { IThemeService } from '../../../../../platform/theme/common/themeService
 import { fillEditorsDragData } from '../../../../browser/dnd.js';
 import { IOutlineComparator, OutlineConfigKeys, OutlineTarget } from '../../../../services/outline/browser/outline.js';
 import './documentSymbolsTree.css';
+import './documentSymbolsTree.patch.css';
 
 export type DocumentSymbolItem = OutlineGroup | OutlineElement;
 
