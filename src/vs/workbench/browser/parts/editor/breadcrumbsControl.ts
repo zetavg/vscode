@@ -46,6 +46,7 @@ import { BreadcrumbsModel, FileElement, OutlineElement2 } from './breadcrumbsMod
 import { BreadcrumbsFilePicker, BreadcrumbsOutlinePicker, BreadcrumbsPicker } from './breadcrumbsPicker.js';
 import { IEditorGroupView } from './editor.js';
 import './media/breadcrumbscontrol.css';
+import './media/breadcrumbscontrol.patch.css';
 
 class OutlineItem extends BreadcrumbsItem {
 

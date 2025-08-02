@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import './selections.css';
+import './selections.patch.css';
 import { DynamicViewOverlay } from '../../view/dynamicViewOverlay.js';
 import { Range } from '../../../common/core/range.js';
 import { HorizontalRange, LineVisibleRanges, RenderingContext } from '../../view/renderingContext.js';

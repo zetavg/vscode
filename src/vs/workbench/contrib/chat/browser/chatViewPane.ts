@@ -18,7 +18,7 @@ import { ILayoutService } from '../../../../platform/layout/browser/layoutServic
 import { ILogService } from '../../../../platform/log/common/log.js';
 import { IOpenerService } from '../../../../platform/opener/common/opener.js';
 import { IStorageService, StorageScope, StorageTarget } from '../../../../platform/storage/common/storage.js';
-import { editorBackground } from '../../../../platform/theme/common/colorRegistry.js';
+import { editorBackground, registerColor } from '../../../../platform/theme/common/colorRegistry.js';
 import { IThemeService } from '../../../../platform/theme/common/themeService.js';
 import { IViewPaneOptions, ViewPane } from '../../../browser/parts/views/viewPane.js';
 import { Memento } from '../../../common/memento.js';
@@ -33,6 +33,9 @@ import { IChatService } from '../common/chatService.js';
 import { ChatAgentLocation, ChatModeKind } from '../common/constants.js';
 import { ChatWidget, IChatViewState } from './chatWidget.js';
 import { ChatViewWelcomeController, IViewWelcomeDelegate } from './viewsWelcome/chatViewWelcomeController.js';
+
+// [ZP-A612] Allow customizing the chat content color (when the chat is in a plane, such as in the sidebar).
+export const chatForeground = registerColor('chat.foreground', SIDE_BAR_FOREGROUND, '');
 
 interface IViewPaneState extends IChatViewState {
 	sessionId?: string;
@@ -208,7 +211,9 @@ export class ChatViewPane extends ViewPane implements IViewWelcomeDelegate {
 					supportsChangingModes: true,
 				},
 				{
-					listForeground: SIDE_BAR_FOREGROUND,
+					// [ZP-A612]
+					// listForeground: SIDE_BAR_FOREGROUND,
+					listForeground: chatForeground,
 					listBackground: locationBasedColors.background,
 					overlayBackground: locationBasedColors.overlayBackground,
 					inputEditorBackground: locationBasedColors.background,

@@ -32,6 +32,7 @@ import { Disposable, DisposableStore, dispose, IDisposable, toDisposable } from 
 import { clamp } from '../../../common/numbers.js';
 import { ScrollEvent } from '../../../common/scrollable.js';
 import './media/tree.css';
+import './media/tree.patch.css';
 import { localize } from '../../../../nls.js';
 import { IHoverDelegate } from '../hover/hoverDelegate.js';
 import { createInstantHoverDelegate } from '../hover/hoverDelegateFactory.js';

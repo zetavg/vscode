@@ -18,6 +18,7 @@ import { Disposable } from '../../../common/lifecycle.js';
 import * as platform from '../../../common/platform.js';
 import * as types from '../../../common/types.js';
 import './actionbar.css';
+import './actionbar.patch.css';
 import * as nls from '../../../../nls.js';
 import type { IManagedHover } from '../hover/hover.js';
 import { getBaseLayerHoverDelegate } from '../hover/hoverDelegate2.js';

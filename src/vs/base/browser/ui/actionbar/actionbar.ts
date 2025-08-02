@@ -14,6 +14,7 @@ import { KeyCode, KeyMod } from '../../../common/keyCodes.js';
 import { Disposable, DisposableMap, DisposableStore, dispose, IDisposable } from '../../../common/lifecycle.js';
 import * as types from '../../../common/types.js';
 import './actionbar.css';
+import './actionbar.patch.css';
 
 export interface IActionViewItem extends IDisposable {
 	action: IAction;

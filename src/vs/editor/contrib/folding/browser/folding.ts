@@ -11,6 +11,7 @@ import { Disposable, DisposableStore, IDisposable } from '../../../../base/commo
 import { escapeRegExpCharacters } from '../../../../base/common/strings.js';
 import * as types from '../../../../base/common/types.js';
 import './folding.css';
+import './folding.patch.css';
 import { StableEditorScrollState } from '../../../browser/stableEditorScroll.js';
 import { ICodeEditor, IEditorMouseEvent, MouseTargetType } from '../../../browser/editorBrowser.js';
 import { EditorAction, EditorContributionInstantiation, registerEditorAction, registerEditorContribution, registerInstantiatedEditorAction, ServicesAccessor } from '../../../browser/editorExtensions.js';
@@ -414,6 +415,11 @@ export class FoldingController extends Disposable implements IEditorContribution
 
 				// TODO@joao TODO@alex TODO@martin this is such that we don't collide with dirty diff
 				if (gutterOffsetX < 4) { // the whitespace between the border and the real folding icon border is 4px
+					return;
+				}
+
+				// [ZP-E30D] A safer way to determine if the click is really on the folding icon.
+				if (e.target.element!.className.indexOf('-folding-') < 0) {
 					return;
 				}
 
