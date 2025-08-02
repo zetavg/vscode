@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./media/style';
+import 'vs/css!./media/style.patch';
 import { registerThemingParticipant } from 'vs/platform/theme/common/themeService';
 import { WORKBENCH_BACKGROUND, TITLE_BAR_ACTIVE_BACKGROUND } from 'vs/workbench/common/theme';
 import { isWeb, isIOS } from 'vs/base/common/platform';

@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./selections';
+import 'vs/css!./selections.patch';
 import { DynamicViewOverlay } from 'vs/editor/browser/view/dynamicViewOverlay';
 import { Range } from 'vs/editor/common/core/range';
 import { HorizontalRange, LineVisibleRanges, RenderingContext } from 'vs/editor/browser/view/renderingContext';

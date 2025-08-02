@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./media/panelpart';
+import 'vs/css!./media/panelpart.patch';
 import { localize, localize2 } from 'vs/nls';
 import { KeyMod, KeyCode } from 'vs/base/common/keyCodes';
 import { MenuId, MenuRegistry, registerAction2, Action2, IAction2Options } from 'vs/platform/actions/common/actions';

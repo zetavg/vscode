@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./media/notificationsList';
+import 'vs/css!./media/notificationsList.patch';
 import { localize } from 'vs/nls';
 import { getWindow, isAncestorOfActiveElement, trackFocus } from 'vs/base/browser/dom';
 import { WorkbenchList } from 'vs/platform/list/browser/listService';

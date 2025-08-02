@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./media/part';
+import 'vs/css!./media/part.patch';
 import { Component } from 'vs/workbench/common/component';
 import { IThemeService, IColorTheme } from 'vs/platform/theme/common/themeService';
 import { Dimension, size, IDimension, getActiveDocument, prepend, IDomPosition } from 'vs/base/browser/dom';
@@ -226,10 +227,13 @@ export abstract class Part extends Component implements ISerializableView {
 }
 
 class PartLayout {
-
-	private static readonly HEADER_HEIGHT = 35;
-	private static readonly TITLE_HEIGHT = 35;
-	private static readonly Footer_HEIGHT = 35;
+	// [ZP-3528]
+	// private static readonly HEADER_HEIGHT = 35;
+	// private static readonly TITLE_HEIGHT = 35;
+	// private static readonly Footer_HEIGHT = 35;
+	private static readonly HEADER_HEIGHT = 28;
+	private static readonly TITLE_HEIGHT = 28;
+	private static readonly Footer_HEIGHT = 28;
 
 	private headerVisible: boolean = false;
 	private footerVisible: boolean = false;

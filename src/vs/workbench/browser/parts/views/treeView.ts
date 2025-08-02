@@ -30,6 +30,7 @@ import { isString } from 'vs/base/common/types';
 import { URI } from 'vs/base/common/uri';
 import { generateUuid } from 'vs/base/common/uuid';
 import 'vs/css!./media/views';
+import 'vs/css!./media/views.patch';
 import { VSDataTransfer } from 'vs/base/common/dataTransfer';
 import { localize } from 'vs/nls';
 import { createActionViewItem, createAndFillInContextMenuActions } from 'vs/platform/actions/browser/menuEntryActionViewItem';

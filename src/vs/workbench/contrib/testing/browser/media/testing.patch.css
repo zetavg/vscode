@@ -1,0 +1,4 @@
+.test-explorer .result-summary {
+	color: var(--vscode-list-activeSelectionForeground);
+	color: color-mix(in srgb, var(--vscode-list-activeSelectionForeground) 80%, var(--vscode-sideBar-foreground) 20%);
+}

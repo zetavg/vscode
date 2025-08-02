@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./media/paneCompositePart';
+import 'vs/css!./media/paneCompositePart.patch';
 import { Event } from 'vs/base/common/event';
 import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
 import { IProgressIndicator } from 'vs/platform/progress/common/progress';

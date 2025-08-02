@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./media/explorerviewlet';
+import 'vs/css!./media/explorerviewlet.patch';
 import { localize, localize2 } from 'vs/nls';
 import { mark } from 'vs/base/common/performance';
 import { VIEWLET_ID, VIEW_ID, IFilesConfiguration, ExplorerViewletVisibleContext } from 'vs/workbench/contrib/files/common/files';

@@ -45,9 +45,9 @@ import { mainWindow } from 'vs/base/browser/window';
 
 // implementation
 
-const defaultThemeExtensionId = 'vscode-theme-defaults';
+const defaultThemeExtensionId = 'vscode-theme-spacegray';
 
-const DEFAULT_FILE_ICON_THEME_ID = 'vscode.vscode-theme-seti-vs-seti';
+const DEFAULT_FILE_ICON_THEME_ID = 'spacegray';
 const fileIconsEnabledClass = 'file-icons-enabled';
 
 const colorThemeRulesClassName = 'contributedColorTheme';

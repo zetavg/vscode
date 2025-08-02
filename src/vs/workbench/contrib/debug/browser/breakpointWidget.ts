@@ -13,6 +13,7 @@ import { KeyCode, KeyMod } from 'vs/base/common/keyCodes';
 import * as lifecycle from 'vs/base/common/lifecycle';
 import { URI as uri } from 'vs/base/common/uri';
 import 'vs/css!./media/breakpointWidget';
+import 'vs/css!./media/breakpointWidget.patch';
 import { IActiveCodeEditor, ICodeEditor } from 'vs/editor/browser/editorBrowser';
 import { EditorCommand, ServicesAccessor, registerEditorCommand } from 'vs/editor/browser/editorExtensions';
 import { ICodeEditorService } from 'vs/editor/browser/services/codeEditorService';

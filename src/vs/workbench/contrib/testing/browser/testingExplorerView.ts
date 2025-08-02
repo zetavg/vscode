@@ -28,6 +28,7 @@ import { ThemeIcon } from 'vs/base/common/themables';
 import { isDefined } from 'vs/base/common/types';
 import { URI } from 'vs/base/common/uri';
 import 'vs/css!./media/testing';
+import 'vs/css!./media/testing.patch';
 import { MarkdownRenderer } from 'vs/editor/browser/widget/markdownRenderer/browser/markdownRenderer';
 import { localize } from 'vs/nls';
 import { DropdownWithPrimaryActionViewItem } from 'vs/platform/actions/browser/dropdownWithPrimaryActionViewItem';

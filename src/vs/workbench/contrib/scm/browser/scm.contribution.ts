@@ -186,7 +186,10 @@ Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration).regis
 			},
 			default: {
 				'added': false,
-				'modified': true
+				// [ZP-35AB] Defaults.
+				// 'modified': true
+				'modified': false
+
 			}
 		},
 		'scm.diffDecorationsIgnoreTrimWhitespace': {

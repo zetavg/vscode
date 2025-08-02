@@ -13,6 +13,7 @@ import { combinedDisposable, DisposableStore, MutableDisposable, toDisposable } 
 import { extUri } from 'vs/base/common/resources';
 import { URI } from 'vs/base/common/uri';
 import 'vs/css!./media/breadcrumbscontrol';
+import 'vs/css!./media/breadcrumbscontrol.patch';
 import { localize, localize2 } from 'vs/nls';
 import { Action2, MenuId, registerAction2 } from 'vs/platform/actions/common/actions';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';

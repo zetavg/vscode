@@ -11,6 +11,7 @@ import { Disposable, DisposableStore, IDisposable } from 'vs/base/common/lifecyc
 import { escapeRegExpCharacters } from 'vs/base/common/strings';
 import * as types from 'vs/base/common/types';
 import 'vs/css!./folding';
+import 'vs/css!./folding.patch';
 import { StableEditorScrollState } from 'vs/editor/browser/stableEditorScroll';
 import { ICodeEditor, IEditorMouseEvent, MouseTargetType } from 'vs/editor/browser/editorBrowser';
 import { EditorAction, EditorContributionInstantiation, registerEditorAction, registerEditorContribution, registerInstantiatedEditorAction, ServicesAccessor } from 'vs/editor/browser/editorExtensions';
@@ -414,6 +415,11 @@ export class FoldingController extends Disposable implements IEditorContribution
 
 				// TODO@joao TODO@alex TODO@martin this is such that we don't collide with dirty diff
 				if (gutterOffsetX < 4) { // the whitespace between the border and the real folding icon border is 4px
+					return;
+				}
+
+				// [ZP-E30D] A safer way to determine if the click is really on the folding icon.
+				if (e.target.element!.className.indexOf('-folding-') < 0) {
 					return;
 				}
 

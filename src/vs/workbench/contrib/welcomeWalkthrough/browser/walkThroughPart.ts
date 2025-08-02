@@ -5,6 +5,7 @@
 
 import 'vs/workbench/contrib/welcomeWalkthrough/common/walkThroughUtils';
 import 'vs/css!./media/walkThroughPart';
+import 'vs/css!./media/walkThroughPart.patch';
 import { DomScrollableElement } from 'vs/base/browser/ui/scrollbar/scrollableElement';
 import { EventType as TouchEventType, GestureEvent, Gesture } from 'vs/base/browser/touch';
 import { ScrollbarVisibility } from 'vs/base/common/scrollable';

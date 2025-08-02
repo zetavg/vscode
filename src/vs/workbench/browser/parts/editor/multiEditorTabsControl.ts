@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./media/multieditortabscontrol';
+import 'vs/css!./media/multieditortabscontrol.patch';
 import { isLinux, isMacintosh, isWindows } from 'vs/base/common/platform';
 import { shorten } from 'vs/base/common/labels';
 import { EditorResourceAccessor, Verbosity, IEditorPartOptions, SideBySideEditor, DEFAULT_EDITOR_ASSOCIATION, EditorInputCapabilities, IUntypedEditorInput, preventEditorClose, EditorCloseMethod, EditorsOrder, IToolbarActions } from 'vs/workbench/common/editor';

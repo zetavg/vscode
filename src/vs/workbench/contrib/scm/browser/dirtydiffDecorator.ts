@@ -6,6 +6,7 @@
 import * as nls from 'vs/nls';
 
 import 'vs/css!./media/dirtydiffDecorator';
+import 'vs/css!./media/dirtydiffDecorator.patch';
 import { ThrottledDelayer } from 'vs/base/common/async';
 import { IDisposable, dispose, toDisposable, Disposable, DisposableStore } from 'vs/base/common/lifecycle';
 import { Event, Emitter } from 'vs/base/common/event';
@@ -921,9 +922,13 @@ export class DirtyDiffController extends Disposable implements DirtyDiffContribu
 		const offsetLeftInGutter = e.target.element.offsetLeft;
 		const gutterOffsetX = data.offsetX - offsetLeftInGutter;
 
-		// TODO@joao TODO@alex TODO@martin this is such that we don't collide with folding
-		if (gutterOffsetX < -3 || gutterOffsetX > 3) { // dirty diff decoration on hover is 6px wide
-			return;
+		// [ZP-E30D] We don't need this anymore since the gutter is patched to be shown on the left and it will never collide with folding (in such case it will early return with `e.target.element.className.indexOf('dirty-diff-glyph') < 0`).
+		// // TODO@joao TODO@alex TODO@martin this is such that we don't collide with folding
+		// if (gutterOffsetX < -3 || gutterOffsetX > 3) { // dirty diff decoration on hover is 6px wide
+		// 	return;
+		// }
+		if (gutterOffsetX) {
+			// Just to make TS happy and not complain about `gutterOffsetX` is unused.
 		}
 
 		this.mouseDownInfo = { lineNumber: range.startLineNumber };
@@ -1035,6 +1040,7 @@ class DirtyDiffDecorator extends Disposable {
 
 		if (options.gutter) {
 			decorationOptions.linesDecorationsClassName = `dirty-diff-glyph ${className}`;
+			decorationOptions.linesDecorationsClassName += ' head-side'; // [ZP-E30D]
 			decorationOptions.linesDecorationsTooltip = tooltip;
 		}
 

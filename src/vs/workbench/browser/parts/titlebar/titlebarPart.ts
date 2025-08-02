@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./media/titlebarpart';
+import 'vs/css!./media/titlebarpart.patch';
 import { localize, localize2 } from 'vs/nls';
 import { MultiWindowParts, Part } from 'vs/workbench/browser/part';
 import { ITitleService } from 'vs/workbench/services/title/browser/titleService';

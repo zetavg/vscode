@@ -21,6 +21,7 @@ import { KeyCode } from 'vs/base/common/keyCodes';
 import { Disposable, DisposableStore, IDisposable } from 'vs/base/common/lifecycle';
 import { ThemeIcon } from 'vs/base/common/themables';
 import 'vs/css!./button';
+import 'vs/css!./button.patch';
 import { localize } from 'vs/nls';
 import type { IManagedHover } from 'vs/base/browser/ui/hover/hover';
 import { getBaseLayerHoverDelegate } from 'vs/base/browser/ui/hover/hoverDelegate2';

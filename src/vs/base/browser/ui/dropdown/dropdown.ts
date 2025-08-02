@@ -17,6 +17,7 @@ import { Emitter } from 'vs/base/common/event';
 import { KeyCode } from 'vs/base/common/keyCodes';
 import { IDisposable } from 'vs/base/common/lifecycle';
 import 'vs/css!./dropdown';
+import 'vs/css!./dropdown.patch';
 
 export interface ILabelRenderer {
 	(container: HTMLElement): IDisposable | null;

@@ -16,6 +16,7 @@ import { KeyCode } from 'vs/base/common/keyCodes';
 import { Disposable, DisposableStore, IDisposable } from 'vs/base/common/lifecycle';
 import { ScrollEvent } from 'vs/base/common/scrollable';
 import 'vs/css!./paneview';
+import 'vs/css!./paneview.patch';
 import { localize } from 'vs/nls';
 import { IView, Sizing, SplitView } from './splitview';
 

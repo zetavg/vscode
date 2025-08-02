@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./media/editortabscontrol';
+import 'vs/css!./media/editortabscontrol.patch';
 import { localize } from 'vs/nls';
 import { applyDragImage, DataTransfers } from 'vs/base/browser/dnd';
 import { Dimension, getActiveWindow, getWindow, isMouseEvent } from 'vs/base/browser/dom';

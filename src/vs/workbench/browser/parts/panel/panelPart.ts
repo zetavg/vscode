@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./media/panelpart';
+import 'vs/css!./media/panelpart.patch';
 import { localize } from 'vs/nls';
 import { IAction, Separator, SubmenuAction, toAction } from 'vs/base/common/actions';
 import { ActionsOrientation } from 'vs/base/browser/ui/actionbar/actionbar';

@@ -43,17 +43,25 @@ export enum ThemeSettings {
 	SYSTEM_COLOR_THEME = 'window.systemColorTheme'
 }
 
+/* [ZP-35AB] Defaults. */
 export enum ThemeSettingDefaults {
-	COLOR_THEME_DARK = 'Default Dark Modern',
-	COLOR_THEME_LIGHT = 'Default Light Modern',
+	// COLOR_THEME_DARK = 'Default Dark Modern',
+	// COLOR_THEME_LIGHT = 'Default Light Modern',
+	COLOR_THEME_DARK = 'Spacegray Dark',
+	COLOR_THEME_LIGHT = 'Spacegray Light',
 	COLOR_THEME_HC_DARK = 'Default High Contrast',
 	COLOR_THEME_HC_LIGHT = 'Default High Contrast Light',
 
-	COLOR_THEME_DARK_OLD = 'Default Dark+',
-	COLOR_THEME_LIGHT_OLD = 'Default Light+',
+	// COLOR_THEME_DARK_OLD = 'Default Dark+',
+	// COLOR_THEME_LIGHT_OLD = 'Default Light+',
+	COLOR_THEME_DARK_OLD = 'Default Dark Modern',
+	COLOR_THEME_LIGHT_OLD = 'Default Light Modern',
 
-	FILE_ICON_THEME = 'vs-seti',
-	PRODUCT_ICON_THEME = 'Default',
+	// FILE_ICON_THEME = 'vs-seti',
+	// PRODUCT_ICON_THEME = 'Default',
+	FILE_ICON_THEME = 'spacegray',
+	// PRODUCT_ICON_THEME = 'Carbon Icons (Spacegray)',
+	PRODUCT_ICON_THEME = 'spacegray-icons-carbon',
 }
 
 export const COLOR_THEME_DARK_INITIAL_COLORS = {

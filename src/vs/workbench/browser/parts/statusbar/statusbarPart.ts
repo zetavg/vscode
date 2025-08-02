@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./media/statusbarpart';
+import 'vs/css!./media/statusbarpart.patch';
 import { localize } from 'vs/nls';
 import { Disposable, DisposableStore, dispose, disposeIfDisposable, IDisposable, MutableDisposable, toDisposable } from 'vs/base/common/lifecycle';
 import { MultiWindowParts, Part } from 'vs/workbench/browser/part';

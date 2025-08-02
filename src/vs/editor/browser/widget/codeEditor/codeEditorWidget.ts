@@ -14,6 +14,7 @@ import { hash } from 'vs/base/common/hash';
 import { Disposable, DisposableStore, IDisposable, dispose } from 'vs/base/common/lifecycle';
 import { Schemas } from 'vs/base/common/network';
 import 'vs/css!./editor';
+import 'vs/css!./editor.patch';
 import { applyFontInfo } from 'vs/editor/browser/config/domFontInfo';
 import { EditorConfiguration, IEditorConstructionOptions } from 'vs/editor/browser/config/editorConfiguration';
 import { TabFocus } from 'vs/editor/browser/config/tabFocus';

@@ -12,6 +12,7 @@ import { ThemeIcon } from 'vs/base/common/themables';
 import { Emitter, Event } from 'vs/base/common/event';
 import { KeyCode } from 'vs/base/common/keyCodes';
 import 'vs/css!./toggle';
+import 'vs/css!./toggle.patch';
 import { isActiveElement, $, addDisposableListener, EventType } from 'vs/base/browser/dom';
 import { getDefaultHoverDelegate } from 'vs/base/browser/ui/hover/hoverDelegateFactory';
 import { IHoverDelegate } from 'vs/base/browser/ui/hover/hoverDelegate';

@@ -9,6 +9,7 @@ import { IList, IndexTreeModel } from 'vs/base/browser/ui/tree/indexTreeModel';
 import { ITreeElement, ITreeModel, ITreeNode, ITreeRenderer } from 'vs/base/browser/ui/tree/tree';
 import { Iterable } from 'vs/base/common/iterator';
 import 'vs/css!./media/tree';
+import 'vs/css!./media/tree.patch';
 
 export interface IIndexTreeOptions<T, TFilterData = void> extends IAbstractTreeOptions<T, TFilterData> { }
 

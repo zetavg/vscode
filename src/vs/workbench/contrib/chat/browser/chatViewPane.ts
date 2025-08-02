@@ -16,7 +16,7 @@ import { ILogService } from 'vs/platform/log/common/log';
 import { IOpenerService } from 'vs/platform/opener/common/opener';
 import { IStorageService, StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
 import { ITelemetryService } from 'vs/platform/telemetry/common/telemetry';
-import { editorBackground } from 'vs/platform/theme/common/colorRegistry';
+import { editorBackground, registerColor } from 'vs/platform/theme/common/colorRegistry';
 import { IThemeService } from 'vs/platform/theme/common/themeService';
 import { IViewPaneOptions, ViewPane } from 'vs/workbench/browser/parts/views/viewPane';
 import { Memento } from 'vs/workbench/common/memento';
@@ -29,6 +29,9 @@ import { CHAT_PROVIDER_ID } from 'vs/workbench/contrib/chat/common/chatParticipa
 import { ChatModelInitState, IChatModel } from 'vs/workbench/contrib/chat/common/chatModel';
 import { IChatService } from 'vs/workbench/contrib/chat/common/chatService';
 import { IChatViewTitleActionContext } from 'vs/workbench/contrib/chat/browser/actions/chatActions';
+
+// [ZP-A612] Allow customizing the chat content color (when the chat is in a plane, such as in the sidebar).
+export const chatForeground = registerColor('chat.foreground', SIDE_BAR_FOREGROUND, '');
 
 interface IViewPaneState extends IChatViewState {
 	sessionId?: string;
@@ -142,7 +145,9 @@ export class ChatViewPane extends ViewPane implements IChatViewPane {
 				{ viewId: this.id },
 				{ supportsFileReferences: true },
 				{
-					listForeground: SIDE_BAR_FOREGROUND,
+					// [ZP-A612]
+					// listForeground: SIDE_BAR_FOREGROUND,
+					listForeground: chatForeground,
 					listBackground: locationBasedColors.background,
 					inputEditorBackground: locationBasedColors.background,
 					resultEditorBackground: editorBackground

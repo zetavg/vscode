@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./iconlabel';
+import 'vs/css!./iconlabel.patch';
 import * as dom from 'vs/base/browser/dom';
 import { HighlightedLabel } from 'vs/base/browser/ui/highlightedlabel/highlightedLabel';
 import { IHoverDelegate } from 'vs/base/browser/ui/hover/hoverDelegate';

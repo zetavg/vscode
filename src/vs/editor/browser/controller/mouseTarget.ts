@@ -400,7 +400,9 @@ abstract class BareHitTestRequest {
 
 		this.mouseVerticalOffset = Math.max(0, ctx.getCurrentScrollTop() + this.relativePos.y);
 		this.mouseContentHorizontalOffset = ctx.getCurrentScrollLeft() + this.relativePos.x - ctx.layoutInfo.contentLeft;
-		this.isInMarginArea = (this.relativePos.x < ctx.layoutInfo.contentLeft && this.relativePos.x >= ctx.layoutInfo.glyphMarginLeft);
+		// [ZP-E30D] Since we do `glyphMarginLeft += 4`, we need to subtract 4 here
+		// this.isInMarginArea = (this.relativePos.x < ctx.layoutInfo.contentLeft && this.relativePos.x >= ctx.layoutInfo.glyphMarginLeft);
+		this.isInMarginArea = (this.relativePos.x < ctx.layoutInfo.contentLeft && this.relativePos.x >= (ctx.layoutInfo.glyphMarginLeft - 4));
 		this.isInContentArea = !this.isInMarginArea;
 		this.mouseColumn = Math.max(0, MouseTargetFactory._getMouseColumn(this.mouseContentHorizontalOffset, ctx.typicalHalfwidthCharacterWidth));
 	}
@@ -698,6 +700,12 @@ export class MouseTargetFactory {
 			};
 
 			offset -= ctx.layoutInfo.glyphMarginLeft;
+
+			// [ZP-E30D]
+			if (offset <= 5) {
+				// On the line decorations
+				return request.fulfillMargin(MouseTargetType.GUTTER_LINE_DECORATIONS, pos, res.range, detail);
+			}
 
 			if (offset <= ctx.layoutInfo.glyphMarginWidth) {
 				// On the glyph margin

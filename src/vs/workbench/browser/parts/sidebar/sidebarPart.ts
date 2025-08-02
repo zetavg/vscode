@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/css!./media/sidebarpart';
+import 'vs/css!./media/sidebarpart.patch';
 import 'vs/workbench/browser/parts/sidebar/sidebarActions';
 import { ActivityBarPosition, IWorkbenchLayoutService, LayoutSettings, Parts, Position as SideBarPosition } from 'vs/workbench/services/layout/browser/layoutService';
 import { SidebarFocusContext, ActiveViewletContext } from 'vs/workbench/common/contextkeys';
