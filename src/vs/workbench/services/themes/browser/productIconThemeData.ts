@@ -96,7 +96,11 @@ export class ProductIconThemeData implements IWorkbenchProductIconTheme {
 	static get defaultTheme(): ProductIconThemeData {
 		let themeData = ProductIconThemeData._defaultProductIconTheme;
 		if (!themeData) {
-			themeData = ProductIconThemeData._defaultProductIconTheme = new ProductIconThemeData(DEFAULT_PRODUCT_ICON_THEME_ID, nls.localize('defaultTheme', 'Default'), ThemeSettingDefaults.PRODUCT_ICON_THEME);
+			// themeData = ProductIconThemeData._defaultProductIconTheme = new ProductIconThemeData(DEFAULT_PRODUCT_ICON_THEME_ID, nls.localize('defaultTheme', 'Default'), ThemeSettingDefaults.PRODUCT_ICON_THEME);
+			themeData = ProductIconThemeData._defaultProductIconTheme = new ProductIconThemeData(DEFAULT_PRODUCT_ICON_THEME_ID, nls.localize('defaultTheme', 'Default'), 'VSCode Default' /* [ZP-35AB] This should not be set to `ThemeSettingDefaults.PRODUCT_ICON_THEME` since we changed `ThemeSettingDefaults.PRODUCT_ICON_THEME` to a icon theme that needs to be loaded, if the two are same the icon theme will not load. */);
+			if (ThemeSettingDefaults) {
+				// Just to make TS happy and not complain about the unused variable `ThemeSettingDefaults`.
+			}
 			themeData.isLoaded = true;
 			themeData.extensionData = undefined;
 			themeData.watch = false;

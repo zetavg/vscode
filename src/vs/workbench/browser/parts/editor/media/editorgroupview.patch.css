@@ -1,0 +1,7 @@
+.monaco-workbench .part.editor > .content .editor-group-container .editor-group-watermark > .letterpress {
+	display: none;
+}
+
+.monaco-workbench .part.editor > .content .editor-group-container > .editor-group-watermark > .shortcuts > .watermark-box {
+	font-weight: 300;
+}

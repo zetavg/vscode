@@ -1,0 +1,10 @@
+.monaco-icon-label > .monaco-icon-label-container > .monaco-icon-description-container > .label-description {
+	opacity: .6;
+	font-family: var(--monaco-condensed-font);
+}
+
+.active > .monaco-icon-label > .monaco-icon-label-container > .monaco-icon-description-container > .label-description,
+.selected > .monaco-icon-label > .monaco-icon-label-container > .monaco-icon-description-container > .label-description,
+*:hover > .monaco-icon-label > .monaco-icon-label-container > .monaco-icon-description-container > .label-description {
+	opacity: .4;
+}

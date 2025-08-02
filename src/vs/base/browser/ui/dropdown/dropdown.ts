@@ -17,6 +17,7 @@ import { Emitter } from '../../../common/event.js';
 import { KeyCode } from '../../../common/keyCodes.js';
 import { IDisposable } from '../../../common/lifecycle.js';
 import './dropdown.css';
+import './dropdown.patch.css';
 
 export interface ILabelRenderer {
 	(container: HTMLElement): IDisposable | null;

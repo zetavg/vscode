@@ -1,0 +1,7 @@
+.monaco-workbench .part.titlebar > .titlebar-container > .titlebar-right {
+	opacity: 0.75;
+	transition: opacity 0.2s;
+}
+.monaco-workbench .part.titlebar > .titlebar-container > .titlebar-right:hover {
+	opacity: 1;
+}

@@ -1,0 +1,7 @@
+.monaco-editor .zone-widget .zone-widget-container.breakpoint-widget {
+	border-color: var(--vscode-peekView-border) !important;
+
+	.monaco-select-box {
+		font-family: var(--monaco-condensed-font);
+	}
+}
