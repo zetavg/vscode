@@ -1,0 +1,39 @@
+/* [ZP-B47C] Rounded corners for highlighted text background */
+.monaco-editor .wordHighlight,
+.monaco-editor .wordHighlightText,
+.monaco-editor .wordHighlightStrong,
+.monaco-editor .hoverHighlight,
+.monaco-editor .selectionHighlight,
+.monaco-editor .findMatch,
+.monaco-editor .currentFindMatch,
+.monaco-editor .squiggly-error,
+.monaco-editor .squiggly-error::before,
+.monaco-editor .squiggly-warning,
+.monaco-editor .squiggly-warning::before,
+.monaco-editor .squiggly-info,
+.monaco-editor .squiggly-info::before,
+.monaco-editor .squiggly-hint,
+.monaco-editor .squiggly-hint::before,
+.monaco-editor .call-decoration,
+.monaco-editor .call-decoration,
+.monaco-editor .searchEditorFindMatch,
+.monaco-editor .unicode-highlight,
+.monaco-editor .reference-decoration,
+.monaco-editor .ghost-text-decoration {
+	border-radius: 3px;
+}
+
+/* [ZP-0FE1] No squiggly underline (squigglies) (~~~~~~~~). */
+.monaco-editor .squiggly-error,
+.monaco-editor .squiggly-warning,
+.monaco-editor .squiggly-info,
+.monaco-editor .squiggly-hint {
+	background: transparent !important;
+}
+.monaco-editor .squiggly-info::before { /* Underline instead of squigglies. */
+	content: '';
+	opacity: 0.8;
+	border-bottom: 1px solid var(--vscode-editorInfo-foreground);
+	border-radius: 0;
+	box-sizing: border-box;
+}

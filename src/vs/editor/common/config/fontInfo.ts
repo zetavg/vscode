@@ -216,18 +216,32 @@ export const FONT_VARIATION_OFF = 'normal';
  */
 export const FONT_VARIATION_TRANSLATE = 'translate';
 
+
+/* [ZP-FID7] Font. */
+// /**
+//  * @internal
+//  */
+// export const DEFAULT_WINDOWS_FONT_FAMILY = 'Consolas, \'Courier New\', monospace';
+// /**
+//  * @internal
+//  */
+// export const DEFAULT_MAC_FONT_FAMILY = 'Menlo, Monaco, \'Courier New\', monospace';
+// /**
+//  * @internal
+//  */
+// export const DEFAULT_LINUX_FONT_FAMILY = '\'Droid Sans Mono\', monospace';
 /**
  * @internal
  */
-export const DEFAULT_WINDOWS_FONT_FAMILY = 'Consolas, \'Courier New\', monospace';
+export const DEFAULT_WINDOWS_FONT_FAMILY = '\'InputMonoNarrow-ExtraLight\', Consolas, \'Courier New\', monospace';
 /**
  * @internal
  */
-export const DEFAULT_MAC_FONT_FAMILY = 'Menlo, Monaco, \'Courier New\', monospace';
+export const DEFAULT_MAC_FONT_FAMILY = '\'InputMonoNarrow-ExtraLight\', Menlo, Monaco, \'Courier New\', monospace';
 /**
  * @internal
  */
-export const DEFAULT_LINUX_FONT_FAMILY = '\'Droid Sans Mono\', monospace';
+export const DEFAULT_LINUX_FONT_FAMILY = '\'InputMonoNarrow-ExtraLight\', \'Droid Sans Mono\', \'monospace\', monospace';
 /**
  * @internal
  */
@@ -237,7 +251,9 @@ export const EDITOR_FONT_DEFAULTS = {
 	),
 	fontWeight: 'normal',
 	fontSize: (
-		platform.isMacintosh ? 12 : 14
+		// [ZP-35AB]
+		// platform.isMacintosh ? 12 : 14
+		platform.isMacintosh ? 15 : 16
 	),
 	lineHeight: 0,
 	letterSpacing: 0,

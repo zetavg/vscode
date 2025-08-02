@@ -1,0 +1,21 @@
+/* [ZP-FID7] Font. */
+.monaco-workbench .part.statusbar {
+	font-family: var(--monaco-condensed-font);
+	font-weight: 300;
+    font-size: 11px;
+}
+
+/* [ZP-804C] Hide remote icon on status bar if not using remote. */
+.monaco-workbench .part.statusbar > .items-container > .statusbar-item.remote-kind:not(:has(.codicon)) {
+	opacity: 0;
+	width: 5.5px; /* should still occupy some space for left margin of the second item */
+}
+
+/* [ZP-0782] No pointer. */
+.monaco-workbench .part.statusbar > .items-container > .statusbar-item > .statusbar-item-label {
+	cursor: default !important;
+}
+
+.monaco-workbench .part.statusbar > .items-container > .statusbar-item span.codicon {
+	font-size: 11px;
+}

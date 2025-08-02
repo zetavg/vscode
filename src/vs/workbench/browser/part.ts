@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import './media/part.css';
+import './media/part.patch.css';
 import { Component } from '../common/component.js';
 import { IThemeService, IColorTheme } from '../../platform/theme/common/themeService.js';
 import { Dimension, size, IDimension, getActiveDocument, prepend, IDomPosition } from '../../base/browser/dom.js';
@@ -201,9 +202,13 @@ export abstract class Part<MementoType extends object = object> extends Componen
 
 class PartLayout {
 
-	private static readonly HEADER_HEIGHT = 35;
-	private static readonly TITLE_HEIGHT = 35;
-	private static readonly Footer_HEIGHT = 35;
+	// [ZP-3528] Header height 28px
+	// private static readonly HEADER_HEIGHT = 35;
+	// private static readonly TITLE_HEIGHT = 35;
+	// private static readonly Footer_HEIGHT = 35;
+	private static readonly HEADER_HEIGHT = 28;
+	private static readonly TITLE_HEIGHT = 28;
+	private static readonly Footer_HEIGHT = 28;
 
 	private headerVisible: boolean = false;
 	private footerVisible: boolean = false;

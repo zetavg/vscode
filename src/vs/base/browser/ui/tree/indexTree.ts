@@ -9,6 +9,7 @@ import { IndexTreeModel } from './indexTreeModel.js';
 import { ITreeElement, ITreeModel, ITreeRenderer, TreeError } from './tree.js';
 import { Iterable } from '../../../common/iterator.js';
 import './media/tree.css';
+import './media/tree.patch.css';
 
 export interface IIndexTreeOptions<T, TFilterData = void> extends IAbstractTreeOptions<T, TFilterData> { }
 
