@@ -30,21 +30,26 @@ You may need to click on "Show all ... assets" to find the one you need.
 ## Development
 
 > [!WARNING]
+> (may be outdated?)
+>
 > Do NOT sync the `main` branch with `microsoft:main` as it might break services which will automatically build the latest stable VSCode with this `main` branch merged into it - we may have merge conflicts and the build will contain code that should be in a future release.
 >
 > Instead, the `main` branch should be continuously rebased onto the common ancestor commit of the release branch of the latest released stable release. To find the common ancestor commit, you can check the parent commit of the first commit in `https://github.com/microsoft/vscode/compare/main...release/x.xx` (replace `x.xx` with the latest stable release version).
 
-You'll need to have a Node.js version manager that supports `.nvmrc` installed, and [Corepack enabled](https://nodejs.org/api/corepack.html#enabling-the-feature).
+> [!TIP]
+> See https://github.com/microsoft/vscode/wiki/How-to-Contribute#build-and-run for more information.
+
+You'll need to have a Node.js version manager that supports `.nvmrc` installed.
 
 After cloning the repository, run the following commands:
 
 ```bash
-yarn install
-yarn compile
-yarn watch
+npm install
+npm run compile
+npm run watch
 ```
 
-Wait for `yarn watch` to finish the initial compilation. You should see `Finished compilation with 0 errors`. If you see `Finished compilation extensions with 0 errors`, it means the compilation is not yet complete.
+Wait for `npm run watch` to finish the initial compilation. You should see `Finished compilation with 0 errors`. If you see `Finished compilation extensions with 0 errors`, it means the compilation is not yet complete.
 
 Then, in another terminal:
 
