@@ -1,0 +1,15 @@
+.search-view .findInFileMatch {
+	border-radius: 3px;
+}
+
+.search-view .monaco-icon-label > .monaco-icon-label-container > .monaco-icon-description-container > .label-description {
+	font-family: var(--monaco-condensed-font);
+}
+
+.search-view .search-widgets-container {
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.search-view .search-widgets-container:has(.query-details.more) {
+	padding-bottom: 8px;
+}

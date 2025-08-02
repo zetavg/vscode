@@ -1,0 +1,5 @@
+.viewpane-filter-container > .viewpane-filter > .viewpane-filter-controls > .viewpane-filter-badge {
+	font-size: 12px;
+	font-family: var(--monaco-condensed-font);
+	padding: 0px 6px;
+}

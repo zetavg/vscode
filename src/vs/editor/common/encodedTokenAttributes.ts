@@ -124,6 +124,7 @@ export class TokenMetadata {
 
 	public static getClassNameFromMetadata(metadata: number): string {
 		const foreground = this.getForeground(metadata);
+		const background = this.getBackground(metadata); // [ZP-8A90]
 		let className = 'mtk' + foreground;
 
 		const fontStyle = this.getFontStyle(metadata);
@@ -138,6 +139,11 @@ export class TokenMetadata {
 		}
 		if (fontStyle & FontStyle.Strikethrough) {
 			className += ' mtks';
+		}
+
+		// [ZP-8A90] https://github.com/microsoft/vscode/pull/212294
+		if (background !== ColorId.None && background !== ColorId.DefaultBackground) {
+			className += ' mtkbg' + background;
 		}
 
 		return className;

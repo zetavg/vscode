@@ -1,0 +1,38 @@
+.monaco-editor .margin-view-overlays .codicon-folding-manual-collapsed,
+.monaco-editor .margin-view-overlays .codicon-folding-manual-expanded,
+.monaco-editor .margin-view-overlays .codicon-folding-expanded,
+.monaco-editor .margin-view-overlays .codicon-folding-collapsed {
+	cursor: default;
+	font-size: 100%;
+}
+
+.monaco-editor .margin-view-overlays:hover .codicon,
+.monaco-editor .margin-view-overlays .codicon.codicon-folding-collapsed,
+.monaco-editor .margin-view-overlays .codicon.codicon-folding-manual-collapsed,
+.monaco-editor .margin-view-overlays .codicon.alwaysShowFoldIcons {
+	opacity: 1;
+}
+
+.monaco-editor .margin-view-overlays .codicon:hover {
+	color: color-mix(in srgb, var(--vscode-inputOption-activeForeground) 50%, var(--vscode-editorGutter-foldingControlForeground) 50%) !important
+}
+
+/* [ZP-3B2F] A more eye-catching folded code indicator like Xcode or Sublime Text. */
+.monaco-editor .inline-folded:after {
+	/* TODO: Not sure why foldPlaceholderForeground isn't exposed as a CSS variable. */
+	background-color: var(--vscode-editor-foldPlaceholderForeground, var(--vscode-textBlockQuote-border));
+	color: var(--vscode-editor-background);
+	display: inline-block;
+	width: 20px;
+	height: 10px;
+	line-height: 10px;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 3px;
+	margin-bottom: 3px;
+}
+
+/* [ZP-0782] No pointer. */
+.monaco-editor .inline-folded:after {
+	cursor: default !important;
+}

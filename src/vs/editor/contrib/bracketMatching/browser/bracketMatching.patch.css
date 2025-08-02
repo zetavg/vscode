@@ -1,0 +1,14 @@
+/* Remove Squiggly Underline (Squigglies) (~~~~~~~~) for Errors, Warnings, etc. */
+.monaco-editor .squiggly-error,
+.monaco-editor .squiggly-warning,
+.monaco-editor .squiggly-info,
+.monaco-editor .squiggly-hint {
+	background: transparent;
+}
+
+/* [ZP-051C] Only show underline for bracket matching. */
+.monaco-editor .bracket-match {
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+}

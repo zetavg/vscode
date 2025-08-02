@@ -1,0 +1,20 @@
+.monaco-workbench .part.editor > .content .editor-group-container > .title .title-label a,
+.monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab .tab-label {
+	/* Do not let error or warnings affect the title label color */
+	color: inherit;
+	font-weight: 200;
+}
+
+.monaco-workbench .part.editor > .content .editor-group-container > .title .title-label a,
+.monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab .tab-label a {
+	font-size: 12px;
+}
+
+.monaco-workbench .part.editor > .content .editor-group-container > .title .monaco-icon-label::before,
+.monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab .monaco-icon-label::before,
+.monaco-workbench .part.editor > .content .editor-group-container > .title .title-label a,
+.monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab .tab-label a,
+.monaco-workbench .part.editor > .content .editor-group-container > .title .title-label h2,
+.monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab .tab-label span {
+	cursor: default;
+}

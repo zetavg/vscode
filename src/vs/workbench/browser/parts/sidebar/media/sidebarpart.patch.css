@@ -1,0 +1,14 @@
+.monaco-workbench .part.sidebar > .title > .title-label h2,
+.monaco-workbench .part.auxiliarybar > .title > .title-label h2 {
+	font-weight: 500;
+}
+
+/* [ZP-C057] Customize the bookmark icon. */
+#workbench\.view\.extension\.bookmarks .custom-view-tree-node-item-icon {
+    background-image: none !important;
+	background: var(--vscode-foreground);
+	opacity: 0.8;
+    mask-image: url("data:image/svg+xml,%3Csvg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M5.49857 3C4.67093 3 4 3.67089 4 4.49555V13L7.99999 11L12 13V4.49555C12 3.66958 11.3292 3 10.5014 3H5.49857Z\" fill=\"black\"/%3E%3C/svg%3E");
+    mask-position: center;
+    mask-repeat: no-repeat;
+}
