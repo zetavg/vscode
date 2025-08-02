@@ -1,13 +1,13 @@
 /* eslint-disable header/header */
 
-import { Color } from 'vs/base/common/color';
+import { Color } from '../../../../../base/common/color.js';
 import {
 	type ColorContribution,
 	type ColorDefaults,
 	ColorTransform,
 	ColorTransformType,
 	type ColorValue,
-} from 'vs/platform/theme/common/colorRegistry';
+} from '../../../../../platform/theme/common/colorRegistry.js';
 
 export function isColorValueDerived(colorValue: ColorValue | null) {
 	if (!colorValue) {
@@ -26,7 +26,8 @@ export function isColorValueDerived(colorValue: ColorValue | null) {
 		} else if (colorValue.op === ColorTransformType.IfDefinedThenElse) {
 			return isColorValueDerived(colorValue.then);
 		} else {
-			return isColorValueDerived(colorValue.value);
+			throw new Error('TODO');
+			// return isColorValueDerived(colorValue.value);
 		}
 	}
 
