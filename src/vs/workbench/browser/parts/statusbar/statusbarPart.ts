@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import './media/statusbarpart.css';
+import './media/statusbarpart.patch.css';
 import { localize } from '../../../../nls.js';
 import { Disposable, DisposableStore, disposeIfDisposable, IDisposable, MutableDisposable, toDisposable } from '../../../../base/common/lifecycle.js';
 import { MultiWindowParts, Part } from '../../part.js';

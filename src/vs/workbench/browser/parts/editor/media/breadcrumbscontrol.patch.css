@@ -1,0 +1,8 @@
+.monaco-workbench .part.editor > .content .editor-group-container .breadcrumbs-control {
+	font-weight: 200;
+}
+
+.monaco-workbench .part.editor > .content .editor-group-container .breadcrumbs-control .file-icon,
+.monaco-workbench .part.editor > .content .editor-group-container .breadcrumbs-control .outline-element-icon {
+	opacity: 0.8;
+}

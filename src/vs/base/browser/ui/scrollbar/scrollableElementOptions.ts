@@ -89,7 +89,7 @@ export interface ScrollableElementCreationOptions {
 	horizontal?: ScrollbarVisibility;
 	/**
 	 * Height (in px) of the horizontal scrollbar.
-	 * Defaults to 10.
+	 * Defaults to 4.
 	 */
 	horizontalScrollbarSize?: number;
 	/**
@@ -110,7 +110,7 @@ export interface ScrollableElementCreationOptions {
 	vertical?: ScrollbarVisibility;
 	/**
 	 * Width (in px) of the vertical scrollbar.
-	 * Defaults to 10.
+	 * Defaults to 4.
 	 */
 	verticalScrollbarSize?: number;
 	/**

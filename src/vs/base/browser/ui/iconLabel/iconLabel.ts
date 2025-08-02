@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import './iconlabel.css';
+import './iconlabel.patch.css';
 import * as dom from '../../dom.js';
 import * as css from '../../cssValue.js';
 import { HighlightedLabel } from '../highlightedlabel/highlightedLabel.js';

@@ -1,0 +1,19 @@
+.monaco-workbench .part.panel .monaco-inputbox > .ibwrapper {
+	/* Make space for .viewpane-filter-badge */
+	padding-right: 8px;
+	width: auto;
+}
+
+.monaco-workbench .part.panel > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item {
+	font-weight: 500;
+}
+
+/* .monaco-workbench .part.panel > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked:not(:focus),
+.monaco-workbench .part.panel > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked.clicked:focus {
+	border-top-color: transparent !important;
+} */
+
+.monaco-workbench .part.panel > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked:not(:focus) .active-item-indicator,
+.monaco-workbench .part.panel > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked.clicked:focus .active-item-indicator {
+	opacity: 0;
+}
