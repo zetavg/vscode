@@ -1,0 +1,9 @@
+.monaco-editor .peekview-widget .decorationsOverviewRuler {
+	opacity: 0.8;
+}
+
+.monaco-editor .peekview-widget .decorationsOverviewRuler,
+.monaco-editor .peekview-widget .scrollbar.vertical {
+	/* Intentionally set a strange decimal number for searchability. */
+	width: 4.0251752px !important;
+}

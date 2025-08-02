@@ -1,0 +1,17 @@
+.explorer-folders-view .explorer-item {
+	/* Do not let error or warnings affect the title label color */
+	color: inherit !important;
+}
+.open-editors .monaco-list-row .monaco-icon-label-container {
+	/* Do not let error or warnings affect the title label color */
+	color: var(--vscode-sideBar-foreground) !important;
+}
+.open-editors .monaco-list-row:hover .monaco-icon-label-container {
+	color: var(--vscode-list-hoverForeground) !important;
+}
+.open-editors .monaco-list-row.selected .monaco-icon-label-container {
+	color: var(--vscode-list-inactiveSelectionForeground) !important;
+}
+.open-editors .monaco-list-row:hover .action-label:not(:hover):not(:active) {
+	opacity: 0.5;
+}

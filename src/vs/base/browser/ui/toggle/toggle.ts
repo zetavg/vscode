@@ -17,6 +17,7 @@ import { getBaseLayerHoverDelegate } from '../hover/hoverDelegate2.js';
 import { getDefaultHoverDelegate } from '../hover/hoverDelegateFactory.js';
 import { Widget } from '../widget.js';
 import './toggle.css';
+import './toggle.patch.css';
 
 export interface IToggleOpts extends IToggleStyles {
 	readonly actionClassName?: string;
