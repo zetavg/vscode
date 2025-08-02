@@ -126,7 +126,7 @@ import { ISharedWebContentExtractorService } from '../../../platform/webContentE
 import { SharedWebContentExtractorService } from '../../../platform/webContentExtractor/node/sharedWebContentExtractorService.js';
 
 // [ZP-D03B] Globally accessible configuration service.
-import { setConfigurationService } from 'vs/z-customizations/configurationService';
+import { setConfigurationService } from '../../../z-customizations/configurationService.js';
 
 class SharedProcessMain extends Disposable implements IClientConnectionFilter {
 
