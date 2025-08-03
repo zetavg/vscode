@@ -1,4 +1,4 @@
-/* [ZP-3528] */
+/* [ZP-3528] Header height 28px */
 .monaco-workbench .part > .title,
 .monaco-workbench .part > .header-or-footer {
 	height: 28px;
