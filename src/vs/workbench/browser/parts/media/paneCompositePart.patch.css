@@ -41,3 +41,10 @@ body:not(.disable-patch-ED16) {
 		opacity: 0.9;
 	}
 }
+
+/* [ZP-HTC1] Center top composite bar (like Cursor) */
+body:not(.disable-patch-HTC1) {
+	.monaco-workbench .pane-composite-part > .header-or-footer .composite-bar-container {
+		justify-content: center;
+	}
+}
