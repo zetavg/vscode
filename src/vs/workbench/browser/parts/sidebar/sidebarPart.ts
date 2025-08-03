@@ -21,7 +21,7 @@ import { AnchorAlignment } from '../../../../base/browser/ui/contextview/context
 import { IExtensionService } from '../../../services/extensions/common/extensions.js';
 import { LayoutPriority } from '../../../../base/browser/ui/grid/grid.js';
 import { assertReturnsDefined } from '../../../../base/common/types.js';
-import { IViewDescriptorService } from '../../../common/views.js';
+import { IViewDescriptorService, ViewContainerLocation } from '../../../common/views.js';
 import { AbstractPaneCompositePart, CompositeBarPosition } from '../paneCompositePart.js';
 import { ActivityBarCompositeBar, ActivitybarPart } from '../activitybar/activitybarPart.js';
 import { ActionsOrientation } from '../../../../base/browser/ui/actionbar/actionbar.js';
@@ -207,6 +207,17 @@ export class SidebarPart extends AbstractPaneCompositePart {
 	}
 
 	protected shouldShowCompositeBar(): boolean {
+		// [ZP-A0TH] Show composite bar (i.e. the activity bar when it's on top or bottom)
+		// only if there are multiple view containers (i.e. tabs) in the side bar.
+		// The update is not instance, user may need to toggle the activity bar visibility
+		// to see the change.
+		const viewDescriptorService: IViewDescriptorService = (this as any).viewDescriptorService;
+		const activeViewContainers = viewDescriptorService.getViewContainersByLocation(ViewContainerLocation.Sidebar)
+			.filter(vc => viewDescriptorService.getViewContainerModel(vc).activeViewDescriptors.length > 0);
+		if (activeViewContainers.length <= 1) {
+			return false;
+		}
+
 		const activityBarPosition = this.configurationService.getValue<ActivityBarPosition>(LayoutSettings.ACTIVITY_BAR_LOCATION);
 		return activityBarPosition === ActivityBarPosition.TOP || activityBarPosition === ActivityBarPosition.BOTTOM;
 	}
