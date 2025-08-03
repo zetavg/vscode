@@ -1,6 +1,6 @@
 .monaco-workbench .part.editor > .content .editor-group-container > .title .title-label a,
 .monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab .tab-label {
-	/* Do not let error or warnings affect the title label color */
+	/* [ZP-TL0C] Do not let error or warnings affect the title label color */
 	color: inherit;
 	font-weight: 200;
 }

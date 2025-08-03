@@ -1,17 +1,21 @@
-.explorer-folders-view .explorer-item {
-	/* Do not let error or warnings affect the title label color */
+/* [ZP-TL0C] Do not let error or warnings affect the title label color */
+.explorer-folders-view .explorer-item,
+.search-view .explorer-item {
 	color: inherit !important;
 }
-.open-editors .monaco-list-row .monaco-icon-label-container {
-	/* Do not let error or warnings affect the title label color */
+.open-editors .monaco-list-row .monaco-icon-label-container,
+.search-view .monaco-list-row .monaco-icon-label-container {
 	color: var(--vscode-sideBar-foreground) !important;
 }
-.open-editors .monaco-list-row:hover .monaco-icon-label-container {
+.open-editors .monaco-list-row:hover .monaco-icon-label-container,
+.search-view .monaco-list-row:hover .monaco-icon-label-container {
 	color: var(--vscode-list-hoverForeground) !important;
 }
-.open-editors .monaco-list-row.selected .monaco-icon-label-container {
+.open-editors .monaco-list-row.selected .monaco-icon-label-container,
+.search-view .monaco-list-row.selected .monaco-icon-label-container {
 	color: var(--vscode-list-inactiveSelectionForeground) !important;
 }
-.open-editors .monaco-list-row:hover .action-label:not(:hover):not(:active) {
+.open-editors .monaco-list-row:hover .action-label:not(:hover):not(:active),
+.search-view .monaco-list-row:hover .action-label:not(:hover):not(:active) {
 	opacity: 0.5;
 }
