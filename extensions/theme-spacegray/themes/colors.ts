@@ -786,7 +786,10 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	// 'editorInlayHint.typeBackground': '', // optional
 	// 'editorInlayHint.parameterForeground': '', // optional
 	// 'editorInlayHint.parameterBackground': '', // optional
-	'editorRuler.foreground': '',
+	'editorRuler.foreground': {
+		dark: opacity(c.base01, 0.4),
+		light: opacity(c.base06, 0.4),
+	},
 	'editor.linkedEditingBackground': '',
 	'editorCodeLens.foreground': '',
 	'editorLightBulb.foreground': {

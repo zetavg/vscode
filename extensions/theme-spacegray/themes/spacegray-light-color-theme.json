@@ -135,6 +135,7 @@
         "editorIndentGuide.activeBackground4": "#343d462e",
         "editorIndentGuide.activeBackground5": "#343d462e",
         "editorIndentGuide.activeBackground6": "#343d462e",
+        "editorRuler.foreground": "#dfe1e866",
         "editorLightBulb.foreground": "#d0a962",
         "editorBracketMatch.background": "#0000",
         "editorBracketMatch.border": "#a7adba",
