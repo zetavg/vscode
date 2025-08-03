@@ -27,6 +27,7 @@ import { assertReturnsDefined } from '../../../../base/common/types.js';
 import { URI } from '../../../../base/common/uri.js';
 import { generateUuid } from '../../../../base/common/uuid.js';
 import './media/gettingStarted.css';
+import './media/gettingStarted.patch.css';
 import { ILanguageService } from '../../../../editor/common/languages/language.js';
 import { MarkdownRenderer } from '../../../../editor/browser/widget/markdownRenderer/browser/markdownRenderer.js';
 import { localize } from '../../../../nls.js';
