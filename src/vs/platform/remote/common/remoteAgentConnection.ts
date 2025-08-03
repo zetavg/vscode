@@ -288,7 +288,7 @@ async function connectToRemoteExtensionHostAgent<T extends RemoteConnection>(opt
 			type: 'connectionType',
 			// [ZP-F39A] Customizable commit hash for REH.
 			// commit: options.commit,
-			commit: getCustomizedREHCommit() || options.commit,
+			commit: getCustomizedREHCommit() as any,
 			signedData: signed,
 			desiredConnectionType: connectionType
 		};
@@ -397,7 +397,7 @@ async function resolveConnectionOptions<T extends RemoteConnection>(options: ICo
 	return {
 		// [ZP-F39A] Customizable commit hash for REH.
 		// commit: options.commit,
-		commit: getCustomizedREHCommit() || options.commit,
+		commit: getCustomizedREHCommit() as any,
 		quality: options.quality,
 		connectTo,
 		connectionToken: connectionToken,
