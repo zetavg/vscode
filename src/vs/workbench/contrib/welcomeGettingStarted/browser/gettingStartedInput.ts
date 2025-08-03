@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import './media/gettingStarted.css';
+import './media/gettingStarted.patch.css';
 import { localize } from '../../../../nls.js';
 import { EditorInput } from '../../../common/editor/editorInput.js';
 import { URI } from '../../../../base/common/uri.js';
