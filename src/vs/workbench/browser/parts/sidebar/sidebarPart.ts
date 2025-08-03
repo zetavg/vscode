@@ -234,6 +234,17 @@ export class SidebarPart extends AbstractPaneCompositePart {
 	}
 
 	protected shouldShowCompositeBar(): boolean {
+		// [ZP-A0TH] Show composite bar (i.e. the activity bar when it's on top or bottom)
+		// only if there are multiple view containers (i.e. tabs) in the side bar.
+		// The update is not instance, user may need to toggle the activity bar visibility
+		// to see the change.
+		const viewDescriptorService: IViewDescriptorService = (this as any).viewDescriptorService;
+		const activeViewContainers = viewDescriptorService.getViewContainersByLocation(ViewContainerLocation.Sidebar)
+			.filter(vc => viewDescriptorService.getViewContainerModel(vc).activeViewDescriptors.length > 0);
+		if (activeViewContainers.length <= 1) {
+			return false;
+		}
+
 		const activityBarPosition = this.configurationService.getValue<ActivityBarPosition>(LayoutSettings.ACTIVITY_BAR_LOCATION);
 		if (activityBarPosition !== ActivityBarPosition.TOP && activityBarPosition !== ActivityBarPosition.BOTTOM) {
 			return false;
