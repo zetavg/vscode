@@ -1,15 +1,18 @@
-/* [ZP-E30D] Locate the diff gutter glyph to the left of the line number, like Sublime Text. This patch requires relivent JS code chages, so we use the `.head-side` selector to ensure that this patch is only applied if the JS code is also patched. */
+/* [ZP-E30D] Locate the diff gutter glyph to the left of the line number, like Sublime Text. This patch requires JS code changes, so we use the `.head-side` selector to ensure that this patch is only applied if the JS code is also patched. */
 .monaco-editor .dirty-diff-glyph.head-side {
 	left: 0 !important;
 	margin: 0 !important;
 	border-left-width: 2px !important;
 }
 .monaco-editor .margin-view-overlays .dirty-diff-glyph.head-side:hover::before {
-	width: 3px !important;
+	width: 5px !important;
     left: 0 !important;
 }
 .monaco-editor .dirty-diff-glyph.head-side {
     width: 5px !important;
+}
+.monaco-editor .dirty-diff-deleted.head-side:before {
+	margin-left: 0 !important;
 }
 
 /* [ZP-0782] No pointer. */
