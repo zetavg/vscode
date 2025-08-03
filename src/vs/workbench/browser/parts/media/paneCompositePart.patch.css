@@ -32,3 +32,8 @@
 .monaco-workbench .pane-composite-part > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.icon .badge.compact .badge-content {
 	top: 12px;
 }
+
+/* [ZP-HTC1] Center top composite bar (like Cursor) */
+.monaco-workbench .pane-composite-part > .header-or-footer .composite-bar-container {
+	justify-content: center;
+}
