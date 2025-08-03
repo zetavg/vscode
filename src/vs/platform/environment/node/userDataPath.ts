@@ -97,5 +97,9 @@ function doGetUserDataPath(cliArgs: NativeParsedArgs, productName: string): stri
 			throw new Error('Platform not supported');
 	}
 
+	if (productName !== 'code-oss-dev') {
+		productName = 'code-oss';
+	}
+
 	return join(appDataPath, productName);
 }
