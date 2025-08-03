@@ -1,0 +1,4 @@
+/* Fix header title got cut off in getting started page */
+.monaco-workbench .part.editor > .content .gettingStartedContainer .gettingStartedSlideCategories > .gettingStartedCategoriesContainer .header {
+	overflow: visible;
+}
