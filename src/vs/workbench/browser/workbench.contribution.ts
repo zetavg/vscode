@@ -567,6 +567,30 @@ const registry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Con
 				'default': true,
 				'markdownDescription': localize('secondarySideBarShowLabels', "Controls whether activity items in the secondary side bar title are shown as label or icon. This setting only has an effect when {0} is not set to {1}.", '`#workbench.activityBar.location#`', '`top`'),
 			},
+			// [ZP-CA8A] Cycle Auxiliary Bar Action
+			'workbench.secondarySideBar.cycleWidths': {
+				'type': 'array',
+				'items': {
+					'oneOf': [
+						{
+							'type': 'number',
+							'minimum': 0
+						},
+						{
+							'type': 'object',
+							'patternProperties': {
+								'^[0-9]+$': {
+									'type': 'number',
+									'minimum': 0
+								}
+							},
+							'additionalProperties': false
+						}
+					]
+				},
+				'default': [0, 300, 640],
+				'markdownDescription': localize('secondarySideBarCycleWidths', "Controls the widths used when cycling through secondary side bar display states. Use 0 to represent hidden state. Values can be numbers or objects with window width breakpoints like `{ \"0\": 300, \"1440\": 320 }`. The cycle command will iterate through these widths in order."),
+			},
 			'workbench.statusBar.visible': {
 				'type': 'boolean',
 				'default': true,
