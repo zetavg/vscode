@@ -919,6 +919,18 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 		light: addedIndicator.light,
 	},
 	'editorGutter.deletedBackground': deletedIndicator,
+	'editorGutter.modifiedSecondaryBackground': {
+		dark: opacity(modifiedIndicator.dark, 0.3),
+		light: opacity(modifiedIndicator.light, 0.3),
+	},
+	'editorGutter.addedSecondaryBackground': {
+		dark: opacity(addedIndicator.dark, 0.3),
+		light: opacity(addedIndicator.light, 0.3),
+	},
+	'editorGutter.deletedSecondaryBackground': {
+		dark: opacity(deletedIndicator.dark, 0.3),
+		light: opacity(deletedIndicator.light, 0.3),
+	},
 	// 'editorGutter.commentRangeForeground': '', // optional
 	// 'editorGutter.commentGlyphForeground': '', // optional
 	// 'editorGutter.commentUnresolvedGlyphForeground': '', // optional
