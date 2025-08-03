@@ -1,4 +1,4 @@
 .monaco-list .outline-element .monaco-highlighted-label {
-	/* Do not let error or warnings affect the title label color */
+	/* [ZP-TL0C] Do not let error or warnings affect the title label color */
 	color: inherit;
 }
