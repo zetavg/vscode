@@ -989,6 +989,14 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	},
 	'chat.requestBorder': '',
 	// 'chat.requestBackground': '', // optional
+	'chat.requestBubbleBackground': {
+		dark: opacity(c.base01, 0.4),
+		light: opacity(c.base05, 0.4),
+	},
+	'chat.requestBubbleHoverBackground': {
+		dark: opacity(c.base01, 0.8),
+		light: opacity(c.base05, 0.8),
+	},
 	'chat.slashCommandBackground': {
 		dark: opacity(c.base07, 0.1),
 		light: opacity(c.base02, 0.1),
@@ -1170,7 +1178,8 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	//
 	'panel.background': {
 		dark: lighten(c.base00_a, 0.07),
-		light: lighten(c.base06_a, -0.01),
+		// light: lighten(c.base06_a, -0.01),
+		light: lighten(c.base07_a, -0.01),
 	}, // optional
 	'panel.border': {
 		dark: opacity(c.base00, 1),
