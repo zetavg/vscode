@@ -22,6 +22,7 @@ import { INotificationService } from '../../../../platform/notification/common/n
 import { ICommandActionTitle } from '../../../../platform/action/common/action.js';
 import { KeybindingWeight } from '../../../../platform/keybinding/common/keybindingsRegistry.js';
 import { SwitchCompositeViewAction } from '../compositeBarActions.js';
+import { IStorageService, StorageScope, StorageTarget } from '../../../../platform/storage/common/storage.js';
 
 const maximizeIcon = registerIcon('panel-maximize', Codicon.screenFull, localize('maximizeIcon', 'Icon to maximize a panel.'));
 export const closeIcon = registerIcon('panel-close', Codicon.close, localize('closeIcon', 'Icon to close a panel.'));
@@ -125,6 +126,69 @@ registerAction2(class extends Action2 {
 		panel?.focus();
 	}
 });
+
+// [ZP-CP0A] Cycle Panel Action
+export class CyclePanelAction extends Action2 {
+
+	static readonly ID = 'workbench.action.cyclePanel';
+	static readonly LABEL = localize2('cyclePanel', "Cycle Panel Display");
+
+	// Storage key for panel state
+	private static readonly PANEL_STATE_KEY = 'panel.cycleState';
+
+	constructor() {
+		super({
+			id: CyclePanelAction.ID,
+			title: CyclePanelAction.LABEL,
+			category: Categories.View,
+			f1: true,
+		});
+	}
+
+	override async run(accessor: ServicesAccessor): Promise<void> {
+		const layoutService = accessor.get(IWorkbenchLayoutService);
+		const storageService = accessor.get(IStorageService);
+
+		// Get the current state from storage
+		const currentState = storageService.getNumber(CyclePanelAction.PANEL_STATE_KEY, StorageScope.PROFILE, 0);
+		let nextState = (currentState + 1) % 3;
+
+		// If the panel is not visible, we will show it
+		if (!layoutService.isVisible(Parts.PANEL_PART)) {
+			nextState = 0;
+		}
+
+		// Determine the heights based on window size
+		const windowHeight = layoutService.mainContainerDimension.height;
+		const standardHeight = windowHeight < 880 ? 230 : windowHeight < 880 ? 240 : 250;
+		const largeHeight = windowHeight / 2;
+
+		switch (nextState) {
+			case 0: // standard height
+				if (!layoutService.isVisible(Parts.PANEL_PART)) {
+					layoutService.setPartHidden(false, Parts.PANEL_PART);
+				}
+				layoutService.setSize(Parts.PANEL_PART, { width: layoutService.getSize(Parts.PANEL_PART).width, height: standardHeight });
+				break;
+			case 1: // large height
+				if (!layoutService.isVisible(Parts.PANEL_PART)) {
+					layoutService.setPartHidden(false, Parts.PANEL_PART);
+				}
+				layoutService.setSize(Parts.PANEL_PART, { width: layoutService.getSize(Parts.PANEL_PART).width, height: largeHeight });
+				break;
+			case 2: // hidden
+				layoutService.setSize(Parts.PANEL_PART, { width: layoutService.getSize(Parts.PANEL_PART).width, height: standardHeight });
+
+				layoutService.setPartHidden(true, Parts.PANEL_PART);
+				break;
+		}
+
+		// Save the next state to storage
+		storageService.store(CyclePanelAction.PANEL_STATE_KEY, nextState, StorageScope.PROFILE, StorageTarget.MACHINE);
+	}
+}
+
+registerAction2(CyclePanelAction);
 
 const PositionPanelActionId = {
 	LEFT: 'workbench.action.positionPanelLeft',
