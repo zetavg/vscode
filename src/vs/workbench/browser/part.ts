@@ -228,7 +228,7 @@ export abstract class Part extends Component implements ISerializableView {
 
 class PartLayout {
 
-	// [ZP-3528]
+	// [ZP-3528] Header height 28px
 	// private static readonly HEADER_HEIGHT = 35;
 	// private static readonly TITLE_HEIGHT = 35;
 	// private static readonly Footer_HEIGHT = 35;
