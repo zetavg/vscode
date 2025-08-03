@@ -18,6 +18,7 @@ import { KeybindingWeight } from '../../../../platform/keybinding/common/keybind
 import { KeyCode, KeyMod } from '../../../../base/common/keyCodes.js';
 import { SwitchCompositeViewAction } from '../compositeBarActions.js';
 import { closeIcon as panelCloseIcon } from '../panel/panelActions.js';
+import { IStorageService, StorageScope, StorageTarget } from '../../../../platform/storage/common/storage.js';
 
 const maximizeIcon = registerIcon('auxiliarybar-maximize', Codicon.screenFull, localize('maximizeIcon', 'Icon to maximize the secondary side bar.'));
 const closeIcon = registerIcon('auxiliarybar-close', panelCloseIcon, localize('closeIcon', 'Icon to close the secondary side bar.'));
@@ -100,6 +101,69 @@ registerAction2(class extends Action2 {
 		accessor.get(IWorkbenchLayoutService).setPartHidden(true, Parts.AUXILIARYBAR_PART);
 	}
 });
+
+// [ZP-CA8A] Cycle Auxiliary Bar Action
+export class CycleAuxiliaryBarAction extends Action2 {
+
+	static readonly ID = 'workbench.action.cycleAuxiliaryBar';
+	static readonly LABEL = localize2('cycleAuxiliaryBar', "Cycle Secondary Side Bar Display");
+
+	// Storage key for auxiliary bar state
+	private static readonly AUXILIARY_BAR_STATE_KEY = 'auxiliaryBar.cycleState';
+
+	constructor() {
+		super({
+			id: CycleAuxiliaryBarAction.ID,
+			title: CycleAuxiliaryBarAction.LABEL,
+			category: Categories.View,
+			f1: true,
+		});
+	}
+
+	override async run(accessor: ServicesAccessor): Promise<void> {
+		const layoutService = accessor.get(IWorkbenchLayoutService);
+		const storageService = accessor.get(IStorageService);
+
+		// Get the current state from storage
+		const currentState = storageService.getNumber(CycleAuxiliaryBarAction.AUXILIARY_BAR_STATE_KEY, StorageScope.PROFILE, 0);
+		let nextState = (currentState + 1) % 3;
+
+		// If the auxiliary bar is not visible, we will show it
+		if (!layoutService.isVisible(Parts.AUXILIARYBAR_PART)) {
+			nextState = 0;
+		}
+
+		// Determine the widths based on window size
+		const windowWidth = layoutService.mainContainerDimension.width;
+		const standardWidth = windowWidth < 1440 ? 300 : 320;
+		const largeWidth = windowWidth > 1600 ? 720 : 640;
+
+		switch (nextState) {
+			case 0: // standard width
+				if (!layoutService.isVisible(Parts.AUXILIARYBAR_PART)) {
+					layoutService.setPartHidden(false, Parts.AUXILIARYBAR_PART);
+				}
+				layoutService.setSize(Parts.AUXILIARYBAR_PART, { width: standardWidth, height: layoutService.getSize(Parts.AUXILIARYBAR_PART).height });
+				break;
+			case 1: // large width
+				if (!layoutService.isVisible(Parts.AUXILIARYBAR_PART)) {
+					layoutService.setPartHidden(false, Parts.AUXILIARYBAR_PART);
+				}
+				layoutService.setSize(Parts.AUXILIARYBAR_PART, { width: largeWidth, height: layoutService.getSize(Parts.AUXILIARYBAR_PART).height });
+				break;
+			case 2: // hidden
+				layoutService.setSize(Parts.AUXILIARYBAR_PART, { width: standardWidth, height: layoutService.getSize(Parts.AUXILIARYBAR_PART).height });
+
+				layoutService.setPartHidden(true, Parts.AUXILIARYBAR_PART);
+				break;
+		}
+
+		// Save the next state to storage
+		storageService.store(CycleAuxiliaryBarAction.AUXILIARY_BAR_STATE_KEY, nextState, StorageScope.PROFILE, StorageTarget.MACHINE);
+	}
+}
+
+registerAction2(CycleAuxiliaryBarAction);
 
 registerAction2(class FocusAuxiliaryBarAction extends Action2 {
 
