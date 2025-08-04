@@ -1,0 +1,5 @@
+/* [ZP-FT0E] Fix hover color for top bar items that came from extensions (not .action-label.codicon should also set background color) */
+.monaco-workbench .part.auxiliarybar > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:hover .action-label,
+.monaco-workbench .part.auxiliarybar > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:focus .action-label {
+	background-color: var(--vscode-activityBarTop-foreground) !important;
+}
