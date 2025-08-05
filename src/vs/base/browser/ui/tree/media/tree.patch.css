@@ -34,3 +34,8 @@
 .part.auxiliarybar .monaco-tl-contents .monaco-icon-label::after {
 	opacity: 0.6 !important;
 }
+
+/* [ZP-0782] No pointer. */
+.monaco-list .monaco-scrollable-element .monaco-tree-sticky-container .monaco-tree-sticky-row:hover {
+	cursor: default;
+}
