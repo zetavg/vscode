@@ -20,6 +20,11 @@ const foreground = {
 	light: opacity(c.base02, 0.9),
 };
 
+const sideBarBackground = {
+	dark: c.base01_a,
+	light: c.base06_a,
+};
+
 const editorBackground = {
 	dark: c.base00,
 	light: c.base07_l,
@@ -311,10 +316,7 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	//
 	// Side Bar
 	//
-	'sideBar.background': {
-		dark: c.base01_a,
-		light: c.base06_a,
-	},
+	'sideBar.background': sideBarBackground,
 	'sideBar.foreground': {
 		// dark: c.base02,
 		dark: opacity(c.base03, sidebarItemForegroundOpacity),
@@ -1005,12 +1007,20 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	'chat.requestBorder': '',
 	// 'chat.requestBackground': '', // optional
 	'chat.requestBubbleBackground': {
-		dark: opacity(c.base01, 0.4),
-		light: opacity(c.base05, 0.4),
+		// dark: opacity(c.base01, 0.4),
+		// light: opacity(c.base05, 0.4),
+		dark: opacity(lighten(c.base01, 0.2), 0.24),
+		light: opacity(lighten(c.base05, -0.1), 0.16),
+		// dark: overlay(sideBarBackground.dark, c.base01, 0.4),
+		// light: overlay(sideBarBackground.light, c.base05, 0.4),
 	},
 	'chat.requestBubbleHoverBackground': {
-		dark: opacity(c.base01, 0.8),
-		light: opacity(c.base05, 0.8),
+		// dark: opacity(c.base01, 0.8),
+		// light: opacity(c.base05, 0.8),
+		dark: opacity(lighten(c.base01, 0.2), 0.38),
+		light: opacity(lighten(c.base05, -0.1), 0.24),
+		// dark: overlay(sideBarBackground.dark, c.base01, 0.8),
+		// light: overlay(sideBarBackground.light, c.base05, 0.8),
 	},
 	'chat.slashCommandBackground': {
 		dark: opacity(c.base07, 0.1),
