@@ -62,6 +62,7 @@ import { ChatInputPart, IChatInputStyles } from './chatInputPart.js';
 import { ChatListDelegate, ChatListItemRenderer, IChatListItemTemplate, IChatRendererDelegate } from './chatListRenderer.js';
 import { ChatEditorOptions } from './chatOptions.js';
 import './media/chat.css';
+import './media/chat.patch.css';
 import './media/chatAgentHover.css';
 import './media/chatViewWelcome.css';
 import { ChatViewWelcomePart, IChatSuggestedPrompts, IChatViewWelcomeContent } from './viewsWelcome/chatViewWelcomeController.js';
