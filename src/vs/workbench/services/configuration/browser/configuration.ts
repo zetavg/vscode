@@ -11,7 +11,9 @@ import { RunOnceScheduler } from '../../../../base/common/async.js';
 import { FileChangeType, FileChangesEvent, IFileService, whenProviderRegistered, FileOperationError, FileOperationResult, FileOperation, FileOperationEvent } from '../../../../platform/files/common/files.js';
 import { ConfigurationModel, ConfigurationModelParser, ConfigurationParseOptions, UserSettings } from '../../../../platform/configuration/common/configurationModels.js';
 import { WorkspaceConfigurationModelParser, StandaloneConfigurationModelParser } from '../common/configurationModels.js';
-import { TASKS_CONFIGURATION_KEY, FOLDER_SETTINGS_NAME, LAUNCH_CONFIGURATION_KEY, IConfigurationCache, ConfigurationKey, REMOTE_MACHINE_SCOPES, FOLDER_SCOPES, WORKSPACE_SCOPES, APPLY_ALL_PROFILES_SETTING, APPLICATION_SCOPES, MCP_CONFIGURATION_KEY } from '../common/configuration.js';
+// [ZP-WLS1] `.vscode/settings.local.json` support
+// import { TASKS_CONFIGURATION_KEY, FOLDER_SETTINGS_NAME, LAUNCH_CONFIGURATION_KEY, IConfigurationCache, ConfigurationKey, REMOTE_MACHINE_SCOPES, FOLDER_SCOPES, WORKSPACE_SCOPES, APPLY_ALL_PROFILES_SETTING, APPLICATION_SCOPES, MCP_CONFIGURATION_KEY } from '../common/configuration.js';
+import { TASKS_CONFIGURATION_KEY, FOLDER_SETTINGS_NAME, FOLDER_SETTINGS_LOCAL_NAME, LAUNCH_CONFIGURATION_KEY, IConfigurationCache, ConfigurationKey, REMOTE_MACHINE_SCOPES, FOLDER_SCOPES, WORKSPACE_SCOPES, APPLY_ALL_PROFILES_SETTING, APPLICATION_SCOPES, MCP_CONFIGURATION_KEY } from '../common/configuration.js';
 import { IStoredWorkspaceFolder } from '../../../../platform/workspaces/common/workspaces.js';
 import { WorkbenchState, IWorkspaceFolder, IWorkspaceIdentifier } from '../../../../platform/workspace/common/workspace.js';
 import { ConfigurationScope, Extensions, IConfigurationRegistry, OVERRIDE_PROPERTY_REGEX } from '../../../../platform/configuration/common/configurationRegistry.js';
@@ -232,6 +234,9 @@ class FileServiceBasedConfiguration extends Disposable {
 
 	private readonly allResources: URI[];
 	private _folderSettingsModelParser: ConfigurationModelParser;
+	// [ZP-WLS1] `.vscode/settings.local.json` support
+	private readonly settingsLocalResource: URI;
+	private _folderSettingsLocalModelParser: ConfigurationModelParser;
 	private _folderSettingsParseOptions: ConfigurationParseOptions;
 	private _standAloneConfigurations: ConfigurationModel[];
 	private _cache: ConfigurationModel;
@@ -250,6 +255,17 @@ class FileServiceBasedConfiguration extends Disposable {
 	) {
 		super();
 		this.allResources = [this.settingsResource, ...this.standAloneConfigurationResources.map(([, resource]) => resource)];
+
+		// [ZP-WLS1] `.vscode/settings.local.json` support
+		// Derive URL for `settings.local.json` from the regular settings resource
+		this.settingsLocalResource = (() => {
+			const settingsDir = this.uriIdentityService.extUri.dirname(this.settingsResource);
+			const settingsBasename = this.uriIdentityService.extUri.basename(this.settingsResource);
+			const settingsLocalBasename = settingsBasename.replace(FOLDER_SETTINGS_NAME, FOLDER_SETTINGS_LOCAL_NAME);
+			return this.uriIdentityService.extUri.joinPath(settingsDir, settingsLocalBasename);
+		})();
+		this.allResources.push(this.settingsLocalResource);
+
 		this._register(combinedDisposable(...this.allResources.map(resource => combinedDisposable(
 			this.fileService.watch(uriIdentityService.extUri.dirname(resource)),
 			// Also listen to the resource incase the resource is a symlink - https://github.com/microsoft/vscode/issues/118134
@@ -257,6 +273,8 @@ class FileServiceBasedConfiguration extends Disposable {
 		))));
 
 		this._folderSettingsModelParser = new ConfigurationModelParser(name, logService);
+		// [ZP-WLS1] `.vscode/settings.local.json` support
+		this._folderSettingsLocalModelParser = new ConfigurationModelParser(FOLDER_SETTINGS_LOCAL_NAME, logService);
 		this._folderSettingsParseOptions = configurationParseOptions;
 		this._standAloneConfigurations = [];
 		this._cache = ConfigurationModel.createEmptyModel(this.logService);
@@ -268,7 +286,7 @@ class FileServiceBasedConfiguration extends Disposable {
 			), () => undefined, 100)(() => this._onDidChange.fire()));
 	}
 
-	async resolveContents(donotResolveSettings?: boolean): Promise<[string | undefined, [string, string | undefined][]]> {
+	async resolveContents(donotResolveSettings?: boolean): Promise<[string | undefined, [string, string | undefined][], (string | undefined /* [ZP-WLS1] `.vscode/settings.local.json` support */)]> {
 
 		const resolveContents = async (resources: URI[]): Promise<(string | undefined)[]> => {
 			return Promise.all(resources.map(async resource => {
@@ -291,21 +309,33 @@ class FileServiceBasedConfiguration extends Disposable {
 			resolveContents(this.standAloneConfigurationResources.map(([, resource]) => resource)),
 		]);
 
-		return [settingsContent, standAloneConfigurationContents.map((content, index) => ([this.standAloneConfigurationResources[index][0], content]))];
+		// [ZP-WLS1] `.vscode/settings.local.json` support
+		const [settingsLocalContent] = await (donotResolveSettings ? Promise.resolve([undefined]) : resolveContents([this.settingsLocalResource]));
+
+		return [settingsContent, standAloneConfigurationContents.map((content, index) => ([this.standAloneConfigurationResources[index][0], content])), (settingsLocalContent /* [ZP-WLS1] `.vscode/settings.local.json` support */)];
 	}
 
 	async loadConfiguration(settingsConfiguration?: ConfigurationModel): Promise<ConfigurationModel> {
 
-		const [settingsContent, standAloneConfigurationContents] = await this.resolveContents(!!settingsConfiguration);
+		const [settingsContent, standAloneConfigurationContents, settingsLocalContent /* [ZP-WLS1] `.vscode/settings.local.json` support */] = await this.resolveContents(!!settingsConfiguration);
 
 		// reset
 		this._standAloneConfigurations = [];
 		this._folderSettingsModelParser.parse('', this._folderSettingsParseOptions);
+		// [ZP-WLS1] `.vscode/settings.local.json` support
+		this._folderSettingsLocalModelParser.parse('', this._folderSettingsParseOptions);
 
 		// parse
 		if (settingsContent !== undefined) {
 			this._folderSettingsModelParser.parse(settingsContent, this._folderSettingsParseOptions);
 		}
+
+		// [ZP-WLS1] `.vscode/settings.local.json` support
+		// parse settings.local.json
+		if (settingsLocalContent !== undefined) {
+			this._folderSettingsLocalModelParser.parse(settingsLocalContent, this._folderSettingsParseOptions);
+		}
+
 		for (let index = 0; index < standAloneConfigurationContents.length; index++) {
 			const contents = standAloneConfigurationContents[index][1];
 			if (contents !== undefined) {
@@ -322,14 +352,20 @@ class FileServiceBasedConfiguration extends Disposable {
 	}
 
 	getRestrictedSettings(): string[] {
-		return this._folderSettingsModelParser.restrictedConfigurations;
+		return [...this._folderSettingsModelParser.restrictedConfigurations, ...this._folderSettingsLocalModelParser.restrictedConfigurations /* [ZP-WLS1] `.vscode/settings.local.json` support */];
 	}
 
 	reparse(configurationParseOptions: ConfigurationParseOptions): ConfigurationModel {
 		const oldContents = this._folderSettingsModelParser.configurationModel.contents;
 		this._folderSettingsParseOptions = configurationParseOptions;
 		this._folderSettingsModelParser.reparse(this._folderSettingsParseOptions);
+		// [ZP-WLS1] `.vscode/settings.local.json` support
+		const oldLocalContents = this._folderSettingsLocalModelParser.configurationModel.contents;
+		this._folderSettingsLocalModelParser.reparse(this._folderSettingsParseOptions);
 		if (!equals(oldContents, this._folderSettingsModelParser.configurationModel.contents)) {
+			this.consolidate();
+
+		} else if (!equals(oldLocalContents, this._folderSettingsLocalModelParser.configurationModel.contents)) {  // [ZP-WLS1] `.vscode/settings.local.json` support
 			this.consolidate();
 		}
 		return this._cache;
@@ -337,6 +373,12 @@ class FileServiceBasedConfiguration extends Disposable {
 
 	private consolidate(settingsConfiguration?: ConfigurationModel): void {
 		this._cache = (settingsConfiguration ?? this._folderSettingsModelParser.configurationModel).merge(...this._standAloneConfigurations);
+
+		// [ZP-WLS1] `.vscode/settings.local.json` support
+		// Merge local settings (`settings.local.json`) on top of base settings
+		this._cache = this._cache.merge(this._folderSettingsLocalModelParser.configurationModel);
+		// Merge all standalone configurations again as they should also override the local settings
+		this._cache = this._cache.merge(...this._standAloneConfigurations);
 	}
 
 	private handleFileChangesEvent(event: FileChangesEvent): boolean {
@@ -929,6 +971,8 @@ class CachedFolderConfiguration {
 	readonly onDidChange = Event.None;
 
 	private _folderSettingsModelParser: ConfigurationModelParser;
+	// [ZP-WLS1] `.vscode/settings.local.json` support
+	private _folderSettingsLocalModelParser: ConfigurationModelParser;
 	private _folderSettingsParseOptions: ConfigurationParseOptions;
 	private _standAloneConfigurations: ConfigurationModel[];
 	private configurationModel: ConfigurationModel;
@@ -943,6 +987,8 @@ class CachedFolderConfiguration {
 	) {
 		this.key = { type: 'folder', key: hash(joinPath(folder, configFolderRelativePath).toString()).toString(16) };
 		this._folderSettingsModelParser = new ConfigurationModelParser('CachedFolderConfiguration', logService);
+		// [ZP-WLS1] `.vscode/settings.local.json` support
+		this._folderSettingsLocalModelParser = new ConfigurationModelParser('CachedFolderConfiguration.local', logService);
 		this._folderSettingsParseOptions = configurationParseOptions;
 		this._standAloneConfigurations = [];
 		this.configurationModel = ConfigurationModel.createEmptyModel(logService);
@@ -956,6 +1002,8 @@ class CachedFolderConfiguration {
 				for (const key of Object.keys(configurationContents)) {
 					if (key === FOLDER_SETTINGS_NAME) {
 						this._folderSettingsModelParser.parse(configurationContents[key], this._folderSettingsParseOptions);
+					} else if (key === FOLDER_SETTINGS_LOCAL_NAME) {  // [ZP-WLS1] `.vscode/settings.local.json` support
+						this._folderSettingsLocalModelParser.parse(configurationContents[key], this._folderSettingsParseOptions);
 					} else {
 						const standAloneConfigurationModelParser = new StandaloneConfigurationModelParser(key, key, this.logService);
 						standAloneConfigurationModelParser.parse(configurationContents[key]);
@@ -969,10 +1017,14 @@ class CachedFolderConfiguration {
 		return this.configurationModel;
 	}
 
-	async updateConfiguration(settingsContent: string | undefined, standAloneConfigurationContents: [string, string | undefined][]): Promise<void> {
+	async updateConfiguration(settingsContent: string | undefined, standAloneConfigurationContents: [string, string | undefined][], settingsLocalContent: string | undefined /* [ZP-WLS1] `.vscode/settings.local.json` support */): Promise<void> {
 		const content: any = {};
 		if (settingsContent) {
 			content[FOLDER_SETTINGS_NAME] = settingsContent;
+		}
+		// [ZP-WLS1] `.vscode/settings.local.json` support
+		if (settingsLocalContent) {
+			content[FOLDER_SETTINGS_LOCAL_NAME] = settingsLocalContent;
 		}
 		standAloneConfigurationContents.forEach(([key, contents]) => {
 			if (contents) {
@@ -987,18 +1039,26 @@ class CachedFolderConfiguration {
 	}
 
 	getRestrictedSettings(): string[] {
-		return this._folderSettingsModelParser.restrictedConfigurations;
+		return [...this._folderSettingsModelParser.restrictedConfigurations, ...this._folderSettingsLocalModelParser.restrictedConfigurations /* [ZP-WLS1] `.vscode/settings.local.json` support */];
 	}
 
 	reparse(configurationParseOptions: ConfigurationParseOptions): ConfigurationModel {
 		this._folderSettingsParseOptions = configurationParseOptions;
 		this._folderSettingsModelParser.reparse(this._folderSettingsParseOptions);
+		// [ZP-WLS1] `.vscode/settings.local.json` support
+		this._folderSettingsLocalModelParser.reparse(this._folderSettingsParseOptions);
 		this.consolidate();
 		return this.configurationModel;
 	}
 
 	private consolidate(): void {
 		this.configurationModel = this._folderSettingsModelParser.configurationModel.merge(...this._standAloneConfigurations);
+
+		// [ZP-WLS1] `.vscode/settings.local.json` support
+		// Merge local settings (`settings.local.json`) on top of base settings
+		this.configurationModel = this.configurationModel.merge(this._folderSettingsLocalModelParser.configurationModel);
+		// Merge all standalone configurations again as they should also override the local settings
+		this.configurationModel = this.configurationModel.merge(...this._standAloneConfigurations);
 	}
 
 	getUnsupportedKeys(): string[] {
@@ -1082,8 +1142,11 @@ export class FolderConfiguration extends Disposable {
 
 	private async updateCache(): Promise<void> {
 		if (this.configurationCache.needsCaching(this.configurationFolder) && this.folderConfiguration instanceof FileServiceBasedConfiguration) {
-			const [settingsContent, standAloneConfigurationContents] = await this.folderConfiguration.resolveContents();
-			this.cachedFolderConfiguration.updateConfiguration(settingsContent, standAloneConfigurationContents);
+			// [ZP-WLS1] `.vscode/settings.local.json` support
+			// const [settingsContent, standAloneConfigurationContents] = await this.folderConfiguration.resolveContents();
+			// this.cachedFolderConfiguration.updateConfiguration(settingsContent, standAloneConfigurationContents);
+			const [settingsContent, standAloneConfigurationContents, settingsLocalContent] = await this.folderConfiguration.resolveContents();
+			this.cachedFolderConfiguration.updateConfiguration(settingsContent, standAloneConfigurationContents, settingsLocalContent);
 		}
 	}
 }
