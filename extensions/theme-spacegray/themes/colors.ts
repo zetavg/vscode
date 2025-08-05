@@ -187,7 +187,7 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	},
 	'icon.foreground': {
 		dark: c.base02,
-		light: c.base03,
+		light: lighten(c.base04, 0.01),
 	},
 	'sash.hoverBorder': editorBorder, // TODO
 
@@ -475,7 +475,7 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	},
 	'inputOption.activeBorder': {
 		dark: c.base02,
-		light: c.base04,
+		light: lighten(c.base04, 0.1),
 	}, // There's no way to change `inputOption.inactiveForeground` so we use custom CSS to do that. This color (`--vscode-inputOption-activeBorder`) will be used as such `inputOption.inactiveForeground`.
 	'inputOption.activeForeground': {
 		dark: opacity(c.base07_a, 1.0),
