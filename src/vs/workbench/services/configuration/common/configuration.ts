@@ -14,6 +14,9 @@ import { IAnyWorkspaceIdentifier } from '../../../../platform/workspace/common/w
 export const FOLDER_CONFIG_FOLDER_NAME = '.vscode';
 export const FOLDER_SETTINGS_NAME = 'settings';
 export const FOLDER_SETTINGS_PATH = `${FOLDER_CONFIG_FOLDER_NAME}/${FOLDER_SETTINGS_NAME}.json`;
+// [ZP-WLS1] `.vscode/settings.local.json` support
+export const FOLDER_SETTINGS_LOCAL_NAME = 'settings.local';
+export const FOLDER_SETTINGS_LOCAL_PATH = `${FOLDER_CONFIG_FOLDER_NAME}/${FOLDER_SETTINGS_LOCAL_NAME}.json`;
 
 export const defaultSettingsSchemaId = 'vscode://schemas/settings/default';
 export const userSettingsSchemaId = 'vscode://schemas/settings/user';
