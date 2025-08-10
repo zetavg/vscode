@@ -1,5 +1,4 @@
 /* eslint-disable header/header */
-/* eslint-disable local/code-no-unexternalized-strings */
 
 import type { ThemeColors } from '../../../src/vs/workbench/contrib/themes/colors';
 
@@ -606,10 +605,13 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	},
 	// For text documents (such as Markdown files) this will highlight all occurrences of the word under the cursor (case sensitive) or the selected text (case insensitive).
 	// And for code files, this will highlight all occurrences of the symbol under the cursor, including matching property names or string literals, but excluding keywords in the language. For variables, it seems to be smart enough to identify the scope and highlight only the same references but not all variables with the same name.
-	// So we consider this information useful and give it a more prominent color.
+	// So we consider this information useful and give it a more prominent color. But not too prominent, so it doesn't distract from warnings and errors.
+	// See also: editor.selectionHighlightBackground, editorOverviewRuler.wordHighlightStrongForeground
 	'minimap.selectionOccurrenceHighlight': {
-		dark: opacity(saturation(overlay(c.base0A, c.base0B_l, 0.1), n => n * 1), 0.8),
-		light: opacity(saturation(overlay(c.base0A_l, c.base0B, 0.1), n => n * 1), 0.8),
+		// dark: opacity(saturation(overlay(c.base0A, c.base0B_l, 0.1), n => n * 1), 0.8),
+		// light: opacity(saturation(overlay(c.base0A_l, c.base0B, 0.1), n => n * 1), 0.8),
+		dark: opacity(editorSelectionBackground.dark, 0.5),
+		light: opacity(editorSelectionBackground.light, 0.5),
 	},
 	// 'minimap.selectionOccurrenceHighlight': { // Used to highlight occurrences of the selected text in a text document (such as Markdown). This seems to not apply to selections in code files.
 	// 	dark: opacity(c.base04, 0.25),
@@ -730,7 +732,10 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	'editor.selectionBackground': editorSelectionBackground,
 	// 'editor.selectionForeground': '', // optional
 	// 'editor.inactiveSelectionBackground': '', // optional
-	// 'editor.selectionHighlightBackground': '', // optional
+	'editor.selectionHighlightBackground': {
+		dark: opacity(editorSelectionBackground.dark, 0.25),
+		light: opacity(editorSelectionBackground.light, 0.25),
+	}, // optional
 	// 'editor.selectionHighlightBorder': '', // optional
 	'editor.wordHighlightBackground': '#00000000',
 	// 'editor.wordHighlightBorder': '', // optional
@@ -738,12 +743,15 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	// 'editor.wordHighlightStrongBorder': '', // optional
 	// 'editor.wordHighlightTextBackground': '', // optional
 	// 'editor.wordHighlightTextBorder': '', // optional
-	'editor.findMatchBackground': '',
+	'editor.findMatchBackground': {
+		'dark': opacity(findMatchIndicatorColor, 0.05),
+		'light': opacity(findMatchIndicatorColor, 0.05),
+	},
 	'editor.findMatchForeground': '',
 	'editor.findMatchHighlightForeground': '',
 	'editor.findMatchHighlightBackground': '#00000000',
 	'editor.findRangeHighlightBackground': '',
-	// 'editor.findMatchBorder': '', // optional
+	'editor.findMatchBorder': findMatchBorder, // optional
 	'editor.findMatchHighlightBorder': findMatchBorder,
 	// 'editor.findRangeHighlightBorder': '', // optional
 	'search.resultsInfoForeground': {
@@ -763,7 +771,11 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	// 'editorUnicodeHighlight.border': '', // optional
 	// 'editorUnicodeHighlight.background': '', // optional
 	'editorLink.activeForeground': '',
-	'editor.rangeHighlightBackground': '',
+	// Used as the temporary background color of the line to highlight when the user clicks on a match in the search results
+	'editor.rangeHighlightBackground': {
+		dark: opacity(c.base02, 0.25),
+		light: '',
+	},
 	// 'editor.rangeHighlightBorder': '', // optional
 	// 'editor.symbolHighlightBackground': '', // optional
 	// 'editor.symbolHighlightBorder': '', // optional
@@ -854,7 +866,7 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 		dark: opacity(editorSelectionBackground.dark, 0.25),
 		light: opacity(editorSelectionBackground.light, 0.25),
 	},
-	'editorOverviewRuler.wordHighlightStrongForeground': { // See also: minimap.selectionOccurrenceHighlight
+	'editorOverviewRuler.wordHighlightStrongForeground': { // See also: minimap.selectionOccurrenceHighlight, editor.selectionHighlightBackground
 		// dark: opacity(saturation(overlay(c.base0A, c.base0B_l, 0.1), n => n * 1), 0.8),
 		// light: opacity(saturation(overlay(c.base0A_l, c.base0B, 0.1), n => n * 1), 0.8),
 		dark: opacity(editorSelectionBackground.dark, 0.8),
