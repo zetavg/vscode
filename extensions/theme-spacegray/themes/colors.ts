@@ -1005,7 +1005,10 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	'diffEditor.unchangedCodeBackground': '',
 	'diffEditor.move.border': '',
 	'diffEditor.moveActive.border': '',
-	'multiDiffEditor.headerBackground': '',
+	'multiDiffEditor.headerBackground': {
+		dark: lighten(c.base01_a, -0.05),
+		light: lighten(c.base06_a, -0.02),
+	},
 	// 'multiDiffEditor.background': '', // optional
 	'multiDiffEditor.border': '',
 

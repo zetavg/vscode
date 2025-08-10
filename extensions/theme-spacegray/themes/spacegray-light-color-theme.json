@@ -183,6 +183,7 @@
         "diffEditor.diagonalFill": "#c0c5cecc",
         "diffEditorGutter.insertedLineBackground": "#79995614",
         "diffEditorGutter.removedLineBackground": "#bf616a14",
+        "multiDiffEditor.headerBackground": "#e0e3ea",
         "chat.foreground": "#65737e",
         "chat.requestBubbleBackground": "#a6abb429",
         "chat.requestBubbleHoverBackground": "#a6abb43d",
