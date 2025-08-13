@@ -24,6 +24,15 @@ const sideBarBackground = {
 	light: c.base06_a,
 };
 
+// const sidebarItemForegroundOpacity = 0.9;
+const sidebarItemForegroundOpacity = 1; // This is now done with CSS patch [ZP-73AF].
+
+const sideBarForeground = {
+	// dark: c.base02,
+	dark: opacity(c.base03, sidebarItemForegroundOpacity),
+	light: opacity(c.base03, sidebarItemForegroundOpacity),
+};
+
 const editorBackground = {
 	dark: c.base00,
 	light: c.base07_l,
@@ -136,8 +145,6 @@ function makeInputValidationBackground(color: string) {
 	};
 }
 
-// const sidebarItemForegroundOpacity = 0.9;
-const sidebarItemForegroundOpacity = 1; // This is now done with CSS patch [ZP-73AF].
 // const sidebarItemWithStatusForegroundOpacity = 0.642;
 const sidebarItemWithStatusForegroundOpacity = 0.8; // Additional opacity is applied with CSS patch [ZP-73AF].
 const lightSidebarItemWithStatusForegroundOpacity = 0.9; // Additional opacity is applied with CSS patch [ZP-73AF].
@@ -316,11 +323,7 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	// Side Bar
 	//
 	'sideBar.background': sideBarBackground,
-	'sideBar.foreground': {
-		// dark: c.base02,
-		dark: opacity(c.base03, sidebarItemForegroundOpacity),
-		light: opacity(c.base03, sidebarItemForegroundOpacity),
-	},
+	'sideBar.foreground': sideBarForeground,
 	// 'sideBar.border': '', // optional
 	// 'sideBar.dropBackground': '', // optional
 	'sideBarTitle.foreground': {
@@ -1656,8 +1659,8 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 		light: opacity(c.base0B_l, lightSidebarItemWithStatusForegroundOpacity),
 	},
 	'gitDecoration.ignoredResourceForeground': {
-		dark: opacity(opacity(c.base03, 0.6), sidebarItemWithStatusForegroundOpacity),
-		light: opacity(opacity(c.base01, 0.4), lightSidebarItemWithStatusForegroundOpacity),
+		dark: opacity(sideBarForeground.dark, 0.6),
+		light: opacity(sideBarForeground.light, 0.6),
 	},
 	'gitDecoration.conflictingResourceForeground': c.base09,
 	'gitDecoration.submoduleResourceForeground': {
