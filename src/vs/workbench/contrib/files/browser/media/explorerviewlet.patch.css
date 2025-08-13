@@ -1,6 +1,8 @@
 /* [ZP-TL0C] Do not let error or warnings affect the title label color */
-.explorer-folders-view .explorer-item,
-.search-view .explorer-item {
+.explorer-folders-view .monaco-list-row:hover .explorer-item,
+.search-view .monaco-list-row:hover .explorer-item,
+.explorer-folders-view .explorer-item:not(.monaco-decoration-itemColor--9ieymw /* private static Decoration: FileDecoration = { color: new ThemeColor('gitDecoration.ignoredResourceForeground') }; */),
+.search-view .explorer-item:not(.monaco-decoration-itemColor--9ieymw /* private static Decoration: FileDecoration = { color: new ThemeColor('gitDecoration.ignoredResourceForeground') }; */) {
 	color: inherit !important;
 }
 .open-editors .monaco-list-row .monaco-icon-label-container,
