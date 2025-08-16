@@ -54,7 +54,8 @@ import { IWorkbenchLayoutService, Parts } from '../../../services/layout/browser
 import { ILifecycleService } from '../../../services/lifecycle/common/lifecycle.js';
 import { IViewsService } from '../../../services/views/common/viewsService.js';
 import { CountTokensCallback, ILanguageModelToolsService, IPreparedToolInvocation, IToolData, IToolImpl, IToolInvocation, IToolResult, ToolDataSource, ToolProgress } from '../../chat/common/languageModelToolsService.js';
-import { IExtensionsWorkbenchService } from '../../extensions/common/extensions.js';
+// [ZP-GCS1] Do not try to install the extension during login
+// import { IExtensionsWorkbenchService } from '../../extensions/common/extensions.js';
 import { IChatAgentImplementation, IChatAgentRequest, IChatAgentResult, IChatAgentService } from '../common/chatAgents.js';
 import { ChatContextKeys } from '../common/chatContextKeys.js';
 import { ChatEntitlement, ChatEntitlementContext, ChatEntitlementRequests, ChatEntitlementService, IChatEntitlementService, isProUser } from '../common/chatEntitlementService.js';
@@ -1190,8 +1191,9 @@ class ChatSetupController extends Disposable {
 		private readonly requests: ChatEntitlementRequests,
 		@ITelemetryService private readonly telemetryService: ITelemetryService,
 		@IAuthenticationService private readonly authenticationService: IAuthenticationService,
-		@IExtensionsWorkbenchService private readonly extensionsWorkbenchService: IExtensionsWorkbenchService,
-		@IProductService private readonly productService: IProductService,
+		// [ZP-GCS1] Do not try to install the extension during login
+		// @IExtensionsWorkbenchService private readonly extensionsWorkbenchService: IExtensionsWorkbenchService,
+		// @IProductService private readonly productService: IProductService,
 		@ILogService private readonly logService: ILogService,
 		@IProgressService private readonly progressService: IProgressService,
 		@IActivityService private readonly activityService: IActivityService,
@@ -1381,13 +1383,15 @@ class ChatSetupController extends Disposable {
 	}
 
 	private async doInstall(): Promise<void> {
-		await this.extensionsWorkbenchService.install(defaultChat.extensionId, {
-			enable: true,
-			isApplicationScoped: true, 	// install into all profiles
-			isMachineScoped: false,		// do not ask to sync
-			installEverywhere: true,	// install in local and remote
-			installPreReleaseVersion: this.productService.quality !== 'stable'
-		}, ChatViewId);
+		// [ZP-GCS1] Do not try to install the extension during login
+		// await this.extensionsWorkbenchService.install(defaultChat.extensionId, {
+		// 	enable: true,
+		// 	isApplicationScoped: true, 	// install into all profiles
+		// 	isMachineScoped: false,		// do not ask to sync
+		// 	installEverywhere: true,	// install in local and remote
+		// 	installPreReleaseVersion: this.productService.quality !== 'stable'
+		// }, ChatViewId);
+		return Promise.resolve();
 	}
 
 	async setupWithProvider(options: { useEnterpriseProvider: boolean; useSocialProvider: string | undefined }): Promise<ChatSetupResultValue> {
