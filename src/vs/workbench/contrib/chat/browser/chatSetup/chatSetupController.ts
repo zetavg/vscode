@@ -23,14 +23,17 @@ import { Registry } from '../../../../../platform/registry/common/platform.js';
 import { ITelemetryService } from '../../../../../platform/telemetry/common/telemetry.js';
 import { IActivityService, ProgressBadge } from '../../../../services/activity/common/activity.js';
 import { ILifecycleService } from '../../../../services/lifecycle/common/lifecycle.js';
-import { IExtensionsWorkbenchService } from '../../../extensions/common/extensions.js';
+// [ZP-GCS1] Do not try to install the extension during login
+// import { IExtensionsWorkbenchService } from '../../../extensions/common/extensions.js';
 import { ChatEntitlement, ChatEntitlementContext, ChatEntitlementRequests, isProUser } from '../../../../services/chat/common/chatEntitlementService.js';
 import { CHAT_OPEN_ACTION_ID } from '../actions/chatActions.js';
-import { ChatViewContainerId, ChatViewId } from '../chat.js';
-import { ChatSetupAnonymous, ChatSetupStep, ChatSetupResultValue, InstallChatEvent, InstallChatClassification, refreshTokens, maybeEnableAuthExtension } from './chatSetup.js';
+// [ZP-GCS1] Do not try to install the extension during login
+import { ChatViewContainerId, /* ChatViewId */ } from '../chat.js';
+import { ChatSetupAnonymous, ChatSetupStep, ChatSetupResultValue, InstallChatEvent, InstallChatClassification, refreshTokens, /* maybeEnableAuthExtension */ } from './chatSetup.js';
 import { IDefaultAccount } from '../../../../../base/common/defaultAccount.js';
 import { IDefaultAccountService } from '../../../../../platform/defaultAccount/common/defaultAccount.js';
-import { IProductService } from '../../../../../platform/product/common/productService.js';
+// [ZP-GCS1] Do not try to install the extension during login
+// import { IProductService } from '../../../../../platform/product/common/productService.js';
 
 const defaultChat = {
 	chatExtensionId: product.defaultChatAgent?.chatExtensionId ?? '',
@@ -59,7 +62,8 @@ export class ChatSetupController extends Disposable {
 		private readonly context: ChatEntitlementContext,
 		private readonly requests: ChatEntitlementRequests,
 		@ITelemetryService private readonly telemetryService: ITelemetryService,
-		@IExtensionsWorkbenchService private readonly extensionsWorkbenchService: IExtensionsWorkbenchService,
+		// [ZP-GCS1] Do not try to install the extension during login
+		// @IExtensionsWorkbenchService private readonly extensionsWorkbenchService: IExtensionsWorkbenchService,
 		@ILogService private readonly logService: ILogService,
 		@IProgressService private readonly progressService: IProgressService,
 		@IActivityService private readonly activityService: IActivityService,
@@ -69,7 +73,8 @@ export class ChatSetupController extends Disposable {
 		@ILifecycleService private readonly lifecycleService: ILifecycleService,
 		@IQuickInputService private readonly quickInputService: IQuickInputService,
 		@IDefaultAccountService private readonly defaultAccountService: IDefaultAccountService,
-		@IProductService private readonly productService: IProductService,
+		// [ZP-GCS1] Do not try to install the extension during login
+		// @IProductService private readonly productService: IProductService,
 	) {
 		super();
 
@@ -151,10 +156,11 @@ export class ChatSetupController extends Disposable {
 	}
 
 	private async signIn(options: IChatSetupControllerOptions): Promise<{ defaultAccount: IDefaultAccount | undefined; entitlement: ChatEntitlement | undefined }> {
-		const authExtensionReEnabled = await maybeEnableAuthExtension(this.extensionsWorkbenchService, this.logService);
-		if (authExtensionReEnabled) {
-			refreshTokens(this.commandService);
-		}
+		// [ZP-GCS1] Do not try to install the extension during login
+		// const authExtensionReEnabled = await maybeEnableAuthExtension(this.extensionsWorkbenchService, this.logService);
+		// if (authExtensionReEnabled) {
+		// 	refreshTokens(this.commandService);
+		// }
 
 		let entitlements;
 		let defaultAccount;
@@ -260,13 +266,15 @@ export class ChatSetupController extends Disposable {
 	}
 
 	private async doInstall(): Promise<void> {
-		await this.extensionsWorkbenchService.install(defaultChat.chatExtensionId, {
-			enable: true,
-			isApplicationScoped: true, 	// install into all profiles
-			isMachineScoped: false,		// do not ask to sync
-			installEverywhere: true,	// install in local and remote
-			installPreReleaseVersion: this.productService.quality !== 'stable'
-		}, ChatViewId);
+		// [ZP-GCS1] Do not try to install the extension during login
+		// await this.extensionsWorkbenchService.install(defaultChat.chatExtensionId, {
+		// 	enable: true,
+		// 	isApplicationScoped: true, 	// install into all profiles
+		// 	isMachineScoped: false,		// do not ask to sync
+		// 	installEverywhere: true,	// install in local and remote
+		// 	installPreReleaseVersion: this.productService.quality !== 'stable'
+		// }, ChatViewId);
+		return Promise.resolve();
 	}
 
 	async setupWithProvider(options: IChatSetupControllerOptions): Promise<ChatSetupResultValue> {
