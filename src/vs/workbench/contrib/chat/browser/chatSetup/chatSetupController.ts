@@ -30,7 +30,8 @@ import { ChatViewContainerId, ChatViewId } from '../chat.js';
 import { ChatSetupAnonymous, ChatSetupStep, ChatSetupResultValue, InstallChatEvent, InstallChatClassification, refreshTokens, maybeEnableAuthExtension } from './chatSetup.js';
 import { IDefaultAccount } from '../../../../../base/common/defaultAccount.js';
 import { IDefaultAccountService } from '../../../../../platform/defaultAccount/common/defaultAccount.js';
-import { IProductService } from '../../../../../platform/product/common/productService.js';
+// [ZP-GCS1] Do not try to install the extension during login
+// import { IProductService } from '../../../../../platform/product/common/productService.js';
 
 const defaultChat = {
 	chatExtensionId: product.defaultChatAgent?.chatExtensionId ?? '',
@@ -69,7 +70,8 @@ export class ChatSetupController extends Disposable {
 		@ILifecycleService private readonly lifecycleService: ILifecycleService,
 		@IQuickInputService private readonly quickInputService: IQuickInputService,
 		@IDefaultAccountService private readonly defaultAccountService: IDefaultAccountService,
-		@IProductService private readonly productService: IProductService,
+		// [ZP-GCS1] Do not try to install the extension during login
+		// @IProductService private readonly productService: IProductService,
 	) {
 		super();
 
@@ -260,13 +262,15 @@ export class ChatSetupController extends Disposable {
 	}
 
 	private async doInstall(): Promise<void> {
-		await this.extensionsWorkbenchService.install(defaultChat.chatExtensionId, {
-			enable: true,
-			isApplicationScoped: true, 	// install into all profiles
-			isMachineScoped: false,		// do not ask to sync
-			installEverywhere: true,	// install in local and remote
-			installPreReleaseVersion: this.productService.quality !== 'stable'
-		}, ChatViewId);
+		// [ZP-GCS1] Do not try to install the extension during login
+		// await this.extensionsWorkbenchService.install(defaultChat.chatExtensionId, {
+		// 	enable: true,
+		// 	isApplicationScoped: true, 	// install into all profiles
+		// 	isMachineScoped: false,		// do not ask to sync
+		// 	installEverywhere: true,	// install in local and remote
+		// 	installPreReleaseVersion: this.productService.quality !== 'stable'
+		// }, ChatViewId);
+		return Promise.resolve();
 	}
 
 	async setupWithProvider(options: IChatSetupControllerOptions): Promise<ChatSetupResultValue> {
