@@ -33,6 +33,13 @@
 	"nodejsRepository": "https://nodejs.org",
 	"urlProtocol": "code-oss",
 	"webviewContentExternalBaseUrlTemplate": "https://{{uuid}}.vscode-cdn.net/insider/ef65ac1ba57f57f2a3961bfe94aa20481caca4c6/out/vs/workbench/contrib/webview/browser/pre/",
+	"trustedExtensionAuthAccess": {
+		"github": ["vscode.github", "github.remotehub", "ms-vscode.remote-server", "github.vscode-pull-request-github", "github.codespaces", "github.copilot", "github.copilot-chat", "ms-vsliveshare.vsliveshare", "ms-azuretools.vscode-azure-github-copilot"],
+		"github-enterprise": ["vscode.github", "github.remotehub", "ms-vscode.remote-server", "github.vscode-pull-request-github", "github.codespaces", "github.copilot", "github.copilot-chat", "ms-vsliveshare.vsliveshare", "ms-azuretools.vscode-azure-github-copilot"],
+		"microsoft": ["github.copilot-chat", "ms-vscode.azure-repos", "ms-vscode.remote-server", "ms-vsliveshare.vsliveshare", "ms-azuretools.vscode-azure-github-copilot", "ms-azuretools.vscode-azureresourcegroups", "ms-azuretools.vscode-dev-azurecloudshell", "ms-edu.vscode-learning", "ms-toolsai.vscode-ai", "ms-toolsai.vscode-ai-remote"],
+		"microsoft-sovereign-cloud": ["ms-vscode.azure-repos", "ms-vscode.remote-server", "ms-vsliveshare.vsliveshare", "ms-azuretools.vscode-azure-github-copilot", "ms-azuretools.vscode-azureresourcegroups", "ms-azuretools.vscode-dev-azurecloudshell", "ms-edu.vscode-learning", "ms-toolsai.vscode-ai", "ms-toolsai.vscode-ai-remote"],
+		"__GitHub.copilot-chat": ["ms-azuretools.vscode-azure-github-copilot", "github.vscode-pull-request-github"]
+	},
 	"defaultChatAgent": {
 		"extensionId": "GitHub.copilot",
 		"chatExtensionId": "GitHub.copilot-chat",
