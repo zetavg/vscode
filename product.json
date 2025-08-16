@@ -33,7 +33,7 @@
 	"nodejsRepository": "https://nodejs.org",
 	"urlProtocol": "code-oss",
 	"webviewContentExternalBaseUrlTemplate": "https://{{uuid}}.vscode-cdn.net/insider/ef65ac1ba57f57f2a3961bfe94aa20481caca4c6/out/vs/workbench/contrib/webview/browser/pre/",
-		"defaultChatAgent": {
+	"defaultChatAgent": {
 		"extensionId": "GitHub.copilot",
 		"chatExtensionId": "GitHub.copilot-chat",
 		"documentationUrl": "https://aka.ms/github-copilot-overview",
@@ -46,26 +46,29 @@
 		"manageOverageUrl": "https://aka.ms/github-copilot-manage-overage",
 		"upgradePlanUrl": "https://aka.ms/github-copilot-upgrade-plan",
 		"signUpUrl": "https://aka.ms/github-sign-up",
-		"providerId": "github",
-		"providerName": "GitHub",
-		"enterpriseProviderId": "github-enterprise",
-		"enterpriseProviderName": "GHE.com",
-		"alternativeProviderId": "google",
-		"alternativeProviderName": "Google",
+		"provider": {
+			"default": {
+				"id": "github",
+				"name": "GitHub"
+			},
+			"enterprise": {
+				"id": "github-enterprise",
+				"name": "GHE.com"
+			},
+			"google": {
+				"id": "google",
+				"name": "Google"
+			},
+			"apple": {
+				"id": "apple",
+				"name": "Apple"
+			}
+		},
 		"providerUriSetting": "github-enterprise.uri",
 		"providerScopes": [
-			[
-				"user:email"
-			],
-			[
-				"read:user"
-			],
-			[
-				"read:user",
-				"user:email",
-				"repo",
-				"workflow"
-			]
+			["user:email"],
+			["read:user"],
+			["read:user", "user:email", "repo", "workflow"]
 		],
 		"entitlementUrl": "https://api.github.com/copilot_internal/user",
 		"entitlementSignupLimitedUrl": "https://api.github.com/copilot_internal/subscribe_limited_user",
