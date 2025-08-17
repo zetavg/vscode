@@ -36,7 +36,9 @@ import { MinimapCharRendererFactory } from './minimapCharRendererFactory.js';
 import { MinimapPosition, MinimapSectionHeaderStyle, TextModelResolvedOptions } from '../../../common/model.js';
 import { createSingleCallFunction } from '../../../../base/common/functional.js';
 import { LRUCache } from '../../../../base/common/map.js';
-import { DEFAULT_FONT_FAMILY } from '../../../../base/browser/fonts.js';
+// [ZP-FID7] Font
+// import { DEFAULT_FONT_FAMILY } from '../../../../base/browser/fonts.js';
+import { COMPRESSED_FONT_FAMILY } from '../../../../base/browser/fonts.js';
 import { ViewModelDecoration } from '../../../common/viewModel/viewModelDecoration.js';
 import { RunOnceScheduler } from '../../../../base/common/async.js';
 
@@ -143,7 +145,9 @@ class MinimapOptions {
 		this.fontScale = minimapLayout.minimapScale;
 		this.minimapLineHeight = minimapLayout.minimapLineHeight;
 		this.minimapCharWidth = Constants.BASE_CHAR_WIDTH * this.fontScale;
-		this.sectionHeaderFontFamily = DEFAULT_FONT_FAMILY;
+		// [ZP-FID7] Font
+		// this.sectionHeaderFontFamily = DEFAULT_FONT_FAMILY;
+		this.sectionHeaderFontFamily = COMPRESSED_FONT_FAMILY;
 		this.sectionHeaderFontSize = minimapOpts.sectionHeaderFontSize * pixelRatio;
 		this.sectionHeaderLetterSpacing = minimapOpts.sectionHeaderLetterSpacing; // intentionally not multiplying by pixelRatio
 		this.sectionHeaderFontColor = MinimapOptions._getSectionHeaderColor(theme, tokensColorTracker.getColor(ColorId.DefaultForeground));
