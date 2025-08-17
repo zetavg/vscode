@@ -284,6 +284,8 @@ export class TextDiffEditor extends AbstractTextEditor<IDiffEditorViewState> imp
 		return {
 			...super.getConfigurationOverrides(configuration),
 			...this.getReadonlyConfiguration(this.input?.isReadonly()),
+			// [ZP-DEFS] Customizable Diff Editor Font Size
+			fontSize: (configuration.diffEditor as any)?.fontSize,
 			originalEditable: this.input instanceof DiffEditorInput && !this.input.original.isReadonly(),
 			lineDecorationsWidth: '2ch'
 		};
