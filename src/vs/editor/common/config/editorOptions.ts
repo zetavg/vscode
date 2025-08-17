@@ -3486,6 +3486,16 @@ class EditorMinimap extends BaseEditorOption<EditorOption.minimap, IEditorMinima
 			sectionHeaderLetterSpacing: EditorFloatOption.clamp(input.sectionHeaderLetterSpacing ?? this.defaultValue.sectionHeaderLetterSpacing, 0, 5),
 		};
 	}
+
+	// [ZP-SMM1] Shrink the minimap width if the editor is too narrow
+	public override compute(env: IEnvironmentalOptions, options: IComputedEditorOptions, value: EditorMinimapOptions): EditorMinimapOptions {
+		const adjustedMaxColumn = Math.max(Math.min(value.maxColumn, env.outerWidth - 812), 40);
+
+		return {
+			...value,
+			maxColumn: adjustedMaxColumn
+		};
+	}
 }
 
 //#endregion
