@@ -17,6 +17,10 @@ import { isElectron, isMacintosh, isWindows } from '../common/platform.js';
  */
 export const DEFAULT_FONT_FAMILY = isWindows ? '"Input Sans Narrow", "Segoe WPC", "Segoe UI", sans-serif' : isMacintosh ? '"Input Sans Narrow", -apple-system, BlinkMacSystemFont, sans-serif' : '"Input Sans Narrow", system-ui, "Ubuntu", "Droid Sans", sans-serif';
 
+// [ZP-FID7] Font
+export const CONDENSED_FONT_FAMILY = isWindows ? '"Input Sans Condensed", "Segoe WPC", "Segoe UI", sans-serif' : isMacintosh ? '"Input Sans Condensed", -apple-system, BlinkMacSystemFont, sans-serif' : '"Input Sans Condensed", system-ui, "Ubuntu", "Droid Sans", sans-serif';
+export const COMPRESSED_FONT_FAMILY = isWindows ? '"Input Sans Compressed", "Segoe WPC", "Segoe UI", sans-serif' : isMacintosh ? '"Input Sans Compressed", -apple-system, BlinkMacSystemFont, sans-serif' : '"Input Sans Compressed", system-ui, "Ubuntu", "Droid Sans", sans-serif';
+
 interface FontData {
 	readonly family: string;
 }
