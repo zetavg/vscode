@@ -9,6 +9,8 @@ import { isFalsyOrWhitespace } from '../../../base/common/strings.js';
 import { URI } from '../../../base/common/uri.js';
 import { localize } from '../../../nls.js';
 import { ContextKeyExpr } from '../../../platform/contextkey/common/contextkey.js';
+// [ZP-FVC0] Configuration to force views to be collapsed by default
+import { IConfigurationService } from '../../../platform/configuration/common/configuration.js';
 import { ExtensionIdentifier, ExtensionIdentifierSet, IExtensionDescription, IExtensionManifest } from '../../../platform/extensions/common/extensions.js';
 import { SyncDescriptor } from '../../../platform/instantiation/common/descriptors.js';
 import { IInstantiationService } from '../../../platform/instantiation/common/instantiation.js';
@@ -27,6 +29,8 @@ import { WebviewViewPane } from '../../contrib/webviewView/browser/webviewViewPa
 import { checkProposedApiEnabled, isProposedApiEnabled } from '../../services/extensions/common/extensions.js';
 import { ExtensionMessageCollector, ExtensionsRegistry, IExtensionPoint, IExtensionPointUser } from '../../services/extensions/common/extensionsRegistry.js';
 import { ILogService } from '../../../platform/log/common/log.js';
+// [ZP-FVC0] Configuration to force views to be collapsed by default
+import { IConfigurationRegistry, Extensions as ConfigurationExtensions } from '../../../platform/configuration/common/configurationRegistry.js';
 import { IExtensionFeatureTableRenderer, IRenderedData, ITableData, IRowData, IExtensionFeaturesRegistry, Extensions as ExtensionFeaturesRegistryExtensions } from '../../services/extensionManagement/common/extensionFeatures.js';
 import { Disposable } from '../../../base/common/lifecycle.js';
 import { MarkdownString } from '../../../base/common/htmlContent.js';
@@ -520,7 +524,7 @@ class ViewsExtensionHandler implements IWorkbenchContribution {
 						canToggleVisibility: true,
 						canMoveView: viewContainer?.id !== REMOTE,
 						treeView: type === ViewType.Tree ? this.instantiationService.createInstance(CustomTreeView, item.id, item.name, extension.description.identifier.value) : undefined,
-						collapsed: this.showCollapsed(container) || initialVisibility === InitialVisibility.Collapsed,
+						collapsed: this.showCollapsed(container) || initialVisibility === InitialVisibility.Collapsed || this.shouldForceCollapsed(item.id) /* [ZP-FVC0] Configuration to force views to be collapsed by default */,
 						order: order,
 						extensionId: extension.description.identifier,
 						originalContainerId: key,
@@ -638,6 +642,15 @@ class ViewsExtensionHandler implements IWorkbenchContribution {
 		}
 		return false;
 	}
+
+	// [ZP-FVC0] Configuration to force views to be collapsed by default
+	private shouldForceCollapsed(viewId: string): boolean {
+		// Check configuration for views that should be collapsed by default
+		const configService = this.instantiationService.invokeFunction((accessor: any) => accessor.get(IConfigurationService));
+		const forceCollapsedViews: string[] = configService.getValue('workbench.views.forceCollapsed') || [];
+
+		return forceCollapsedViews.includes(viewId);
+	}
 }
 
 class ViewContainersDataRenderer extends Disposable implements IExtensionFeatureTableRenderer {
@@ -753,3 +766,22 @@ Registry.as<IExtensionFeaturesRegistry>(ExtensionFeaturesRegistryExtensions.Exte
 });
 
 registerWorkbenchContribution2(ViewsExtensionHandler.ID, ViewsExtensionHandler, WorkbenchPhase.BlockStartup);
+
+// [ZP-FVC0] Configuration to force views to be collapsed by default
+Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration).registerConfiguration({
+	id: 'workbench',
+	order: 7,
+	title: localize('workbenchConfigurationTitle', "Workbench"),
+	type: 'object',
+	properties: {
+		'workbench.views.forceCollapsed': {
+			type: 'array',
+			items: {
+				type: 'string'
+			},
+			default: [],
+			description: localize('workbench.views.forceCollapsed', "List of view IDs that should be collapsed by default in their containers. Use this to control which extension views start collapsed. Exapmle: [\"bookmarksExplorer\"]."),
+			examples: [['bookmarksExplorer']]
+		}
+	}
+});
