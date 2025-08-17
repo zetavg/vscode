@@ -512,6 +512,30 @@ const registry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Con
 				'default': 'left',
 				'description': localize('sideBarLocation', "Controls the location of the primary side bar and activity bar. They can either show on the left or right of the workbench. The secondary side bar will show on the opposite side of the workbench.")
 			},
+			// [ZP-CS8A] Cycle Side Bar Action
+			'workbench.sideBar.cycleWidths': {
+				'type': 'array',
+				'items': {
+					'oneOf': [
+						{
+							'type': 'number',
+							'minimum': 0
+						},
+						{
+							'type': 'object',
+							'patternProperties': {
+								'^[0-9]+$': {
+									'type': 'number',
+									'minimum': 0
+								}
+							},
+							'additionalProperties': false
+						}
+					]
+				},
+				'default': [280, 500],
+				'markdownDescription': localize('sideBarCycleWidths', "Controls the widths used when cycling through primary side bar display states. Use 0 to represent hidden state. Values can be numbers or objects with window width breakpoints like `{ \"0\": 300, \"1440\": 320 }`. The cycle command will iterate through these widths in order."),
+			},
 			'workbench.panel.showLabels': {
 				'type': 'boolean',
 				'default': true,
