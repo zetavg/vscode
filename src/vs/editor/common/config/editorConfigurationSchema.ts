@@ -261,6 +261,14 @@ const editorConfiguration: IConfigurationNode = {
 				nls.localize('diffAlgorithm.advanced', "Uses the advanced diffing algorithm."),
 			]
 		},
+		// [ZP-DEFS] Customizable Diff Editor Font Size
+		'diffEditor.fontSize': {
+			type: 'number',
+			default: 14,
+			minimum: 6,
+			maximum: 100,
+			description: nls.localize('diffEditorFontSize', "Controls the font size in pixels for the diff editor.")
+		},
 		'diffEditor.hideUnchangedRegions.enabled': {
 			type: 'boolean',
 			default: diffEditorDefaultOptions.hideUnchangedRegions.enabled,
