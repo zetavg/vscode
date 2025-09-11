@@ -211,6 +211,10 @@ export class CycleAuxiliaryBarAction extends Action2 {
 		const targetWidth = evaluateWidth(configuredWidths[nextState], nextState);
 
 		if (targetWidth === 0) {
+			// We need set to the next width in case the auxiliary bar is opened later via other operations
+			const nextNextState = (nextState + 1) % configuredWidths.length;
+			const nextNextTargetWidth = evaluateWidth(configuredWidths[nextNextState], nextNextState);
+			layoutService.setSize(Parts.AUXILIARYBAR_PART, { width: nextNextTargetWidth, height: layoutService.getSize(Parts.AUXILIARYBAR_PART).height });
 			// Hide the auxiliary bar
 			layoutService.setPartHidden(true, Parts.AUXILIARYBAR_PART);
 		} else {
