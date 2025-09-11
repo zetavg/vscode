@@ -166,6 +166,10 @@ export class CycleSideBarAction extends Action2 {
 		const targetWidth = evaluateWidth(configuredWidths[nextState], nextState);
 
 		if (targetWidth === 0) {
+			// We need set to the next width in case the side bar is opened later via other operations
+			const nextNextState = (nextState + 1) % configuredWidths.length;
+			const nextNextTargetWidth = evaluateWidth(configuredWidths[nextNextState], nextNextState);
+			layoutService.setSize(Parts.SIDEBAR_PART, { width: nextNextTargetWidth, height: layoutService.getSize(Parts.SIDEBAR_PART).height });
 			// Hide the side bar
 			layoutService.setPartHidden(true, Parts.SIDEBAR_PART);
 		} else {
