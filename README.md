@@ -30,11 +30,13 @@ You may need to click on "Show all ... assets" to find the one you need.
 ## Development
 
 > [!WARNING]
-> (may be outdated?)
 >
-> Do NOT sync the `main` branch with `microsoft:main` as it might break services which will automatically build the latest stable VSCode with this `main` branch merged into it - we may have merge conflicts and the build will contain code that should be in a future release.
+> **Do NOT merge or sync `main` with `microsoft:main`.**
+> Doing so can break services that automatically build the latest stable VS Code (from a release tag) with this repository’s `main` branch merged into it. This may introduce merge conflicts and pull in code intended for a future release.
 >
-> Instead, the `main` branch should be continuously rebased onto the common ancestor commit of the release branch of the latest released stable release. To find the common ancestor commit, you can check the parent commit of the first commit in `https://github.com/microsoft/vscode/compare/main...release/x.xx` (replace `x.xx` with the latest stable release version).
+> Instead, rebase main onto the commit where microsoft:main and the latest stable release branch diverged (i.e. the common ancestor commit).
+> To find that common ancestor, check the parent commit of the first commit in:
+> `https://github.com/microsoft/vscode/compare/main...release/x.xx`, or use `git merge-base upstream/main upstream/release/x.xx` (replace `x.xx` with the latest stable release version, such as `1.108`).
 
 > [!TIP]
 > See https://github.com/microsoft/vscode/wiki/How-to-Contribute#build-and-run for more information.
