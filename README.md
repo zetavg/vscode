@@ -51,7 +51,7 @@ npm run compile
 npm run watch
 ```
 
-Wait for `npm run watch` to finish the initial compilation. You should see `Finished compilation with 0 errors`. If you see `Finished compilation extensions with 0 errors`, it means the compilation is not yet complete.
+Wait for `npm run watch` to finish the initial compilation. You should see `Finished compilation with 0 errors`. If you see `Finished compilation extensions with 0 errors` instead, the compilation is not yet complete.
 
 Then, in another terminal:
 
