@@ -30,7 +30,8 @@ import { ILifecycleService } from '../../../../services/lifecycle/common/lifecyc
 // import { IExtensionsWorkbenchService } from '../../../extensions/common/extensions.js';
 import { ChatEntitlement, ChatEntitlementContext, ChatEntitlementRequests, isProUser } from '../../../../services/chat/common/chatEntitlementService.js';
 import { CHAT_OPEN_ACTION_ID } from '../actions/chatActions.js';
-import { ChatViewId, ChatViewContainerId } from '../chat.js';
+// [ZP-GCS1] Do not try to install the extension during login
+import { /* ChatViewId, */ ChatViewContainerId } from '../chat.js';
 import { ChatSetupAnonymous, ChatSetupStep, ChatSetupResultValue, InstallChatEvent, InstallChatClassification, refreshTokens } from './chatSetup.js';
 
 const defaultChat = {
