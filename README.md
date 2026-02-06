@@ -4,28 +4,20 @@ This is a fork of [Visual Studio Code](https://github.com/microsoft/vscode) with
 
 ## Download
 
-Built binaries can be found in the [Releases page of the zetavg/vscodium repo](https://github.com/zetavg/vscodium/releases). You may need to click `Show all ... assets` to see all available downloads.
+Built binaries can be found in the [Releases page of the zetavg/vscode-build repo](https://github.com/zetavg/vscode-build/releases). You may need to click `Show all ... assets` to see all available downloads.
 
 You may need to click on "Show all ... assets" to find the one you need.
 
 > [!NOTE]
-> Note that the downloads there are basically VSCodium releases, which are not quite the same as Microsoft's Visual Studio Code. You may need to check VSCodium's documentation for topics such as [how to use Microsoft's VS Code Marketplace](https://github.com/VSCodium/vscodium/blob/master/docs/index.md#extensions-marketplace). Some topics in [Troubleshooting](https://github.com/VSCodium/vscodium/blob/master/docs/troubleshooting.md) related to Remote SSH, `Apple cannot check it for malicious software` or `app is damaged and can’t be opened` errors might be useful.
+> Note that the downloads there are basically VSCodium releases, which are not quite the same as Microsoft's Visual Studio Code. You may need to check VSCodium's documentation for help. Some topics in [Troubleshooting](https://github.com/VSCodium/vscodium/blob/master/docs/troubleshooting.md) related to [Remote SSH](https://github.com/VSCodium/vscodium/blob/c7b5ab02b1d76f75beca55ea2c7a3b232afdec4d/docs/troubleshooting.md#remote-ssh-doesnt-work), [`Apple cannot check it for malicious software`](https://github.com/VSCodium/vscodium/blob/c7b5ab02b1d76f75beca55ea2c7a3b232afdec4d/docs/troubleshooting.md#app-cant-be-opened-because-apple-cannot-check-it-for-malicious-software) or [`app is damaged and can’t be opened`](https://github.com/VSCodium/vscodium/blob/c7b5ab02b1d76f75beca55ea2c7a3b232afdec4d/docs/troubleshooting.md#macos-quarantine) errors might be useful.
 
-> [!NOTE]
-> While using remote development extensions such as [Open Remote - SSH](https://open-vsx.org/extension/jeanp413/open-remote-ssh), [it will automatically download a Remote Extension Host (REH) from VSCodium based on the version and release number of the local VSCode](https://github.com/jeanp413/open-remote-ssh/blob/v0.0.45/src/serverSetup.ts#L38). Also, the REH will [reject a connection if the commit of the REH is not the same as the commit of the local VSCode](https://github.com/microsoft/vscode/blob/1.90.0/src/vs/server/node/remoteExtensionHostAgentServer.ts#L369-L374).
->
-> Since the version number of zetavg/vscode and VSCodium might not be the same, you may encounter a `Could not establish connection to "x.x.x.x"` error, or a `Client refused: version mismatch` error when trying to connect to a remote server.
->
-> To workaround this, you'll need to:
->
-> 1. Set the `"remote.SSH.serverDownloadUrlTemplate"` user setting to a URL with hard-coded VSCodium version and release number, e.g. `"https://github.com/VSCodium/vscodium/releases/download/1.91.1.24193/vscodium-reh-${os}-${arch}-1.91.1.24193.tar.gz"` (replace the `${version}.${release}` part with hard-coded ones base on [available VSCodium releases](https://github.com/VSCodium/vscodium/releases)).
-> 2. To avoid the `Client refused: version mismatch` error, `zetavg/vscode` has been patched to use a customizable commit hash while interacting with REHs. You can find the commit hash of a VSCodium REH by downloading one on it's [releases page](https://github.com/VSCodium/vscodium/releases) (look for any `vscodium-reh-*.tar.gz`; only the release version matters, the platform does not), un-package it, and look for the `"commit"` property in the `product.json` file. Set that commit hash as your `"remoteExtensionHost.commit"` user setting in your `zetavg/vscode`.
->
-> <details>
-> <summary>Debugging <code>vscodium-server</code> (or <code>vscode-server-oss</code>, <code>vscode-server</code>)</summary>
-> <br />
-> The server will be installed at <code>~/.vscodium-server/bin/[real-client-commit]></code> (or <code>~/.vscode-server-oss/...</code>, etc.) on the remote server. The <code>[real-client-commit]</code> is the actual commit of your local vscode, which can be found in Code > About Visual Studio Code. Logs can be found at <code>~/.vscodium-server/.[real-client-commit].log</code>. You can use <code>pkill -f vscodium-server</code> to kill all running servers.
-> </details>
+
+### Extensions
+
+Some extensions (e.g., GitHub Copilot and GitHub Copilot Chat) aren’t available on Open VSX, so you need to install them manually.
+Download Visual Studio Code with the same version number (links [here](https://stackoverflow.com/a/76018303/3416647)), install the required extensions there, then export them as VSIX files.
+Finally, install those VSIX files in your editor.
+
 
 ## Development
 
