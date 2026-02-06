@@ -274,6 +274,13 @@
         "terminalCommandDecoration.errorBackground": "#bf616a",
         "terminalStickyScrollHover.background": "#2b303b",
         "scmGraph.historyItemBaseRefColor": "#ea5c00",
+        "scmGraph.historyItemHoverAdditionsForeground": "#a3be8c",
+        "scmGraph.historyItemHoverDeletionsForeground": "#bf616a",
+        "scmGraph.foreground1": "#fecc66",
+        "scmGraph.foreground2": "#bf616a",
+        "scmGraph.foreground3": "#ab7967",
+        "scmGraph.foreground4": "#8fa1b3",
+        "scmGraph.foreground5": "#b48ead",
         "debugIcon.breakpointForeground": "#bf616a",
         "debugIcon.breakpointCurrentStackframeForeground": "#fecc66",
         "debugIcon.breakpointStackframeForeground": "#8fc853",
@@ -311,7 +318,13 @@
         "settings.focusedRowBackground": "#232830b3",
         "settings.headerBorder": "#0000",
         "settings.sashBorder": "#0000",
-        "breadcrumb.foreground": "#65737e"
+        "breadcrumb.foreground": "#65737e",
+        "charts.red": "#bf616a",
+        "charts.blue": "#96b5b4",
+        "charts.yellow": "#ebcb8b",
+        "charts.orange": "#d08770",
+        "charts.green": "#a3be8c",
+        "charts.purple": "#b48ead"
     },
     "tokenColors": [
         {
