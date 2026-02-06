@@ -1,5 +1,7 @@
 /* eslint-disable header/header */
 
+// [ZP-11FC] ThemeColors type generation (generates `src/vs/workbench/contrib/themes/colors.ts`)
+
 import { Color } from '../../../../../base/common/color.js';
 import {
 	type ColorContribution,
@@ -9,7 +11,7 @@ import {
 	type ColorValue,
 } from '../../../../../platform/theme/common/colorRegistry.js';
 
-export function isColorValueDerived(colorValue: ColorValue | null) {
+export function isColorValueDerived(colorValue: ColorValue | null): boolean {
 	if (!colorValue) {
 		return false;
 	}
@@ -25,9 +27,10 @@ export function isColorValueDerived(colorValue: ColorValue | null) {
 			return colorValue.values.some(isColorValueDerived);
 		} else if (colorValue.op === ColorTransformType.IfDefinedThenElse) {
 			return isColorValueDerived(colorValue.then);
+		} else if (colorValue.op === ColorTransformType.Mix) {
+			return isColorValueDerived(colorValue.color) && isColorValueDerived(colorValue.with);
 		} else {
-			throw new Error('TODO');
-			// return isColorValueDerived(colorValue.value);
+			return isColorValueDerived(colorValue.value);
 		}
 	}
 
