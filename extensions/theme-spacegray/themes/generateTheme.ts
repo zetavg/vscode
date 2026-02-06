@@ -16,7 +16,7 @@ export function generateTheme(
 ) {
 	const processedColors = Object.fromEntries(
 		Object.entries(colors)
-			.filter(([, v]) => (typeof v === 'string' ? !!v : !!(v && v[type])))
+			.filter(([, v]) => (typeof v === 'string' ? !!v && v !== 'TODO' : !!(v && v[type])))
 			.map(([k, v]) => [k, colorToHex(typeof v === 'string' ? v : v[type])])
 	);
 
@@ -29,7 +29,7 @@ export function generateTheme(
 			...cs,
 			settings: Object.fromEntries(
 				Object.entries(cs.settings)
-					.filter(([, v]) => (typeof v === 'string' ? !!v : !!(v && v[type])))
+					.filter(([, v]) => (typeof v === 'string' ? !!v && v !== 'TODO' : !!(v && v[type])))
 					.map(([k, v]) => [
 						k,
 						k === 'fontStyle' ? v : colorToHex(typeof v === 'string' ? v : v[type]),
