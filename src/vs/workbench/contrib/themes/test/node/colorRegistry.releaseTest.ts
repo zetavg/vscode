@@ -20,6 +20,7 @@ import { NullLogService } from '../../../../../platform/log/common/log.js';
 import { mock } from '../../../../../base/test/common/mock.js';
 import { INativeEnvironmentService } from '../../../../../platform/environment/common/environment.js';
 import { FileAccess } from '../../../../../base/common/network.js';
+// [ZP-11FC] ThemeColors type generation (generates `src/vs/workbench/contrib/themes/colors.ts`)
 import { defaultsToString, isConsideredRequired } from './utils.js';
 
 interface ColorInfo {
@@ -116,6 +117,7 @@ suite('Color Registry', function () {
 		}
 	});
 
+	// [ZP-11FC] ThemeColors type generation (generates `src/vs/workbench/contrib/themes/colors.ts`)
 	test(`update colors in colors.ts`, async function () {
 		const varFilePath = FileAccess.asFileUri('vs/../../src/vs/workbench/contrib/themes/colors.ts').fsPath;
 		const fileContentLines = [
