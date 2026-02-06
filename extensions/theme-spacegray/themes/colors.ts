@@ -381,6 +381,10 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 		dark: opacity(c.base07, 0.1),
 		light: opacity(c.base02, 0.1),
 	},
+	'textPreformat.border': { // TODO
+		dark: '#00000000',
+		light: '#00000000'
+	},
 	'textSeparator.foreground': { // need to check
 		dark: opacity(c.base07, 0.1),
 		light: opacity(c.base00, 0.1),
@@ -420,6 +424,15 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 		light: lighten(ac.light_link_color, -0.16),
 	},
 	'button.secondaryHoverBackground': opacity(c.base0C_a, 0.5), // need to check
+
+	'radio.activeForeground': 'TODO',
+	'radio.activeBackground': 'TODO',
+	'radio.activeBorder': 'TODO',
+	'radio.inactiveForeground': 'TODO',
+	'radio.inactiveBackground': 'TODO',
+	'radio.inactiveBorder': 'TODO',
+	'radio.inactiveHoverBackground': 'TODO',
+
 	'checkbox.background': {
 		dark: c.base00_a,
 		light: c.base06,
@@ -501,6 +514,7 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	//
 	// Scrollbar control
 	//
+	'scrollbar.background': '#00000000', // no background
 	'scrollbar.shadow': '#00000000', // no shadow
 	'scrollbarSlider.activeBackground': {
 		dark: opacity(c.base03, 0.9),
@@ -530,6 +544,10 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 		// light: lighten(c.base04, 0.1),
 		light: c.base05,
 	},
+	'activityWarningBadge.foreground': '#ffffff', // TODO
+	'activityWarningBadge.background': { 'dark': '#B27C00', 'light': '#B27C00' }, // TODO
+	'activityErrorBadge.foreground': '#ffffff', // TODO
+	'activityErrorBadge.background': { 'dark': '#F14C4C', 'light': '#E51400', }, // TODO
 
 	//
 	// Progress bar
@@ -538,6 +556,13 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 		dark: opacity(c.base03, 0.9),
 		light: opacity(c.base04, 0.9),
 	},
+
+	//
+	// Chart
+	//
+	'chart.line': { 'dark': '#236B8E', 'light': '#236B8E' }, // TODO
+	'chart.axis': 'TODO',
+	'chart.guide': 'TODO',
 
 	//
 	// Lists and trees
@@ -746,6 +771,7 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	// 'editor.wordHighlightStrongBorder': '', // optional
 	// 'editor.wordHighlightTextBackground': '', // optional
 	// 'editor.wordHighlightTextBorder': '', // optional
+	'editor.compositionBorder': 'TODO',
 	'editor.findMatchBackground': {
 		'dark': opacity(findMatchIndicatorColor, 0.05),
 		'light': opacity(findMatchIndicatorColor, 0.05),
@@ -1053,6 +1079,11 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 		light: '',
 	},
 	// 'chat.avatarForeground': '', // optional
+	'chat.editedFileForeground': 'TODO',
+	'chat.requestCodeBorder': 'TODO',
+	'chat.checkpointSeparator': 'TODO',
+	'chat.linesAddedForeground': 'TODO',
+	'chat.linesRemovedForeground': 'TODO',
 
 	//
 	// Inline Chat colors
@@ -1097,6 +1128,7 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	// 'editorSuggestWidget.selectedForeground': '', // optional
 	// 'editorSuggestWidget.selectedIconForeground': '', // optional
 	// 'editorSuggestWidgetStatus.foreground': '', // optional
+	'inlineEdit.gutterIndicator.background': 'TODO',
 	'editorHoverWidget.foreground': {
 		dark: c.base05,
 		light: c.base03,
@@ -1362,9 +1394,12 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	// 'extensionBadge.remoteBackground': '', // optional
 	// 'extensionBadge.remoteForeground': '', // optional
 	'extensionIcon.starForeground': '',
+	'extensionIcon.privateForeground': '',
 	// 'extensionIcon.verifiedForeground': '', // optional
 	'extensionIcon.preReleaseForeground': '',
 	'extensionIcon.sponsorForeground': '',
+
+	'mcpIcon.starForeground': '',
 
 	//
 	// Quick picker colors
@@ -1487,6 +1522,19 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 		light: c.base06,
 	},
 	'terminal.initialHintForeground': '',
+	'terminalSymbolIcon.inlineSuggestionForeground': 'TODO',
+
+	//
+	// SCM
+	//
+	'scmGraph.historyItemBaseRefColor': '#EA5C00', // TODO
+	'scmGraph.historyItemHoverAdditionsForeground': 'TODO',
+	'scmGraph.historyItemHoverDeletionsForeground': 'TODO',
+	'scmGraph.foreground1': 'TODO',
+	'scmGraph.foreground2': 'TODO',
+	'scmGraph.foreground3': 'TODO',
+	'scmGraph.foreground4': 'TODO',
+	'scmGraph.foreground5': 'TODO',
 
 	//
 	// Debug Icons colors
