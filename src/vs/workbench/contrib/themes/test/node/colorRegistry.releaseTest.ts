@@ -117,6 +117,7 @@ suite('Color Registry', function () {
 	});
 
 	// [ZP-5D9B] theme color export utility
+	// (generates `src/vs/workbench/contrib/themes/colors.ts`)
 	test(`update colors in colors.ts [ZP-5D9B]`, async function () {
 		const varFilePath = FileAccess.asFileUri('vs/../../src/vs/workbench/contrib/themes/colors.ts').fsPath;
 		const fileContentLines = [
