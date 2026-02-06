@@ -1530,13 +1530,13 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	// SCM
 	//
 	'scmGraph.historyItemBaseRefColor': '#EA5C00', // TODO
-	'scmGraph.historyItemHoverAdditionsForeground': 'TODO',
-	'scmGraph.historyItemHoverDeletionsForeground': 'TODO',
-	'scmGraph.foreground1': 'TODO',
-	'scmGraph.foreground2': 'TODO',
-	'scmGraph.foreground3': 'TODO',
-	'scmGraph.foreground4': 'TODO',
-	'scmGraph.foreground5': 'TODO',
+	'scmGraph.historyItemHoverAdditionsForeground': c.base0B,
+	'scmGraph.historyItemHoverDeletionsForeground': c.base08,
+	'scmGraph.foreground1': c.base0A_a, // "#FFB000"
+	'scmGraph.foreground2': c.base08, // "#DC267F"
+	'scmGraph.foreground3': c.base0F, // "#994F00"
+	'scmGraph.foreground4': c.base0D, // c.base0C already used as current/main branch // "#40B0A6"
+	'scmGraph.foreground5': c.base0E, // "#B66DFF"
 
 	//
 	// Debug Icons colors
@@ -1844,12 +1844,12 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	//
 	// 'charts.foreground': '', // optional
 	// 'charts.lines': '', // optional
-	// 'charts.red': '', // optional
-	// 'charts.blue': '', // optional
-	// 'charts.yellow': '', // optional
-	// 'charts.orange': '', // optional
-	'charts.green': '',
-	'charts.purple': '',
+	'charts.red': c.base08, // optional
+	'charts.blue': c.base0C, // optional
+	'charts.yellow': c.base0A, // optional
+	'charts.orange': c.base09,
+	'charts.green': c.base0B,
+	'charts.purple': c.base0E,
 
 	//
 	// Ports Colors
