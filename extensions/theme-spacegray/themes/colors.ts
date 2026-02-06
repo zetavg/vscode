@@ -993,12 +993,14 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	//
 
 	'diffEditor.insertedLineBackground': {
-		dark: opacity(addedIndicator.dark, 0.12),
-		light: opacity(addedIndicator.light, 0.12),
+		// The green color may be too dark/light that makes the text on it hard to read, so we use a more transparent color to make sure the text is readable.
+		dark: opacity(addedIndicator.dark, 0.1),
+		light: opacity(addedIndicator.light, 0.1),
 	},
 	'diffEditor.insertedTextBackground': {
-		dark: opacity(addedIndicator.dark, 0.20),
-		light: opacity(addedIndicator.light, 0.20),
+		// The green color may be too dark/light that makes the text on it hard to read, so we use a more transparent color to make sure the text is readable.
+		dark: opacity(addedIndicator.dark, 0.1),
+		light: opacity(addedIndicator.light, 0.1),
 	},
 	// 'diffEditor.insertedTextBorder': '', // optional
 	'diffEditor.removedLineBackground': {
