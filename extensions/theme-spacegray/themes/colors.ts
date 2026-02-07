@@ -1083,9 +1083,12 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	// 'chat.avatarForeground': '', // optional
 	'chat.editedFileForeground': 'TODO',
 	'chat.requestCodeBorder': 'TODO',
-	'chat.checkpointSeparator': 'TODO',
-	'chat.linesAddedForeground': 'TODO',
-	'chat.linesRemovedForeground': 'TODO',
+	'chat.checkpointSeparator': {
+		dark: opacity(foreground.dark, 0.2),
+		light: opacity(foreground.light, 0.2),
+	},
+	'chat.linesAddedForeground': c.base0B,
+	'chat.linesRemovedForeground': c.base08,
 
 	//
 	// Inline Chat colors
