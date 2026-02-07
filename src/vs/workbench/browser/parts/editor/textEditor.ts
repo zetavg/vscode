@@ -30,6 +30,9 @@ import { ICursorPositionChangedEvent } from '../../../../editor/common/cursorEve
 import { IFileService } from '../../../../platform/files/common/files.js';
 import { IMarkdownString } from '../../../../base/common/htmlContent.js';
 
+// [ZP-E468] Editor font size by max window width
+import { ILayoutService } from '../../../../platform/layout/browser/layoutService.js';
+
 export interface IEditorConfiguration {
 	editor: object;
 	diffEditor: object;
@@ -63,6 +66,9 @@ export abstract class AbstractTextEditor<T extends IEditorViewState> extends Abs
 
 	private readonly inputListener = this._register(new MutableDisposable());
 
+	// [ZP-E468] Editor font size by max window width
+	private readonly layoutService: ILayoutService;
+
 	constructor(
 		id: string,
 		group: IEditorGroup,
@@ -79,6 +85,15 @@ export abstract class AbstractTextEditor<T extends IEditorViewState> extends Abs
 
 		// Listen to configuration changes
 		this._register(this.textResourceConfigurationService.onDidChangeConfiguration(e => this.handleConfigurationChangeEvent(e)));
+
+		// [ZP-E468] Editor font size by max window width
+		// Listen to window layout changes to update responsive font size
+		this.layoutService = this.instantiationService.invokeFunction(accessor => accessor.get(ILayoutService));
+		this._register(this.layoutService.onDidLayoutMainContainer(() => {
+			if (this.isVisible()) {
+				this.updateEditorConfiguration();
+			}
+		}));
 
 		// ARIA: if a group is added or removed, update the editor's ARIA
 		// label so that it appears in the label for when there are > 1 groups
@@ -163,13 +178,45 @@ export abstract class AbstractTextEditor<T extends IEditorViewState> extends Abs
 	}
 
 	protected getConfigurationOverrides(configuration: IEditorConfiguration): ICodeEditorOptions {
+		// [ZP-E468] Editor font size by max window width
+		// Resolve responsive font size from editor.fontSizeByMaxWindowWidth
+		const responsiveFontSize = this.resolveFontSizeByMaxWindowWidth((configuration.editor as any)?.fontSizeByMaxWindowWidth);
+
 		return {
+			// [ZP-E468] Editor font size by max window width
+			...(responsiveFontSize !== undefined ? { fontSize: responsiveFontSize } : {}),
 			overviewRulerLanes: 3,
 			lineNumbersMinChars: 3,
 			fixedOverflowWidgets: true,
 			...this.getReadonlyConfiguration(this.input?.isReadonly()),
 			renderValidationDecorations: configuration.problems?.visibility !== false ? 'on' : 'off'
 		};
+	}
+
+	// [ZP-E468] Editor font size by max window width
+	// Resolve font size from a breakpoint map based on current window width.
+	// The breakpoint map is { "maxWidth": fontSize }, where the narrowest (smallest) matching breakpoint wins (like CSS `@media (max-width: ...)`)
+	protected resolveFontSizeByMaxWindowWidth(breakpointMap: Record<string, number> | undefined): number | undefined {
+		if (!breakpointMap || typeof breakpointMap !== 'object') {
+			return undefined;
+		}
+
+		const windowWidth = this.layoutService.mainContainerDimension.width;
+		const breakpoints = Object.keys(breakpointMap)
+			.map(key => parseInt(key, 10))
+			.filter(key => !isNaN(key))
+			.sort((a, b) => a - b); // Sort ascending so we find the narrowest match
+
+		for (const breakpoint of breakpoints) {
+			if (windowWidth <= breakpoint) {
+				const fontSize = breakpointMap[breakpoint.toString()];
+				if (typeof fontSize === 'number' && fontSize >= 6 && fontSize <= 100) {
+					return fontSize;
+				}
+			}
+		}
+
+		return undefined;
 	}
 
 	protected createEditor(parent: HTMLElement): void {
