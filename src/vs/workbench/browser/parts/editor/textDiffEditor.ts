@@ -271,6 +271,11 @@ export class TextDiffEditor extends AbstractTextEditor<IDiffEditorViewState> imp
 			diffEditorConfiguration.diffWordWrap = <'off' | 'on' | 'inherit' | undefined>diffEditorConfiguration.wordWrap;
 			delete diffEditorConfiguration.wordWrap;
 
+			// [ZP-E468] Editor font size by max window width
+			// [ZP-DEFS] Customizable Diff Editor Font Size
+			// fontSize is handled by getConfigurationOverrides (responsive + static), so remove it here to prevent the raw diffEditor.fontSize (default 0) from clobbering it.
+			delete diffEditorConfiguration.fontSize;
+
 			Object.assign(editorConfiguration, diffEditorConfiguration);
 		}
 
@@ -281,11 +286,18 @@ export class TextDiffEditor extends AbstractTextEditor<IDiffEditorViewState> imp
 	}
 
 	protected override getConfigurationOverrides(configuration: IEditorConfiguration): IDiffEditorOptions {
+		// [ZP-E468] Editor font size by max window width
+		// Resolve responsive font size from diffEditor.fontSizeByMaxWindowWidth
+		const responsiveDiffFontSize = this.resolveFontSizeByMaxWindowWidth((configuration.diffEditor as any)?.fontSizeByMaxWindowWidth);
+
 		return {
 			...super.getConfigurationOverrides(configuration),
 			...this.getReadonlyConfiguration(this.input?.isReadonly()),
 			// [ZP-DEFS] Customizable Diff Editor Font Size
-			fontSize: (configuration.diffEditor as any)?.fontSize,
+			// [ZP-E468] Editor font size by max window width
+			// fontSize: (configuration.diffEditor as any)?.fontSize,
+			// Responsive font size takes priority over static diffEditor.fontSize
+			fontSize: responsiveDiffFontSize ?? (configuration.diffEditor as any)?.fontSize,
 			originalEditable: this.input instanceof DiffEditorInput && !this.input.original.isReadonly(),
 			lineDecorationsWidth: '2ch'
 		};
