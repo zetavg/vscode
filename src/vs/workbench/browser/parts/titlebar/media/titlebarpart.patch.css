@@ -5,3 +5,9 @@
 .monaco-workbench .part.titlebar > .titlebar-container > .titlebar-right:hover {
 	opacity: 1;
 }
+
+
+.monaco-workbench .part.titlebar > .titlebar-container {
+	/* Small adjustment to make the content of the title bar look more vertically centered while using the Spacegrey theme */
+	padding-top: 1px;
+}
