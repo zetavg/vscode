@@ -22,6 +22,15 @@ export const editorConfigurationBaseNode = Object.freeze<IConfigurationNode>({
 const editorConfiguration: IConfigurationNode = {
 	...editorConfigurationBaseNode,
 	properties: {
+		// [ZP-E468] Editor font size by max window width
+		'editor.fontSizeByMaxWindowWidth': {
+			type: 'object',
+			default: { '1440': 14.5, '1380': 14 },
+			markdownDescription: nls.localize('fontSizeByMaxWindowWidth', "Controls the font size in pixels based on window width. Each key is a max window width (in pixels), and the value is the font size to use when the window width is at or below that value. The narrowest matching breakpoint wins. Example: `{\"1440\": 14.5, \"1200\": 13}`."),
+			additionalProperties: {
+				type: 'number'
+			}
+		},
 		'editor.tabSize': {
 			type: 'number',
 			default: EDITOR_MODEL_DEFAULTS.tabSize,
@@ -270,6 +279,15 @@ const editorConfiguration: IConfigurationNode = {
 			minimum: 6,
 			maximum: 100,
 			description: nls.localize('diffEditorFontSize', "Controls the font size in pixels for the diff editor.")
+		},
+		// [ZP-E468] Editor font size by max window width
+		'diffEditor.fontSizeByMaxWindowWidth': {
+			type: 'object',
+			default: { '1440': 13.5, '1380': 13 },
+			markdownDescription: nls.localize('diffEditorFontSizeByMaxWindowWidth', "Controls the diff editor font size in pixels based on window width. Each key is a max window width (in pixels), and the value is the font size to use when the window width is at or below that value. The narrowest matching breakpoint wins. Example: `{\"1440\": 14.5, \"1200\": 13}`."),
+			additionalProperties: {
+				type: 'number'
+			}
 		},
 		'diffEditor.hideUnchangedRegions.enabled': {
 			type: 'boolean',
