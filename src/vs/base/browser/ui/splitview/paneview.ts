@@ -18,7 +18,9 @@ import { ScrollEvent } from '../../../common/scrollable.js';
 import './paneview.css';
 import './paneview.patch.css';
 import { localize } from '../../../../nls.js';
-import { IView, Sizing, SplitView } from './splitview.js';
+// [ZP-CF73] Prioritize explorer pane when redistributing space on pane collapse
+// import { IView, Sizing, SplitView } from './splitview.js';
+import { IView, LayoutPriority, Sizing, SplitView } from './splitview.js';
 import { applyDragImage } from '../dnd/dnd.js';
 
 export interface IPaneOptions {
@@ -28,6 +30,8 @@ export interface IPaneOptions {
 	orientation?: Orientation;
 	title: string;
 	titleDescription?: string;
+	// [ZP-CF73] Prioritize explorer pane when redistributing space on pane collapse
+	priority?: LayoutPriority;
 }
 
 export interface IPaneStyles {
@@ -141,6 +145,9 @@ export abstract class Pane extends Disposable implements IView {
 
 	orthogonalSize: number = 0;
 
+	// [ZP-CF73] Prioritize explorer pane when redistributing space on pane collapse
+	readonly priority?: LayoutPriority;
+
 	protected getAriaHeaderLabel(title: string): string {
 		return localize('viewSection', "{0} Section", title);
 	}
@@ -152,6 +159,8 @@ export abstract class Pane extends Disposable implements IView {
 		this._ariaHeaderLabel = this.getAriaHeaderLabel(options.title);
 		this._minimumBodySize = typeof options.minimumBodySize === 'number' ? options.minimumBodySize : this._orientation === Orientation.HORIZONTAL ? 200 : 120;
 		this._maximumBodySize = typeof options.maximumBodySize === 'number' ? options.maximumBodySize : Number.POSITIVE_INFINITY;
+		// [ZP-CF73] Prioritize explorer pane when redistributing space on pane collapse
+		this.priority = options.priority;
 
 		this.element = $('.pane');
 	}
