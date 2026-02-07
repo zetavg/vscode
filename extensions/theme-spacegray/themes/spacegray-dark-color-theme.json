@@ -184,7 +184,7 @@
         "editorGutter.addedSecondaryBackground": "#a3be8c4d",
         "editorGutter.deletedSecondaryBackground": "#bf616a4d",
         "bookmarks.overviewRuler": "#ab7967",
-        "diffEditor.insertedLineBackground": "#a3be8c1a",
+        "diffEditor.insertedLineBackground": "#a3be8c14",
         "diffEditor.insertedTextBackground": "#a3be8c1a",
         "diffEditor.removedLineBackground": "#bf616a1f",
         "diffEditor.removedTextBackground": "#bf616a33",
