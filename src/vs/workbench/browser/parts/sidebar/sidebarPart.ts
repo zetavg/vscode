@@ -22,6 +22,7 @@ import { IExtensionService } from '../../../services/extensions/common/extension
 import { LayoutPriority } from '../../../../base/browser/ui/grid/grid.js';
 import { assertReturnsDefined } from '../../../../base/common/types.js';
 import { IViewDescriptorService, ViewContainerLocation } from '../../../common/views.js';
+import { DisposableMap } from '../../../../base/common/lifecycle.js'; // [ZP-A0TH]
 import { AbstractPaneCompositePart, CompositeBarPosition } from '../paneCompositePart.js';
 import { ActivityBarCompositeBar, ActivitybarPart } from '../activitybar/activitybarPart.js';
 import { ActionsOrientation } from '../../../../base/browser/ui/actionbar/actionbar.js';
@@ -126,6 +127,10 @@ export class SidebarPart extends AbstractPaneCompositePart {
 				this.onDidChangeActivityBarLocation();
 			}
 		}));
+
+		// [ZP-A0TH] Listen for view container changes to dynamically show/hide
+		// the composite bar based on the number of active view containers.
+		this.trackActiveViewContainers(viewDescriptorService);
 
 		this.registerActions();
 	}
@@ -233,11 +238,65 @@ export class SidebarPart extends AbstractPaneCompositePart {
 		};
 	}
 
+	// [ZP-A0TH] Track active view containers to dynamically show/hide composite bar.
+	private trackActiveViewContainers(viewDescriptorService: IViewDescriptorService): void {
+		const perContainerListeners = this._register(new DisposableMap<string>());
+
+		const subscribeToContainer = (containerId: string) => {
+			const container = viewDescriptorService.getViewContainerById(containerId);
+			if (container) {
+				perContainerListeners.set(containerId, viewDescriptorService.getViewContainerModel(container)
+					.onDidChangeActiveViewDescriptors(() => this.onDidChangeActivityBarLocation()));
+			}
+		};
+
+		// Subscribe to existing sidebar containers
+		for (const vc of viewDescriptorService.getViewContainersByLocation(ViewContainerLocation.Sidebar)) {
+			subscribeToContainer(vc.id);
+		}
+
+		// React to containers being added/removed
+		this._register(viewDescriptorService.onDidChangeViewContainers(({ added, removed }) => {
+			for (const { container, location } of added) {
+				if (location === ViewContainerLocation.Sidebar) {
+					subscribeToContainer(container.id);
+				}
+			}
+			for (const { container } of removed) {
+				perContainerListeners.deleteAndDispose(container.id);
+			}
+			this.onDidChangeActivityBarLocation();
+		}));
+
+		// React to containers being moved between locations
+		this._register(viewDescriptorService.onDidChangeContainerLocation(({ viewContainer, from, to }) => {
+			if (to === ViewContainerLocation.Sidebar) {
+				subscribeToContainer(viewContainer.id);
+			} else if (from === ViewContainerLocation.Sidebar) {
+				perContainerListeners.deleteAndDispose(viewContainer.id);
+			}
+			this.onDidChangeActivityBarLocation();
+		}));
+	}
+
 	protected shouldShowCompositeBar(): boolean {
 		// [ZP-A0TH] Show composite bar (i.e. the activity bar when it's on top or bottom)
 		// only if there are multiple view containers (i.e. tabs) in the side bar.
-		// The update is not instance, user may need to toggle the activity bar visibility
-		// to see the change.
+		//
+		// Limitation: when tabs are unpinned (hidden via the context menu) leaving
+		// only one visible tab, the bar does not auto-hide. This is because:
+		// - Pin/unpin is a UI-level operation on CompositeBar (private, no public
+		//   event), not reflected in IViewDescriptorService or activeViewDescriptors.
+		// - Hooking into CompositeBar.onDidChange via `(bar as any).compositeBar`
+		//   causes infinite loops: creating a new composite bar fires onDidChange
+		//   during setup, and the guard (comparing current vs desired visibility)
+		//   did not prevent the loop in practice.
+		// - Reading pinned state from storage (ActivitybarPart.pinnedViewContainersKey)
+		//   also did not work reliably: the storage write happens inside
+		//   PaneCompositeBar's own onDidChange handler (registered async via
+		//   whenInstalledExtensionsRegistered), and timing/re-entrance issues
+		//   prevented the external listener from seeing the updated state.
+		// The user can toggle activity bar visibility to force a re-evaluation.
 		const viewDescriptorService: IViewDescriptorService = (this as any).viewDescriptorService;
 		const activeViewContainers = viewDescriptorService.getViewContainersByLocation(ViewContainerLocation.Sidebar)
 			.filter(vc => viewDescriptorService.getViewContainerModel(vc).activeViewDescriptors.length > 0);
