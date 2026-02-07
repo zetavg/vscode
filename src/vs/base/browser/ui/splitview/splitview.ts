@@ -1226,7 +1226,20 @@ export class SplitView<TLayoutContext = undefined, TView extends IView<TLayoutCo
 	private relayout(lowPriorityIndexes?: number[], highPriorityIndexes?: number[]): void {
 		const contentSize = this.viewItems.reduce((r, i) => r + i.size, 0);
 
-		this.resize(this.viewItems.length - 1, this.size - contentSize, undefined, lowPriorityIndexes, highPriorityIndexes);
+		// [ZP-CF73] Prioritize explorer pane when redistributing space on pane collapse
+		// this.resize(this.viewItems.length - 1, this.size - contentSize, undefined, lowPriorityIndexes, highPriorityIndexes);
+		// Merge explicit priority indexes with priority derived from view items
+		const low = new Set(lowPriorityIndexes);
+		const high = new Set(highPriorityIndexes);
+		for (let i = 0; i < this.viewItems.length; i++) {
+			if (this.viewItems[i].priority === LayoutPriority.Low) {
+				low.add(i);
+			} else if (this.viewItems[i].priority === LayoutPriority.High) {
+				high.add(i);
+			}
+		}
+
+		this.resize(this.viewItems.length - 1, this.size - contentSize, undefined, low.size > 0 ? [...low] : undefined, high.size > 0 ? [...high] : undefined);
 		this.distributeEmptySpace();
 		this.layoutViews();
 		this.saveProportions();
