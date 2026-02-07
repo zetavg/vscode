@@ -26,6 +26,8 @@ import { WorkbenchCompressibleAsyncDataTree } from '../../../../../platform/list
 import { DelayedDragHandler } from '../../../../../base/browser/dnd.js';
 import { IEditorService, SIDE_GROUP, ACTIVE_GROUP } from '../../../../services/editor/common/editorService.js';
 import { IViewPaneOptions, ViewPane } from '../../../../browser/parts/views/viewPane.js';
+// [ZP-CF73] Prioritize explorer pane when redistributing space on pane collapse
+import { LayoutPriority } from '../../../../../base/browser/ui/splitview/splitview.js';
 import { ILabelService } from '../../../../../platform/label/common/label.js';
 import { ExplorerDelegate, ExplorerDataSource, FilesRenderer, ICompressedNavigationController, FilesFilter, FileSorter, FileDragAndDrop, ExplorerCompressionDelegate, isCompressedFolderName, ExplorerFindProvider } from './explorerViewer.js';
 import { IThemeService, IFileIconTheme } from '../../../../../platform/theme/common/themeService.js';
@@ -217,7 +219,9 @@ export class ExplorerView extends ViewPane implements IExplorerView {
 		@IOpenerService openerService: IOpenerService,
 		@IAccessibilityService private readonly accessibilityService: IAccessibilityService
 	) {
-		super(options, keybindingService, contextMenuService, configurationService, contextKeyService, viewDescriptorService, instantiationService, openerService, themeService, hoverService);
+		// [ZP-CF73] Prioritize explorer pane when redistributing space on pane collapse
+		// super(options, keybindingService, contextMenuService, configurationService, contextKeyService, viewDescriptorService, instantiationService, openerService, themeService, hoverService);
+		super({ ...options, priority: LayoutPriority.High }, keybindingService, contextMenuService, configurationService, contextKeyService, viewDescriptorService, instantiationService, openerService, themeService, hoverService);
 
 		this.delegate = options.delegate;
 		this.resourceContext = instantiationService.createInstance(ResourceContextKey);
