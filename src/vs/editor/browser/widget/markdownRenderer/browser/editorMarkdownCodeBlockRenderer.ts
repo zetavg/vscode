@@ -72,7 +72,9 @@ export class EditorMarkdownCodeBlockRenderer implements IMarkdownCodeBlockRender
 			// Otherwise use the global font settings.
 			// Pass in fake pixel ratio of 1 since we only need the font info to apply font family
 			return createBareFontInfoFromRawSettings({
-				fontFamily: this._configurationService.getValue<IEditorOptions>('editor').fontFamily
+				fontFamily: this._configurationService.getValue<IEditorOptions>('editor').fontFamily,
+				// [ZP-4DEA] The default editor fontSize was increased to 15px on macOS (see ZP-35AB patch), but for inline code blocks in markdown (tooltips, hovers, etc.), 15px is too large. Use 12px as the default for better readability in these compact contexts.
+				fontSize: 12,
 			}, 1);
 		}
 	}
