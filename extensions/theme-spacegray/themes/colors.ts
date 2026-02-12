@@ -1050,7 +1050,10 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 		dark: c.base03_a,
 		light: c.base03,
 	},
-	'chat.requestBorder': '',
+	'chat.requestBorder': {
+		dark: opacity(c.base02, 0.5),
+		light: opacity(c.base04, 0.5),
+	},
 	// 'chat.requestBackground': '', // optional
 	'chat.requestBubbleBackground': {
 		// dark: opacity(c.base01, 0.4),
