@@ -52,6 +52,7 @@ import { isResponseVM } from '../../chat/common/model/chatViewModel.js';
 import * as marked from '../../../../base/common/marked/marked.js';
 import { CTX_INLINE_CHAT_FOCUSED, CTX_INLINE_CHAT_RESPONSE_FOCUSED, inlineChatBackground, inlineChatForeground } from '../common/inlineChat.js';
 import './media/inlineChat.css';
+import './media/inlineChat.patch.css';
 
 export interface InlineChatWidgetViewState {
 	editorViewState: ICodeEditorViewState;
