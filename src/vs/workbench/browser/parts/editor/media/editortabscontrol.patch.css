@@ -30,3 +30,7 @@ body:not(.disable-patch-TL0C) {
 		color: inherit;
 	}
 }
+
+.monaco-workbench .part.editor > .content .editor-group-container > .title {
+	cursor: default;
+}
