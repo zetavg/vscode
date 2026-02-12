@@ -1,0 +1,5 @@
+/* [ZP-0221] Fix inline chat border color not configurable */
+.monaco-workbench .zone-widget.inline-chat-widget > .zone-widget-container {
+	border-top-color: var(--vscode-inlineChat-border) !important;
+    border-bottom-color: var(--vscode-inlineChat-border) !important;
+}
