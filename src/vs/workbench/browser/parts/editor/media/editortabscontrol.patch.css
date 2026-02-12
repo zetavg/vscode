@@ -18,3 +18,7 @@
 .monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab .tab-label span {
 	cursor: default;
 }
+
+.monaco-workbench .part.editor > .content .editor-group-container > .title {
+	cursor: default;
+}
