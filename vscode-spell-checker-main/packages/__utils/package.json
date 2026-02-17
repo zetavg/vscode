@@ -1,0 +1,55 @@
+{
+  "name": "@internal/common-utils",
+  "version": "1.0.0",
+  "description": "Shared Utils between server and client",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./autoLoad": {
+      "import": "./dist/autoLoad.js"
+    },
+    "./eventEmitter": {
+      "import": "./dist/EventEmitter/index.mjs"
+    },
+    "./eventEmitter/operators": {
+      "import": "./dist/EventEmitter/operators/index.mjs"
+    },
+    "./errors": {
+      "import": "./dist/errors.js"
+    },
+    "./log": {
+      "import": "./dist/log.js"
+    },
+    "./logger": {
+      "import": "./dist/logger.js"
+    },
+    "./timer": {
+      "import": "./dist/timer.js"
+    },
+    "./uriHelper": {
+      "import": "./dist/uriHelper.js"
+    },
+    "./util": {
+      "import": "./dist/util.js"
+    }
+  },
+  "scripts": {
+    "build-production": "npm run clean-build",
+    "build": "tsc -p .",
+    "clean-build": "npm run clean && npm run build",
+    "clean": "shx rm -rf out dist coverage",
+    "test": "vitest run .",
+    "watch": "tsc -p . --watch"
+  },
+  "dependencies": {
+    "@cspell/url": "^9.6.4",
+    "vscode-uri": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=22.20.0"
+  }
+}

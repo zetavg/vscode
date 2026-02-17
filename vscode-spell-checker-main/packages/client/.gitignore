@@ -1,0 +1,9 @@
+out/*
+dist/*
+coverage/*
+server/*
+regexWorker/*
+node_modules
+temp
+*.vsix
+*.cpuprofile

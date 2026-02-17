@@ -1,0 +1,33 @@
+{
+  "name": "webview-api",
+  "version": "1.0.0",
+  "description": "Define the API between the extension and the webviews.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./apiModels": {
+      "import": "./dist/apiModels.js",
+      "types": "./dist/apiModels.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "build-production": "npm run clean && npm run build",
+    "watch": "tsc -p . --watch",
+    "clean": "shx rm -rf dist",
+    "test": "vitest run"
+  },
+  "author": "Street Side Software",
+  "license": "MIT",
+  "dependencies": {
+    "json-rpc-api": "file:../json-rpc-api",
+    "utils-disposables": "file:../utils-disposables",
+    "utils-logger": "file:../utils-logger"
+  },
+  "engines": {
+    "node": ">=22.20.0"
+  }
+}

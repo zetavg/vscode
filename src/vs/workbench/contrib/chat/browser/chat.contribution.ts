@@ -11,6 +11,7 @@ import { Schemas } from '../../../../base/common/network.js';
 import { isMacintosh } from '../../../../base/common/platform.js';
 import { PolicyCategory } from '../../../../base/common/policy.js';
 import { registerEditorFeature } from '../../../../editor/common/editorFeatures.js';
+// import { ModesRegistry } from '../../../../editor/common/languages/modesRegistry.js';
 import * as nls from '../../../../nls.js';
 import { AccessibleViewRegistry } from '../../../../platform/accessibility/browser/accessibleViewRegistry.js';
 import { registerAction2 } from '../../../../platform/actions/common/actions.js';
@@ -1277,6 +1278,13 @@ AccessibleViewRegistry.register(new PanelChatAccessibilityHelp());
 AccessibleViewRegistry.register(new QuickChatAccessibilityHelp());
 AccessibleViewRegistry.register(new EditsChatAccessibilityHelp());
 AccessibleViewRegistry.register(new AgentChatAccessibilityHelp());
+
+// ModesRegistry.registerLanguage({
+// 	id: 'chatinput',
+// 	extensions: [],
+// 	aliases: [],
+// 	mimetypes: ['text/x-chat-input']
+// });
 
 registerEditorFeature(ChatInputBoxContentProvider);
 

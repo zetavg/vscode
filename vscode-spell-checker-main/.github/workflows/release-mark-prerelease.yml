@@ -1,0 +1,53 @@
+# This workflow is used to mark an existing release as a prerelease.
+# It reads the `prerelease` property from the `package.json` file.
+# If the property is `true`, it marks the release as a prerelease.
+# If the property is `false`, it does nothing.
+name: '🚀 Mark Prerelease'
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Tag of the release to be updated.
+        type: string
+        required: true
+  release:
+    types:
+      - published
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: true
+
+permissions:
+  actions: read
+  checks: write
+  contents: write
+  issues: read
+  packages: write
+  pull-requests: read
+  repository-projects: read
+  statuses: read
+
+jobs:
+  UpdateRelease:
+    name: Mark Release
+    env:
+      REF: ${{ inputs.ref || github.ref }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ env.REF }}
+
+      - name: Get Mode
+        id: prerelease-mode
+        uses: ./.github/actions/is-prerelease
+
+      - name: Mark Prerelease
+        if: ${{ steps.prerelease-mode.outputs.prerelease == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release edit ${{ env.REF }} --prerelease

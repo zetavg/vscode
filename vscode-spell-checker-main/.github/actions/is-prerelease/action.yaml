@@ -1,0 +1,24 @@
+name: vsce-args
+description: Determine the arguments to pass to `vsce publish`.
+
+outputs:
+  args:
+    description: arguments to pass to `vsce publish`
+    value: ${{ steps.check-prerelease.outputs.arg }}
+  prerelease:
+    description: Is the package a prerelease? ("true"/"false")
+    value: ${{ steps.check-prerelease.outputs.prerelease }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Check package.json for prerelease
+      id: check-prerelease
+      uses: actions/github-script@v8
+      with:
+        script: |
+          const fs = require('fs');
+          const manifest = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          const vsce = manifest['vsce'] || {};
+          const isPrerelease = vsce.preRelease || false;
+          core.setOutput('arg', isPrerelease ? '--pre-release' : '');
+          core.setOutput('prerelease', isPrerelease);

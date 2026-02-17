@@ -1,0 +1,47 @@
+{
+  "name": "json-rpc-api",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Make JSON-RPC calls ",
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:tsc",
+    "build:tsc": "tsc -p tsconfig.json",
+    "build-production": "npm run clean && npm run build",
+    "clean": "shx rm -rf dist",
+    "coverage": "vitest run --coverage",
+    "test": "vitest run"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "keywords": [
+    "json-rpc",
+    "webviews",
+    "vscode"
+  ],
+  "author": "Street Side Software",
+  "license": "MIT",
+  "dependencies": {
+    "utils-disposables": "file:../utils-disposables",
+    "utils-logger": "file:../utils-logger",
+    "vscode-jsonrpc": "^8.2.1"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.map",
+    "!dist/**/*.test.*",
+    "!dist/**/test/**",
+    "!dist/esm/**/*.js",
+    "!dist/esm/**/*.ts"
+  ],
+  "engines": {
+    "node": ">=22.20.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.109.0"
+  }
+}

@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
+flagWords:
+  - forbidd->forbid
+suggestWords:
+  - againn->again
+ignorePaths:
+  - .git/objects
+  - .vscode
+  - .vscode-insiders
+  - cspell.config.yaml
+  - dictionary.txt
+  - node_modules
+  - package-lock.json
+  - vscode-extension
+dictionaryDefinitions:
+  - name: sample-words
+    path: ./dictionary.txt
+    addWords: true
+  - name: forbid
+    flagWords:
+      - codding->coding
+      - cafë->café
+      - auto-correct->autocorrect
+dictionaries:
+  - sample-words
+  - forbid

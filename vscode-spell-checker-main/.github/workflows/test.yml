@@ -1,0 +1,55 @@
+name: ' 🧪 Build and Test'
+on:
+  pull_request:
+    paths-ignore:
+      - 'website/**'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'website/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    strategy:
+      matrix:
+        os:
+          # - macos-latest # Disabled because github actions randomly fails on macos
+          - ubuntu-latest
+          - windows-latest
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test
+      # Ensure the repository is clean after build & test
+      # - run: git --no-pager diff --compact-summary --exit-code
+
+  test-vsce-build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run test-vsce-build

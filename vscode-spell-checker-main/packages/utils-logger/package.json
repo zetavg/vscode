@@ -1,0 +1,41 @@
+{
+  "name": "utils-logger",
+  "private": true,
+  "version": "1.0.0",
+  "description": "A logger interface.",
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:tsc",
+    "build:tsc": "tsc -p tsconfig.json",
+    "build-production": "npm run clean && npm run build",
+    "clean": "shx rm -rf dist",
+    "coverage": "vitest run --coverage",
+    "test": "vitest run"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/logger.js"
+    }
+  },
+  "keywords": [
+    "json-rpc",
+    "webviews",
+    "vscode"
+  ],
+  "author": "Street Side Software",
+  "license": "MIT",
+  "dependencies": {},
+  "files": [
+    "dist",
+    "!dist/**/*.map",
+    "!dist/**/*.test.*",
+    "!dist/**/test/**",
+    "!dist/esm/**/*.js",
+    "!dist/esm/**/*.ts"
+  ],
+  "engines": {
+    "node": ">=22.20.0"
+  },
+  "devDependencies": {}
+}

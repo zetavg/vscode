@@ -1,0 +1,12 @@
+import:
+  - ../../cspell.config.yaml
+ignorePaths:
+  - out
+  - dist
+  - public/assets
+  - public/build
+words:
+  - codicons
+  - iife
+  - sirv
+  - todos

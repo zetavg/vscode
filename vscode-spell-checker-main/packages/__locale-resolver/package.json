@@ -1,0 +1,26 @@
+{
+  "name": "@internal/locale-resolver",
+  "version": "1.0.0",
+  "description": "Language Code Resolver",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build-production": "npm run clean-build",
+    "build": "tsc -p .",
+    "clean-build": "npm run clean && npm run build",
+    "clean": "shx rm -rf out dist coverage",
+    "test": "vitest run .",
+    "watch": "tsc -p . --watch",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=22.20.0"
+  }
+}

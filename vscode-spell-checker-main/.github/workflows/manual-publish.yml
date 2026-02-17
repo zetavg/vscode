@@ -1,0 +1,114 @@
+# This is a basic workflow that is manually triggered
+
+name: '🚀 Publish to Marketplace'
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: The release TAG to publish. i.e. `v2.3.0`
+        required: true
+        default: 'v2.3.0'
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: true
+    secrets:
+      OVSX_TOKEN:
+        required: true
+      VSCE_TOKEN:
+        required: true
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  check_version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      alpha: ${{ steps.version.outputs.alpha }}
+      validVersion: ${{ steps.version.outputs.validVersion }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Check Package Version
+        id: version
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const fs = require('fs');
+            const manifest = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            const version = manifest.version;
+            core.setOutput('version', version);
+            const alpha = version.includes('alpha');
+            core.setOutput('alpha', alpha || '');
+            const validVersion = /^\d+\.\d+\.\d+$/.test(version);
+            core.setOutput('validVersion', validVersion || '');
+            return {
+              version,
+              alpha,
+              validVersion
+            };
+
+      - name: Display Info
+        uses: streetsidesoftware/actions/public/summary@v1
+        with:
+          text: |
+            # Package Info
+            ref: ${{ inputs.ref }}
+            version: `${{ steps.version.outputs.version }}`
+            alpha: ${{ contains(steps.version.outputs.version, 'alpha') }}
+            validVersion: ${{ steps.version.outputs.validVersion }}
+            versionInfo: ${{ toJSON(steps.version.outputs) }}
+
+      - name: Check Version
+        if: ${{ steps.version.outputs.validVersion != 'true' }}
+        run: |
+          echo "::warning title=Do NOT Publish::The version in package.json is not a releasable version."
+
+  publish:
+    runs-on: ubuntu-latest
+    needs:
+      - check_version
+    if: ${{ needs.check_version.outputs.validVersion == 'true' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install
+        run: |
+          npm install
+          npm run build
+
+      - name: Build Extension .vsix
+        run: npm run package-extension
+      - name: Publish VSCE
+        run: >
+          find ./build -name "*.vsix" | xargs npx vsce publish --skip-duplicate -p ${{ secrets.VSCE_TOKEN }} --packagePath
+          || echo "PUB_FAIL_VSCE=true" >> $GITHUB_ENV
+      - name: Check Publish Result VSCE
+        if: ${{ env.PUB_FAIL_VSCE }}
+        run: echo "::error title=VSCE::Failed to Publish to VS Code Marketplace."
+      - name: Publish OVSX
+        run: >
+          find ./build -name "*.vsix" | xargs npx ovsx publish --skip-duplicate -p ${{ secrets.OVSX_TOKEN }}
+          || echo "PUB_FAIL_OVSX=true" >> $GITHUB_ENV
+      - name: Check Publish Result OVSX
+        if: ${{ env.PUB_FAIL_OVSX }}
+        run: echo "::error title=OVSX::Failed to Publish to Eclipse Open VSX."
+      - name: Check Build
+        if: ${{ env.PUB_FAIL_VSCE || env.PUB_FAIL_OVSX }}
+        run: exit 1
