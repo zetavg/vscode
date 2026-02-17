@@ -44,6 +44,8 @@ export enum ChatConfiguration {
 	ExitAfterDelegation = 'chat.exitAfterDelegation',
 	AgentsControlClickBehavior = 'chat.agentsControl.clickBehavior',
 	ExplainChangesEnabled = 'chat.editing.explainChanges.enabled',
+	// [ZP-2C20] Show cost/usage in chat messages
+	ShowMoreResponseDetails = 'chat.showMoreResponseDetails',
 }
 
 /**

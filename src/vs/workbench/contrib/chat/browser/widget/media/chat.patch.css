@@ -6,3 +6,14 @@
 .interactive-item-container .monaco-toolbar .action-item:not(.disabled):active .codicon {
 	color: color-mix(in srgb, var(--vscode-foreground) 80%, var(--vscode-icon-foreground) 20%) !important;
 }
+
+/* [ZP-2C20] Show cost/usage in chat messages */
+.interactive-item-container.interactive-response:not(.chat-response-loading) .chat-footer-toolbar .chat-footer-details:has(.cost-details) {
+	padding-top: 0;
+	margin-top: -2px;
+}
+.interactive-item-container.interactive-response:not(.chat-response-loading) .chat-footer-toolbar .chat-footer-details .cost-details {
+	font-size: 8px;
+    line-height: 10px;
+    text-align: right;
+}
