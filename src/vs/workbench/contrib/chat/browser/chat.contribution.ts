@@ -517,6 +517,12 @@ configurationRegistry.registerConfiguration({
 			default: 'windowNotFocused',
 			description: nls.localize('chat.notifyWindowOnResponseReceived', "Controls whether a chat session should present the user with an OS notification when a response is received. This includes a window badge as well as notification toast."),
 		},
+		// [ZP-2C20] Show cost/usage in chat messages
+		[ChatConfiguration.ShowMoreResponseDetails]: {
+			type: 'boolean',
+			default: false,
+			description: nls.localize('chat.showResponseDetails', "Show additional details (such as token usage) in the footer of chat responses."),
+		},
 		'chat.checkpoints.enabled': {
 			type: 'boolean',
 			default: true,

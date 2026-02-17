@@ -718,6 +718,28 @@ export class ChatListItemRenderer extends Disposable implements ITreeRenderer<Ch
 			templateData.footerDetailsContainer.classList.add('hidden');
 		}
 
+		// [ZP-2C20] Show cost/usage in chat messages
+		if (isResponseVM(element) && element.isComplete && element.result?.usage) {
+			const usage = element.result.usage;
+
+			const costDetailsText = `\u2191 ${formatTokenCount(usage.promptTokens)} \u2193 ${formatTokenCount(usage.completionTokens)}`;
+
+			if (templateData.footerDetailsContainer.textContent.length > 0) {
+				if (this.configService.getValue<boolean>(ChatConfiguration.ShowMoreResponseDetails)) {
+					const costDetailsDiv = document.createElement('div');
+					costDetailsDiv.classList.add('cost-details');
+					costDetailsDiv.innerText += costDetailsText;
+					templateData.footerDetailsContainer.appendChild(costDetailsDiv);
+				}
+			} else {
+				templateData.footerDetailsContainer.innerText += costDetailsText;
+			}
+
+
+			templateData.footerDetailsContainer.title = costDetailsText;
+			templateData.footerDetailsContainer.classList.remove('hidden');
+		}
+
 		ChatContextKeys.responseHasError.bindTo(templateData.contextKeyService).set(isResponseVM(element) && !!element.errorDetails);
 		const isFiltered = !!(isResponseVM(element) && element.errorDetails?.responseIsFiltered);
 		ChatContextKeys.responseIsFiltered.bindTo(templateData.contextKeyService).set(isFiltered);
@@ -2711,4 +2733,14 @@ function getSubagentId(invocation: IChatToolInvocation | IChatToolInvocationSeri
  */
 function isSubagentToolInvocation(invocation: IChatToolInvocation | IChatToolInvocationSerialized): boolean {
 	return !!getSubagentId(invocation);
+}
+
+// [ZP-2C20] Show cost/usage in chat messages
+function formatTokenCount(count: number): string {
+	if (count >= 1_000_000) {
+		return `${(count / 1_000_000).toFixed(1)}mt`;
+	} else if (count >= 1_000) {
+		return `${(count / 1_000).toFixed(1)}kt`;
+	}
+	return `${count}t`;
 }
