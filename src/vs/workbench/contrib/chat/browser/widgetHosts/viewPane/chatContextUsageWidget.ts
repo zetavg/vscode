@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import './media/chatContextUsageWidget.css';
+import './media/chatContextUsageWidget.patch.css';
 import * as dom from '../../../../../../base/browser/dom.js';
 import { EventType, addDisposableListener } from '../../../../../../base/browser/dom.js';
 import { IDelayedHoverOptions } from '../../../../../../base/browser/ui/hover/hover.js';
