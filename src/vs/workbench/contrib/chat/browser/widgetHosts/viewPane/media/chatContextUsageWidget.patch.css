@@ -1,0 +1,4 @@
+/* [ZP-0782] No pointer. */
+.chat-context-usage-widget {
+	cursor: default !important;
+}
