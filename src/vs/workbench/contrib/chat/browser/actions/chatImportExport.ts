@@ -20,6 +20,10 @@ import { IChatService } from '../../common/chatService/chatService.js';
 import { URI } from '../../../../../base/common/uri.js';
 import { revive } from '../../../../../base/common/marshalling.js';
 import { ACTIVE_GROUP, PreferredGroup } from '../../../../services/editor/common/editorService.js';
+// [ZP-8B1A] Provide a command to export all chat sessions from the current workspace
+import { IProgressService, ProgressLocation } from '../../../../../platform/progress/common/progress.js';
+import { CancellationToken } from '../../../../../base/common/cancellation.js';
+import { ChatAgentLocation } from '../../common/constants.js';
 
 const defaultFileName = 'chat.json';
 const filters = [{ name: localize('chat.file.label', "Chat Session"), extensions: ['json'] }];
@@ -137,6 +141,67 @@ export function registerChatExportActions() {
 			} catch (err) {
 				throw err;
 			}
+		}
+	});
+
+	// [ZP-8B1A] Provide a command to export all chat sessions from the current workspace
+	registerAction2(class ExportAllChatSessionsAction extends Action2 {
+		constructor() {
+			super({
+				id: 'workbench.action.chat.exportAll',
+				category: CHAT_CATEGORY,
+				title: localize2('chat.exportAll.label', "Export All Chat Sessions..."),
+				precondition: ChatContextKeys.enabled,
+				f1: true,
+			});
+		}
+		async run(accessor: ServicesAccessor) {
+			const chatService = accessor.get(IChatService);
+			const fileDialogService = accessor.get(IFileDialogService);
+			const fileService = accessor.get(IFileService);
+			const progressService = accessor.get(IProgressService);
+
+			const defaultUri = await fileDialogService.defaultFolderPath();
+			const folderUri = await fileDialogService.showOpenDialog({
+				defaultUri,
+				canSelectFiles: false,
+				canSelectFolders: true,
+				canSelectMany: false,
+				title: localize('chat.exportAll.folderTitle', "Select Folder to Export All Chat Sessions"),
+			});
+			if (!folderUri || folderUri.length === 0) {
+				return;
+			}
+
+			const targetFolder = folderUri[0];
+
+			await progressService.withProgress(
+				{ location: ProgressLocation.Notification, title: localize('chat.exportAll.exporting', "Exporting chat sessions...") },
+				async () => {
+					const allSessions = await chatService.getLocalSessionHistory();
+
+					for (const detail of allSessions) {
+						const sessionRef = await chatService.acquireOrLoadSession(detail.sessionResource, ChatAgentLocation.Chat, CancellationToken.None);
+						if (!sessionRef) {
+							continue;
+						}
+						try {
+							const model = sessionRef.object;
+							const exported = model.toExport();
+							/**
+							 * We expect sessionUid to be something like `MmNkMmYxNWItZTc3Mi00MzVlLTkwOGQtMWQzYTIyMzZhOTU2` while `.sessionResource` is something like `vscode-chat-session://local/MmNkMmYxNWItZTc3Mi00MzVlLTkwOGQtMWQzYTIyMzZhOTU2`.
+							 */
+							const sessionUid = model.sessionResource.path.replaceAll('/', '-').replace(/^[\s-]+|[\s-]+$/g, '');
+							const fileName = `${sessionUid}.json`;
+							const filePath = joinPath(targetFolder, fileName);
+							const content = VSBuffer.fromString(JSON.stringify(exported, undefined, 2));
+							await fileService.writeFile(filePath, content);
+						} finally {
+							sessionRef.dispose();
+						}
+					}
+				}
+			);
 		}
 	});
 }
