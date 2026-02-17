@@ -67,6 +67,8 @@ export enum ChatConfiguration {
 	ArtifactsRulesByMemoryFilePath = 'chat.artifacts.rules.byMemoryFilePath',
 	ToolConfirmationCarousel = 'chat.tools.confirmationCarousel.enabled',
 	DefaultNewSessionMode = 'chat.newSession.defaultMode',
+	// [ZP-2C20] Show cost/usage in chat messages
+	ShowMoreResponseDetails = 'chat.showMoreResponseDetails',
 }
 
 /**
