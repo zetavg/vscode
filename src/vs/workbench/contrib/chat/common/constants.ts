@@ -56,6 +56,8 @@ export enum ChatConfiguration {
 	ChatCustomizationMenuEnabled = 'chat.customizationsMenu.enabled',
 	AutopilotEnabled = 'chat.autopilot.enabled',
 	ImageCarouselEnabled = 'chat.imageCarousel.enabled',
+	// [ZP-2C20] Show cost/usage in chat messages
+	ShowMoreResponseDetails = 'chat.showMoreResponseDetails',
 }
 
 /**
