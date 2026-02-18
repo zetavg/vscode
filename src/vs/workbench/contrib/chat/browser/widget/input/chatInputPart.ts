@@ -65,6 +65,8 @@ import { ServiceCollection } from '../../../../../../platform/instantiation/comm
 import { IKeybindingService } from '../../../../../../platform/keybinding/common/keybinding.js';
 import { WorkbenchList } from '../../../../../../platform/list/browser/listService.js';
 import { ILogService } from '../../../../../../platform/log/common/log.js';
+// [ZP-43D0] hold-to-switch-model
+import { INotificationService, Severity } from '../../../../../../platform/notification/common/notification.js';
 import { ObservableMemento, observableMemento } from '../../../../../../platform/observable/common/observableMemento.js';
 import { bindContextKey } from '../../../../../../platform/observable/common/platformObservableUtils.js';
 import { IStorageService, StorageScope, StorageTarget } from '../../../../../../platform/storage/common/storage.js';
@@ -359,6 +361,21 @@ export class ChatInputPart extends Disposable implements IHistoryNavigationWidge
 
 	private _currentLanguageModel = observableValue<ILanguageModelChatMetadataAndIdentifier | undefined>('_currentLanguageModel', undefined);
 
+	// [ZP-43D0] hold-to-switch-model
+	/**
+	 * Saved model before a hold-to-switch-model gesture. When set, the
+	 * current model was temporarily swapped to the flagship model and this
+	 * holds the model to restore on key release.
+	 */
+	private _modelBeforeHold: ILanguageModelChatMetadataAndIdentifier | undefined;
+
+	// [ZP-43D0] hold-to-switch-model
+	/**
+	 * Tracks the last hold-to-switch model identifier that was not found,
+	 * so we only show the warning notification once per bad value.
+	 */
+	private _holdModelNotFoundId: string | undefined;
+
 	get currentLanguageModel() {
 		return this._currentLanguageModel.get()?.identifier;
 	}
@@ -488,6 +505,8 @@ export class ChatInputPart extends Disposable implements IHistoryNavigationWidge
 		@IWorkspaceContextService private readonly workspaceContextService: IWorkspaceContextService,
 		@IWorkbenchLayoutService private readonly layoutService: IWorkbenchLayoutService,
 		@IViewDescriptorService private readonly viewDescriptorService: IViewDescriptorService,
+		// [ZP-43D0] hold-to-switch-model
+		@INotificationService private readonly notificationService: INotificationService,
 	) {
 		super();
 
@@ -743,6 +762,19 @@ export class ChatInputPart extends Disposable implements IHistoryNavigationWidge
 			const currentIndex = models.findIndex(model => model.identifier === this._currentLanguageModel.get()?.identifier);
 			const nextIndex = (currentIndex + 1) % models.length;
 			this.setCurrentLanguageModel(models[nextIndex]);
+		}
+	}
+
+	// [ZP-43D0] hold-to-switch-model
+	/**
+	 * If the model was temporarily switched via the hold-to-switch gesture,
+	 * restore the original model.
+	 */
+	private _restoreModelFromHold(): void {
+		if (this._modelBeforeHold) {
+			const saved = this._modelBeforeHold;
+			this._modelBeforeHold = undefined;
+			this.setCurrentLanguageModel(saved);
 		}
 	}
 
@@ -1879,6 +1911,95 @@ export class ChatInputPart extends Disposable implements IHistoryNavigationWidge
 					}
 				}
 			}
+		}));
+
+		// [ZP-43D0] hold-to-switch-model
+		// Hold-to-switch-model: while certain modifier keys are held in the chat
+		// input, temporarily switch to a different model:
+		//   Cmd/Ctrl → configured flagship model (chat.holdToSwitchModel)
+		//   Alt/Option → default model for this location
+		// We use a DOM listener because CodeEditorWidget.onKeyDown does not fire
+		// for modifier-only key presses.
+		const inputWindow = dom.getWindow(editorContainer);
+		this._register(addDisposableListener(this._inputEditorElement, 'keydown', (e) => {
+			if (this._modelBeforeHold) {
+				return;
+			}
+
+			const current = this._currentLanguageModel.get();
+			let targetModel: ILanguageModelChatMetadataAndIdentifier | undefined;
+
+			if (e.key === 'Meta' || e.key === 'Control') {
+				// Cmd/Ctrl → switch to configured flagship model
+				const flagshipModelId = this.configurationService.getValue<string>(ChatConfiguration.HoldToSwitchModel);
+				if (!flagshipModelId || current?.identifier === flagshipModelId) {
+					return;
+				}
+				const models = this.getModels();
+				targetModel = models.find(m => m.identifier === flagshipModelId);
+				if (!targetModel && this._holdModelNotFoundId !== flagshipModelId) {
+					this._holdModelNotFoundId = flagshipModelId;
+					const availableIds = models.map(m => `\`${m.identifier}\``).join(', ');
+					this.notificationService.notify({
+						severity: Severity.Warning,
+						message: localize('chat.holdToSwitchModel.notFound', "The configured hold-to-switch model `{0}` was not found. Available models: {1}", flagshipModelId, availableIds),
+						source: localize('chat', "Chat"),
+					});
+				}
+			} else if (e.key === 'Alt') {
+				// Alt/Option → switch to the default model for this location
+				const models = this.getModels();
+				targetModel = models.find(m => m.metadata.isDefaultForLocation[this.location]) || models.find(m => m.metadata.isUserSelectable);
+				if (!targetModel || targetModel.identifier === current?.identifier) {
+					return;
+				}
+			} else {
+				return;
+			}
+
+			if (targetModel) {
+				this._modelBeforeHold = current;
+				this._currentLanguageModel.set(targetModel, undefined);
+			}
+		}));
+
+		// When Enter is pressed while the hold-to-switch model is active, submit
+		// with the flagship model. We use a capture-phase DOM listener so the event
+		// is intercepted before the editor and keybinding service process it (which
+		// would otherwise dispatch Cmd+Enter to ChatSubmitWithCodebaseAction).
+		this._register(dom.addDisposableListener(this._inputEditorElement, 'keydown', (e) => {
+			if (e.key !== 'Enter' || !this._modelBeforeHold) {
+				return;
+			}
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			const flagshipModel = this._currentLanguageModel.get();
+			if (flagshipModel) {
+				this.setCurrentLanguageModel(flagshipModel);
+			}
+			const saved = this._modelBeforeHold;
+			this._modelBeforeHold = undefined;
+			this._widget?.acceptInput().then(() => {
+				if (saved) {
+					this.setCurrentLanguageModel(saved);
+				}
+			}, () => {
+				if (saved) {
+					this.setCurrentLanguageModel(saved);
+				}
+			});
+		}, true /* useCapture */));
+
+		// Release the modifier key anywhere in the window to restore the model
+		this._register(addDisposableListener(inputWindow, 'keyup', (e) => {
+			if (this._modelBeforeHold && (e.key === 'Meta' || e.key === 'Control' || e.key === 'Alt')) {
+				this._restoreModelFromHold();
+			}
+		}));
+
+		// Also restore when the window loses focus (e.g. user Cmd-Tabs away)
+		this._register(addDisposableListener(inputWindow, 'blur', () => {
+			this._restoreModelFromHold();
 		}));
 
 		this._register(this._inputEditor.onDidChangeModelContent(() => {

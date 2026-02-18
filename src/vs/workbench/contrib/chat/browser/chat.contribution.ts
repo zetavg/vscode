@@ -451,6 +451,12 @@ configurationRegistry.registerConfiguration({
 			default: false,
 			description: nls.localize('chat.showResponseDetails', "Show additional details (such as token usage) in the footer of chat responses."),
 		},
+		// [ZP-43D0] hold-to-switch-model
+		[ChatConfiguration.HoldToSwitchModel]: {
+			type: 'string',
+			markdownDescription: nls.localize('chat.holdToSwitchModel', "Specifies the model identifier to temporarily switch to while holding the {0} key in the chat input. Leave empty to disable.", isMacintosh ? '`Cmd`' : '`Ctrl`'),
+			default: '',
+		},
 		'chat.checkpoints.enabled': {
 			type: 'boolean',
 			default: true,

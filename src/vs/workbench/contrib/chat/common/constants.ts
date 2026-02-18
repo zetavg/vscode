@@ -46,6 +46,8 @@ export enum ChatConfiguration {
 	ExplainChangesEnabled = 'chat.editing.explainChanges.enabled',
 	// [ZP-2C20] Show cost/usage in chat messages
 	ShowMoreResponseDetails = 'chat.showMoreResponseDetails',
+	// [ZP-43D0] hold-to-switch-model
+	HoldToSwitchModel = 'chat.holdToSwitchModel',
 }
 
 /**
