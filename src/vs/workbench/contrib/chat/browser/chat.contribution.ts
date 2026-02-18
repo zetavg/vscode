@@ -542,6 +542,17 @@ configurationRegistry.registerConfiguration({
 			default: false,
 			description: nls.localize('chat.showResponseDetails', "Show additional details (such as token usage) in the footer of chat responses."),
 		},
+		// [ZP-43D0] Chat: hold-to-switch-mode
+		[ChatConfiguration.HoldCmdKeyAction]: {
+			type: 'string',
+			markdownDescription: nls.localize('chat.editing.HoldCmdKeyAction', "Action(s) to perform while holding the {0} key in the chat input. Multiple actions can be comma-separated.\n\n- Empty: disabled (default)\n- `switchModel`: switch to the default model (Auto)\n- `switchModel:<id>`: switch to a specific model (e.g. `switchModel:copilot/gpt-4o`)\n- `switchMode:<id>`: switch to a specific mode/agent (e.g. `switchMode:ask`, `switchMode:agent`, `switchMode:edit`)\n\nExample: `switchMode:ask,switchModel:copilot/gpt-4o`", isMacintosh ? '`Cmd`' : '`Ctrl`'),
+			default: '',
+		},
+		[ChatConfiguration.HoldOptionKeyAction]: {
+			type: 'string',
+			markdownDescription: nls.localize('chat.editing.holdOptionKeyAction', "Action(s) to perform while holding the {0} key in the chat input. Multiple actions can be comma-separated.\n\n- Empty: disabled\n- `switchModel`: switch to the default model (Auto) (default)\n- `switchModel:<id>`: switch to a specific model (e.g. `switchModel:copilot/gpt-4o`)\n- `switchMode:<id>`: switch to a specific mode/agent (e.g. `switchMode:ask`, `switchMode:agent`, `switchMode:edit`)\n\nExample: `switchMode:agent,switchModel:copilot/claude-opus-4.6`", isMacintosh ? '`Option`' : '`Alt`'),
+			default: 'switchModel',
+		},
 		'chat.checkpoints.enabled': {
 			type: 'boolean',
 			default: true,
