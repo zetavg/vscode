@@ -1114,7 +1114,9 @@ export class ChangeLanguageAction extends Action2 {
 	constructor() {
 		super({
 			id: ChangeLanguageAction.ID,
-			title: localize2('changeMode', 'Change Language Mode'),
+			// [ZP-BEF1] "Set Syntax" is more discoverable for Sublime Text users.
+			// title: localize2('changeMode', 'Change Language Mode'),
+			title: localize2('changeMode', 'Change Language Mode (Set Syntax)'),
 			f1: true,
 			keybinding: {
 				weight: KeybindingWeight.WorkbenchContrib,
