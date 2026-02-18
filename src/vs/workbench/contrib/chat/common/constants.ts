@@ -58,6 +58,9 @@ export enum ChatConfiguration {
 	ChatCustomizationMenuEnabled = 'chat.customizationsMenu.enabled',
 	// [ZP-2C20] Show cost/usage in chat messages
 	ShowMoreResponseDetails = 'chat.showMoreResponseDetails',
+	// [ZP-43D0] Chat: hold-to-switch-mode
+	HoldCmdKeyAction = 'chat.editing.HoldCmdKeyAction',
+	HoldOptionKeyAction = 'chat.editing.holdOptionKeyAction',
 }
 
 /**
