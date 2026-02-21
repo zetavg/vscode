@@ -27,6 +27,7 @@ function isActionButtonStateEqual(state1: ActionButtonState, state2: ActionButto
 		state1.isRebaseInProgress === state2.isRebaseInProgress &&
 		state1.isSyncInProgress === state2.isSyncInProgress &&
 		state1.repositoryHasChangesToCommit === state2.repositoryHasChangesToCommit &&
+		state1.repositoryHasStagedChanges === state2.repositoryHasStagedChanges && // [ZP-0F44] Disable commit button when no staged changes
 		state1.repositoryHasUnresolvedConflicts === state2.repositoryHasUnresolvedConflicts;
 }
 
@@ -39,6 +40,7 @@ interface ActionButtonState {
 	readonly isSyncInProgress: boolean;
 	readonly repositoryHasChangesToCommit: boolean;
 	readonly repositoryHasUnresolvedConflicts: boolean;
+	readonly repositoryHasStagedChanges: boolean; // [ZP-0F44] Disable commit button when no staged changes
 }
 
 export class ActionButton {
@@ -65,6 +67,7 @@ export class ActionButton {
 		private readonly postCommitCommandCenter: CommitCommandsCenter,
 		private readonly logger: LogOutputChannel) {
 		this._state = {
+			repositoryHasStagedChanges: false, // [ZP-0F44] Disable commit button when no staged changes
 			HEAD: undefined,
 			isCheckoutInProgress: false,
 			isCommitInProgress: false,
@@ -92,6 +95,7 @@ export class ActionButton {
 			if (e.affectsConfiguration('git.branchProtectionPrompt', root) ||
 				e.affectsConfiguration('git.postCommitCommand', root) ||
 				e.affectsConfiguration('git.rememberPostCommitCommand', root) ||
+				e.affectsConfiguration('git.requireStagedChangesToCommit', root) || // [ZP-0F44] Disable commit button when no staged changes
 				e.affectsConfiguration('git.showActionButton', root)) {
 				this._onDidChange.fire();
 			}
@@ -129,6 +133,17 @@ export class ActionButton {
 
 		const primaryCommand = this.getCommitActionButtonPrimaryCommand();
 
+		// [ZP-0F44] Disable commit button when no staged changes
+		const requireStagedChanges = config.get<boolean>('requireStagedChangesToCommit', true);
+		const disabledDueToNoStagedChanges = requireStagedChanges &&
+			!this.state.repositoryHasStagedChanges &&
+			!this.state.isRebaseInProgress &&
+			!this.state.isMergeInProgress;
+		if (disabledDueToNoStagedChanges) {
+			const noStagedChangesTooltip = disabledDueToNoStagedChanges ? l10n.t('No Staged Changes') : undefined;
+			primaryCommand.tooltip = noStagedChangesTooltip;
+		}
+
 		return {
 			command: primaryCommand,
 			secondaryCommands: this.getCommitActionButtonSecondaryCommands(),
@@ -136,6 +151,7 @@ export class ActionButton {
 				this.state.repositoryHasChangesToCommit ||
 				(this.state.isRebaseInProgress && !this.state.repositoryHasUnresolvedConflicts) ||
 				(this.state.isMergeInProgress && !this.state.repositoryHasUnresolvedConflicts)) &&
+				!disabledDueToNoStagedChanges && // [ZP-0F44]
 				!this.state.isCommitInProgress
 		};
 	}
@@ -283,6 +299,7 @@ export class ActionButton {
 	private onDidRunGitStatus(): void {
 		this.state = {
 			...this.state,
+			repositoryHasStagedChanges: this.repository.indexGroup.resourceStates.length > 0, // [ZP-0F44] Disable commit button when no staged changes
 			HEAD: this.repository.HEAD,
 			isMergeInProgress: this.repository.mergeInProgress,
 			isRebaseInProgress: !!this.repository.rebaseCommit,
