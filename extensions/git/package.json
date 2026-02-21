@@ -3430,6 +3430,13 @@
           "description": "%config.suggestSmartCommit%",
           "default": true
         },
+        "git.requireStagedChangesToCommit": {
+          "//": "[ZP-0F44] Disable commit button when no staged changes",
+          "type": "boolean",
+          "scope": "resource",
+          "description": "%config.requireStagedChangesToCommit%",
+          "default": true
+        },
         "git.enableCommitSigning": {
           "type": "boolean",
           "scope": "resource",

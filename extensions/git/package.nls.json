@@ -205,6 +205,7 @@
 	"config.smartCommitChanges.all": "Automatically stage all changes.",
 	"config.smartCommitChanges.tracked": "Automatically stage tracked changes only.",
 	"config.suggestSmartCommit": "Suggests to enable smart commit (commit all changes when there are no staged changes).",
+	"config.requireStagedChangesToCommit": "([ZP-0F44]) When enabled, the commit button is disabled when there are no staged changes. When disabled, pressing commit with no staged changes shows a prompt to stage all changes.",
 	"config.enableCommitSigning": "Enables commit signing with GPG, X.509, or SSH.",
 	"config.discardAllScope": "Controls what changes are discarded by the `Discard all changes` command. `all` discards all changes. `tracked` discards only tracked files. `prompt` shows a prompt dialog every time the action is run.",
 	"config.decorations.enabled": "Controls whether Git contributes colors and badges to the Explorer and the Open Editors view.",
