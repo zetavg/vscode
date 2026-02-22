@@ -29,7 +29,9 @@ import { Schemas } from '../../../../../../base/common/network.js';
 import { mixin } from '../../../../../../base/common/objects.js';
 import { autorun, derived, derivedOpts, IObservable, ISettableObservable, observableFromEvent, observableValue } from '../../../../../../base/common/observable.js';
 import { isMacintosh } from '../../../../../../base/common/platform.js';
-import { isEqual } from '../../../../../../base/common/resources.js';
+// [ZP-43D0]
+// import { isEqual } from '../../../../../../base/common/resources.js';
+import { isEqual, relativePath, resolvePath } from '../../../../../../base/common/resources.js';
 import { ScrollbarVisibility } from '../../../../../../base/common/scrollable.js';
 import { URI } from '../../../../../../base/common/uri.js';
 import { IEditorConstructionOptions } from '../../../../../../editor/browser/config/editorConfiguration.js';
@@ -58,6 +60,8 @@ import { IConfigurationService } from '../../../../../../platform/configuration/
 import { ContextKeyExpr, IContextKey, IContextKeyService, RawContextKey } from '../../../../../../platform/contextkey/common/contextkey.js';
 import { IFileService } from '../../../../../../platform/files/common/files.js';
 import { registerAndCreateHistoryNavigationContext } from '../../../../../../platform/history/browser/contextScopedHistoryWidget.js';
+// [ZP-43D0]
+import { IEnvironmentService } from '../../../../../../platform/environment/common/environment.js';
 import { IInstantiationService } from '../../../../../../platform/instantiation/common/instantiation.js';
 import { ServiceCollection } from '../../../../../../platform/instantiation/common/serviceCollection.js';
 import { IKeybindingService } from '../../../../../../platform/keybinding/common/keybinding.js';
@@ -394,10 +398,10 @@ export class ChatInputPart extends Disposable implements IHistoryNavigationWidge
 
 	// [ZP-43D0] Chat: hold-to-switch-mode
 	/**
-	 * Tracks the last hold-to-switch target that was not found,
+	 * Tracks hold-to-switch targets that were not found,
 	 * so we only show the warning notification once per bad value.
 	 */
-	private _holdNotFoundId: string | undefined;
+	private readonly _holdNotFoundIds = new Set<string>();
 
 	get currentLanguageModel() {
 		return this._currentLanguageModel.get()?.identifier;
@@ -532,6 +536,7 @@ export class ChatInputPart extends Disposable implements IHistoryNavigationWidge
 		@IChatAttachmentWidgetRegistry private readonly _chatAttachmentWidgetRegistry: IChatAttachmentWidgetRegistry,
 		// [ZP-43D0] Chat: hold-to-switch-mode
 		@INotificationService private readonly notificationService: INotificationService,
+		@IEnvironmentService private readonly environmentService: IEnvironmentService,
 	) {
 		super();
 
@@ -803,6 +808,57 @@ export class ChatInputPart extends Disposable implements IHistoryNavigationWidge
 	}
 
 	// [ZP-43D0] Chat: hold-to-switch-mode
+	/**
+	 * Resolve a mode identifier that may be an exact ID, a relative
+	 * `vscode-userdata:` path (e.g. `vscode-userdata:./prompts/foo.agent.md`),
+	 * or a display name.
+	 */
+	private _resolveHoldMode(modeId: string): IChatMode | undefined {
+		// 1. Exact ID match (fast path)
+		const exact = this.chatModeService.findModeById(modeId);
+		if (exact) {
+			return exact;
+		}
+
+		// 2. Relative vscode-userdata: path → resolve against userRoamingDataHome
+		if (modeId.startsWith(Schemas.vscodeUserData + ':')) {
+			const pathPart = modeId.substring(Schemas.vscodeUserData.length + 1);
+			if (pathPart.startsWith('./') || pathPart.startsWith('../')) {
+				const resolved = resolvePath(this.environmentService.userRoamingDataHome, pathPart);
+				const resolvedMode = this.chatModeService.findModeById(resolved.toString());
+				if (resolvedMode) {
+					return resolvedMode;
+				}
+			}
+		}
+
+		// 3. Fallback: match by display name
+		return this.chatModeService.findModeByName(modeId);
+	}
+
+	/**
+	 * Return a display-friendly label for a mode ID. For custom modes whose
+	 * ID is a `vscode-userdata:` URI, the label uses a path relative to
+	 * `userRoamingDataHome` (e.g. `vscode-userdata:./prompts/foo.agent.md`).
+	 */
+	private _displayModeId(mode: IChatMode): string {
+		if (mode.isBuiltin) {
+			return mode.id;
+		}
+		try {
+			const uri = URI.parse(mode.id);
+			if (uri.scheme === Schemas.vscodeUserData) {
+				const rel = relativePath(this.environmentService.userRoamingDataHome, uri);
+				if (rel !== undefined) {
+					return `${Schemas.vscodeUserData}:./${rel}`;
+				}
+			}
+		} catch {
+			// Not a valid URI — fall through
+		}
+		return mode.id;
+	}
+
 	/**
 	 * If the model/mode was temporarily switched via the hold-to-switch gesture,
 	 * restore the original state.
@@ -2182,8 +2238,8 @@ export class ChatInputPart extends Disposable implements IHistoryNavigationWidge
 					let targetModel: ILanguageModelChatMetadataAndIdentifier | undefined;
 					if (modelId) {
 						targetModel = models.find(m => m.identifier === modelId);
-						if (!targetModel && this._holdNotFoundId !== modelId) {
-							this._holdNotFoundId = modelId;
+						if (!targetModel && !this._holdNotFoundIds.has(modelId)) {
+							this._holdNotFoundIds.add(modelId);
 							const availableIds = models.map(m => `\`${m.identifier}\``).join(', ');
 							this.notificationService.notify({
 								severity: Severity.Warning,
@@ -2202,12 +2258,13 @@ export class ChatInputPart extends Disposable implements IHistoryNavigationWidge
 				} else if (action.startsWith('switchMode:')) {
 					const modeId = action.substring('switchMode:'.length);
 					const currentMode = this._currentModeObservable.get();
-					const targetMode = this.chatModeService.findModeById(modeId);
+					// [ZP-43D0] resolve relative vscode-userdata: paths and name fallback
+					const targetMode = this._resolveHoldMode(modeId);
 					if (!targetMode) {
-						if (this._holdNotFoundId !== modeId) {
-							this._holdNotFoundId = modeId;
+						if (!this._holdNotFoundIds.has(modeId)) {
+							this._holdNotFoundIds.add(modeId);
 							const { builtin, custom } = this.chatModeService.getModes();
-							const availableIds = [...builtin, ...custom].map(m => `\`${m.id}\``).join(', ');
+							const availableIds = [...builtin, ...custom].map(m => `\`${this._displayModeId(m)}\``).join(', ');
 							this.notificationService.notify({
 								severity: Severity.Warning,
 								message: localize('chat.holdToSwitch.modeNotFound', "The configured hold-to-switch mode `{0}` was not found. Available modes: {1}", modeId, availableIds),
@@ -2220,6 +2277,16 @@ export class ChatInputPart extends Disposable implements IHistoryNavigationWidge
 						this._currentModeObservable.set(targetMode, undefined);
 						this._onDidChangeCurrentChatMode.fire();
 						didChange = true;
+					}
+				} else {
+					// [ZP-43D0] Warn about unrecognized hold-to-switch actions
+					if (!this._holdNotFoundIds.has(action)) {
+						this._holdNotFoundIds.add(action);
+						this.notificationService.notify({
+							severity: Severity.Warning,
+							message: localize('chat.holdToSwitch.unknownAction', "Unrecognized hold-to-switch action `{0}`. Valid actions: `switchModel`, `switchModel:<id>`, `switchMode:<id>`.", action),
+							source: localize('chat', "Chat"),
+						});
 					}
 				}
 			}
