@@ -7,6 +7,23 @@
 	color: color-mix(in srgb, var(--vscode-foreground) 80%, var(--vscode-icon-foreground) 20%) !important;
 }
 
+/* [ZP-05BF] Show model name during streaming */
+.interactive-item-container.interactive-response.chat-response-loading .chat-footer-toolbar:has(.chat-footer-details:not(.hidden)) {
+	display: block;
+	padding-top: 6px;
+	height: 22px;
+}
+
+.interactive-item-container.interactive-response.chat-response-loading .chat-footer-toolbar .chat-footer-details:not(.hidden) {
+	display: block;
+	opacity: 0.7;
+	visibility: visible;
+}
+
+.interactive-item-container.interactive-response.chat-response-loading .chat-footer-toolbar .monaco-action-bar {
+	display: none;
+}
+
 /* [ZP-2C20] Show cost/usage in chat messages */
 .interactive-item-container.interactive-response:not(.chat-response-loading) .chat-footer-toolbar .chat-footer-details:has(.cost-details) {
 	padding-top: 0;
