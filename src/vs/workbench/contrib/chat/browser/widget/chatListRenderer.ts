@@ -100,6 +100,7 @@ import { ChatEditorOptions } from './chatOptions.js';
 import { ChatCodeBlockContentProvider, CodeBlockPart } from './chatContentParts/codeBlockPart.js';
 import { autorun, observableValue } from '../../../../../base/common/observable.js';
 import { RunSubagentTool } from '../../common/tools/builtinTools/runSubagentTool.js';
+import { ILanguageModelsService } from '../../common/languageModels.js'; // [ZP-05BF] Show model name during streaming
 import { isEqual } from '../../../../../base/common/resources.js';
 import { IChatTipService } from '../chatTipService.js';
 
@@ -241,6 +242,7 @@ export class ChatListItemRenderer extends Disposable implements ITreeRenderer<Ch
 		@IChatEntitlementService private readonly chatEntitlementService: IChatEntitlementService,
 		@IChatService private readonly chatService: IChatService,
 		@IChatTipService private readonly chatTipService: IChatTipService,
+		@ILanguageModelsService private readonly languageModelsService: ILanguageModelsService, // [ZP-05BF] Show model name during streaming
 	) {
 		super();
 
@@ -657,6 +659,20 @@ export class ChatListItemRenderer extends Disposable implements ITreeRenderer<Ch
 		if (isResponseVM(element) && element.result?.details) {
 			templateData.footerDetailsContainer.textContent = element.result.details;
 			templateData.footerDetailsContainer.classList.remove('hidden');
+			// [ZP-05BF] Show model name during streaming, before result.details is available
+		} else if (isResponseVM(element) && !element.isComplete) {
+			const modelId = element.model.request?.modelId;
+			if (modelId) {
+				const modelMeta = this.languageModelsService.lookupLanguageModel(modelId);
+				if (modelMeta?.name) {
+					templateData.footerDetailsContainer.textContent = modelMeta.name;
+					templateData.footerDetailsContainer.classList.remove('hidden');
+				} else {
+					templateData.footerDetailsContainer.classList.add('hidden');
+				}
+			} else {
+				templateData.footerDetailsContainer.classList.add('hidden');
+			}
 		} else {
 			templateData.footerDetailsContainer.classList.add('hidden');
 		}
