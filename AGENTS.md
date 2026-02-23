@@ -21,7 +21,9 @@ You are not working with the official VS Code. Instead, you are working with a c
 
 3. **Do not delete or modify upstream code lines.** Instead, comment them out, and add your new code below. This preserves the original code for later reference and allows us to easily identify our changes.
 
-4. **Always prioritize rebase-ability.** Before implementing a change, ask yourself:
+4. **Never modify upstream `*.css` files directly.** Instead, edit the corresponding `*.patch.css` file next to the original. If the `*.patch.css` file does not exist yet, create it and then update **every place** that imports the original CSS file so that it also imports the patch CSS file immediately after the original import. This keeps upstream CSS files untouched and conflict-free during rebases.
+
+5. **Always prioritize rebase-ability.** Before implementing a change, ask yourself:
    * Can this change survive upstream updates with minimal or no conflicts?
    * Is there a less invasive approach that achieves the same goal?
    * Am I modifying a file or code path that is likely to change frequently upstream?
