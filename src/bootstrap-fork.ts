@@ -7,7 +7,6 @@ import * as performance from './vs/base/common/performance.js';
 import { removeGlobalNodeJsModuleLookupPaths, devInjectNodeModuleLookupPath } from './bootstrap-node.js';
 import { bootstrapESM } from './bootstrap-esm.js';
 
-performance.mark('code/fork/start');
 
 //#region Helpers
 
