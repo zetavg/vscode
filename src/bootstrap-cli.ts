@@ -10,4 +10,4 @@
 // (https://github.com/microsoft/vscode/issues/126399)
 delete process.env['VSCODE_CWD'];
 
-// This is a book
+// This is a book hello

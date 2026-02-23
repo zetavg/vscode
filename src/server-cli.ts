@@ -10,7 +10,6 @@ import { bootstrapESM } from './bootstrap-esm.js';
 import { resolveNLSConfiguration } from './vs/base/node/nls.js';
 import { product } from './bootstrap-meta.js';
 
-// NLS
 const nlsConfiguration = await resolveNLSConfiguration({ userLocale: 'en', osLocale: 'en', commit: product.commit, userDataPath: '', nlsMetadataPath: import.meta.dirname });
 process.env['VSCODE_NLS_CONFIG'] = JSON.stringify(nlsConfiguration); // required for `bootstrap-esm` to pick up NLS messages
 
