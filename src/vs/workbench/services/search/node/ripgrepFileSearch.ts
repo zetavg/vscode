@@ -17,6 +17,57 @@ import { rgPath } from '@vscode/ripgrep';
 // If @vscode/ripgrep is in an .asar file, then the binary is unpacked.
 const rgDiskPath = rgPath.replace(/\bnode_modules\.asar\b/, 'node_modules.asar.unpacked');
 
+// [ZP-D540] Let quick file navigation (Cmd+P) respect search.exclude un-ignored (false) patterns
+// Extract patterns set to `false` in the exclude expression — these represent
+// patterns the user explicitly un-excluded (e.g. `"**/*.pdf": false` in
+// search.exclude) to override .gitignore exclusions.
+export function getUnignorePatterns(excludePattern?: glob.IExpression): string[] {
+	if (!excludePattern) {
+		return [];
+	}
+	const patterns: string[] = [];
+	for (const key of Object.keys(excludePattern)) {
+		if (key && excludePattern[key] === false) {
+			patterns.push(key);
+		}
+	}
+	return patterns;
+}
+
+// [ZP-D540] Let quick file navigation (Cmd+P) respect search.exclude un-ignored (false) patterns
+// Spawn a supplemental ripgrep that runs with --no-ignore but restricted to only
+// the un-ignored glob patterns. This finds files that .gitignore excludes but the
+// user explicitly wants included via `"pattern": false` in search.exclude.
+// Returns undefined if there are no un-ignore patterns or ignore files aren't active.
+export function spawnSupplementalRipgrepCmd(folderQuery: IFolderQuery, excludePattern?: glob.IExpression, numThreads?: number): { cmd: cp.ChildProcess; rgDiskPath: string; args: string[]; cwd: string } | undefined {
+	if (folderQuery.disregardIgnoreFiles !== false) {
+		return undefined; // ignore files aren't active, nothing to override
+	}
+	const unignorePatterns = getUnignorePatterns(excludePattern);
+	if (unignorePatterns.length === 0) {
+		return undefined;
+	}
+	const args = ['--files', '--hidden', '--case-sensitive', '--no-require-git', '--no-ignore'];
+	for (const pattern of unignorePatterns) {
+		args.push('-g', pattern);
+		if (isMac) {
+			const normalized = normalizeNFD(pattern);
+			if (normalized !== pattern) {
+				args.push('-g', normalized);
+			}
+		}
+	}
+	if (!folderQuery.ignoreSymlinks) {
+		args.push('--follow');
+	}
+	args.push('--no-config');
+	if (numThreads) {
+		args.push('--threads', `${numThreads}`);
+	}
+	const cwd = folderQuery.folder.fsPath;
+	return { cmd: cp.spawn(rgDiskPath, args, { cwd }), rgDiskPath, args, cwd };
+}
+
 export function spawnRipgrepCmd(config: IFileQuery, folderQuery: IFolderQuery, includePattern?: glob.IExpression, excludePattern?: glob.IExpression, numThreads?: number) {
 	const rgArgs = getRgArgs(config, folderQuery, includePattern, excludePattern, numThreads);
 	const cwd = folderQuery.folder.fsPath;
