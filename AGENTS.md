@@ -17,6 +17,8 @@ You are not working with the official VS Code. Instead, you are working with a c
      * TypeScript: `// [ZP-804C] Hide the remote icon on the status bar when not connected to a remote.`
 		 * Pure JSON: `"//": "[ZP-804C] Hide the remote icon on the status bar when not connected to a remote.",`
    * A single patch identifier should be used consistently across all files for changes that serve the same purpose.
+   * **Every `[ZP-<id>]` comment must include a short description** — never leave a bare identifier like `// [ZP-XXXX]`. Always write `// [ZP-XXXX] Short description of what this patch does` so the purpose of the change is immediately clear without having to search for context.
+   * **The description on the `[ZP-<id>]` line must be the same canonical text everywhere the patch ID appears.** Pick one concise description when creating the patch and repeat it verbatim at every occurrence. If a particular site needs additional context, put that explanation on subsequent comment lines — never vary the text that follows the `[ZP-<id>]` tag itself.
    * To generate a new patch identifier, run: `openssl rand -hex 2 | tr '[:lower:]' '[:upper:]'`. After generating one, search the codebase for existing identifiers to avoid duplicates.
 
 3. **Do not delete or modify upstream code lines.** Instead, comment them out, and add your new code below. This preserves the original code for later reference and allows us to easily identify our changes.
@@ -29,6 +31,15 @@ You are not working with the official VS Code. Instead, you are working with a c
    * Am I modifying a file or code path that is likely to change frequently upstream?
 
    Prefer strategies that decouple our modifications from upstream code as much as possible.
+
+### Writing Patch Descriptions
+
+Patch descriptions (the text after `[ZP-<id>]`) should be **high-level and user-facing** — written so that someone without knowledge of the implementation can understand what the change does. Describe the *what* and *why* from the user's perspective, not the *how*.
+
+   * **Good:** `Let quick file navigation (Cmd+P) respect search.exclude un-ignored (false) patterns`
+   * **Bad:** `Supplemental ripgrep for search.exclude un-ignored (false) patterns` — mentions internal tooling (ripgrep) that is an implementation detail, not a user-visible concept.
+
+Implementation details (e.g. which tool is spawned, which API is called) belong in subsequent comment lines below the `[ZP-<id>]` tag, not in the canonical description itself.
 
 ### Tricks to Minimize Changed Lines
 
