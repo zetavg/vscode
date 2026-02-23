@@ -20,7 +20,9 @@ import * as types from '../../../../base/common/types.js';
 import { URI } from '../../../../base/common/uri.js';
 import { Promises } from '../../../../base/node/pfs.js';
 import { IFileQuery, IFolderQuery, IProgressMessage, ISearchEngineStats, IRawFileMatch, ISearchEngine, ISearchEngineSuccess, isFilePatternMatch, hasSiblingFn } from '../common/search.js';
-import { spawnRipgrepCmd } from './ripgrepFileSearch.js';
+// [ZP-D540] Let quick file navigation (Cmd+P) respect search.exclude un-ignored (false) patterns
+// import { spawnRipgrepCmd } from './ripgrepFileSearch.js';
+import { spawnRipgrepCmd, spawnSupplementalRipgrepCmd } from './ripgrepFileSearch.js';
 import { prepareQuery } from '../../../../base/common/fuzzyScorer.js';
 
 interface IDirectoryEntry extends IRawFileMatch {
@@ -193,6 +195,40 @@ export class FileWalker {
 	private cmdTraversal(folderQuery: IFolderQuery, numThreads: number | undefined, onResult: (result: IRawFileMatch) => void, onMessage: (message: IProgressMessage) => void, cb: (err?: Error) => void): void {
 		const rootFolder = folderQuery.folder.fsPath;
 		const isMac = platform.isMacintosh;
+
+		// [ZP-D540] Let quick file navigation (Cmd+P) respect search.exclude un-ignored (false) patterns
+		// Wrap cb to run a supplemental rg for un-ignored patterns (search.exclude entries
+		// set to `false`) before signaling completion. ripgrep's --ignore-file negation
+		// cannot cross-override .gitignore, so we run a second rg with --no-ignore
+		// restricted to just those glob patterns.
+		const realCb = cb;
+		cb = (err?: Error) => {
+			if (err) { realCb(err); return; }
+			const supplemental = spawnSupplementalRipgrepCmd(folderQuery, this.folderExcludePatterns.get(folderQuery.folder.fsPath)!.expression, numThreads);
+			if (!supplemental) { realCb(); return; }
+			const sEscaped = supplemental.args.map(a => a.match(/^-/) ? a : `'${a}'`).join(' ');
+			onMessage({ message: `[Supplemental] ${supplemental.rgDiskPath} ${sEscaped}\n - cwd: ${supplemental.cwd}` });
+			let sLeftover = '';
+			this.collectStdout(supplemental.cmd, 'utf8', onMessage, (sErr: Error | null, stdout?: string, last?: boolean) => {
+				if (sErr) { realCb(sErr); return; }
+				if (this.isLimitHit) { realCb(); return; }
+				const normalized = sLeftover + (isMac ? normalization.normalizeNFC(stdout || '') : stdout);
+				const relativeFiles = normalized.split('\n');
+				if (last) {
+					const n = relativeFiles.length;
+					relativeFiles[n - 1] = relativeFiles[n - 1].trim();
+					if (!relativeFiles[n - 1]) { relativeFiles.pop(); }
+				} else {
+					sLeftover = relativeFiles.pop() || '';
+				}
+				this.cmdResultCount += relativeFiles.length;
+				for (const relativePath of relativeFiles) {
+					this.matchFile(onResult, { base: rootFolder, relativePath, searchPath: this.getSearchPath(folderQuery, relativePath) });
+					if (this.isLimitHit) { break; }
+				}
+				if (last || this.isLimitHit) { realCb(); }
+			});
+		};
 
 		const killCmd = () => cmd && cmd.kill();
 		killCmds.add(killCmd);
