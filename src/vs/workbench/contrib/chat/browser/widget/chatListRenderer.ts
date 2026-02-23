@@ -104,7 +104,7 @@ import { ILanguageModelsService } from '../../common/languageModels.js'; // [ZP-
 import { isEqual } from '../../../../../base/common/resources.js';
 import { IChatTipService } from '../chatTipService.js';
 
-const $ = dom.$;
+const $ = dom.$; // hi
 
 const COPILOT_USERNAME = 'GitHub Copilot';
 

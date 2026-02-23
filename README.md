@@ -2,6 +2,32 @@
 
 This is a fork of [Visual Studio Code](https://github.com/microsoft/vscode) with various patches and customizations.
 
+## Key Features
+
+- **Local Workspace Settings (`.vscode/settings.local.json`)** — Adds support for a `.vscode/settings.local.json` file that overrides `.vscode/settings.json`. Add it to `.gitignore` and every developer on the team gets their own workspace settings (font size, theme, formatters, etc.) without polluting the shared config.
+
+- **Hold-to-Switch AI Model/Mode** — Hold Cmd/Ctrl or Alt/Option in the chat input to temporarily switch to a different AI model or agent mode, then release to revert. Configurable via `chat.editing.HoldCmdKeyAction` and `chat.editing.holdOptionKeyAction` with actions like `switchModel:<id>` and `switchMode:<id>`.
+
+- **Token Usage & Model Name in Chat** — See the active model name while a response is streaming, and view token usage (prompt ↑ / completion ↓) in each response footer after completion. Provides visibility into AI costs and which model is being used.
+
+- **Export All Chat Sessions** — A single command ("Export All Chat Sessions...") to bulk-export every chat session in the workspace as individual JSON files, useful for archiving, sharing, or auditing AI conversations.
+
+- **Responsive Editor Font Size by Window Width** — The `editor.fontSizeByMaxWindowWidth` setting automatically adjusts font size based on window width breakpoints (e.g. `{"1440": 14.5, "1380": 14}`), so the editor stays readable on any display size without manual tweaking.
+
+- **Disable Commit Button Without Staged Changes** — A `git.requireStagedChangesToCommit` setting that grays out the commit button when there are no staged changes, preventing accidental commits of unstaged files.
+
+- **Cycle Secondary Side Bar Widths** — A "Cycle Secondary Side Bar Display" command that cycles the auxiliary bar through configurable widths (including hiding), with support for window-width breakpoints. Configured via `workbench.secondarySideBar.cycleWidths`.
+
+- **Customizable REH Commit Hash** — Override the commit hash VS Code reports when connecting to a Remote Extension Host, preventing version-mismatch rejections when using custom builds with remote servers.
+
+- **Copilot Extensions Run Locally by Default** — GitHub Copilot and Copilot Chat extensions are configured to run on the local machine by default when connected to a remote, improving responsiveness.
+
+- **Customizable Diff Editor Font Size** — A dedicated `diffEditor.fontSize` setting, allowing the diff editor to use a different font size from the main editor.
+
+- **"Set Syntax" Command Alias** — The "Change Language Mode" command is labeled "Change Language Mode (Set Syntax)", making it immediately discoverable for users coming from Sublime Text.
+
+- **Spacegray Theme & Visual Polish** — Ships with a bundled Spacegray theme suite (dark/light color themes, file icons, Carbon product icons) set as defaults, along with various style refinements: rounded highlight corners, clean straight underlines instead of squigglies, dotted indent guides, eye-catching fold indicators, compact 28px panel headers, git diff gutter moved to the left of line numbers, and more.
+
 ## Download
 
 Built binaries can be found in the [Releases page of the zetavg/vscode-build repo](https://github.com/zetavg/vscode-build/releases). You may need to click `Show all ... assets` to see all available downloads.
