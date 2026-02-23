@@ -2,6 +2,10 @@
 
 This is a fork of [Visual Studio Code](https://github.com/microsoft/vscode) with various patches and customizations.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ebee32c3-de7f-49f8-bca0-d1b89ac9d054" />
+</p>
+
 ## Download
 
 Built binaries can be found in the [Releases page of the zetavg/vscode-build repo](https://github.com/zetavg/vscode-build/releases). You may need to click `Show all ... assets` to see all available downloads.
