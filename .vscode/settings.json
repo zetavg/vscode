@@ -125,12 +125,12 @@
 	"css.format.spaceAroundSelectorSeparator": true,
 	// --- Git ---
 	"git.ignoreLimitWarning": true,
-	"git.branchProtection": [
-		"main",
-		"main-*",
-		"distro",
-		"release/*"
-	],
+	// "git.branchProtection": [
+	// 	"main",
+	// 	"main-*",
+	// 	"distro",
+	// 	"release/*"
+	// ],
 	"git.branchProtectionPrompt": "alwaysCommitToNewBranch",
 	"git.branchRandomName.enable": true,
 	"git.pullBeforeCheckout": true,
