@@ -28,6 +28,104 @@ This is a fork of [Visual Studio Code](https://github.com/microsoft/vscode) with
 
 - **Spacegray Theme & Visual Polish** — Ships with a bundled Spacegray theme suite (dark/light color themes, file icons, Carbon product icons) set as defaults, along with various style refinements: rounded highlight corners, clean straight underlines instead of squigglies, dotted indent guides, eye-catching fold indicators, compact 28px panel headers, git diff gutter moved to the left of line numbers, and more.
 
+## Full Key Features
+
+### Workspace & Configuration
+
+1. **Local workspace settings** — Support for settings.local.json, allowing per-developer workspace settings that aren't committed to the repository. Overrides settings.json, intended to be .gitignore'd.
+
+2. **Customizable REH commit hash** (`ZP-F39A`) — Allows overriding the commit hash VS Code reports when connecting to a Remote Extension Host, preventing connection rejections due to version mismatch.
+
+3. **Globally accessible configuration service** (`ZP-D03B`) — A lightweight utility that makes the configuration service globally accessible, simplifying patches that need to read settings without threading the service through.
+
+### Chat / AI Enhancements
+
+4. **Hold-to-switch model/mode** (`ZP-43D0`) — Hold Cmd/Ctrl or Alt/Option in the chat input to **temporarily** switch to a different AI model or agent mode. Release the key to revert. Configurable via `chat.editing.HoldCmdKeyAction` and `chat.editing.holdOptionKeyAction`. Supports `switchModel`, `switchModel:<id>`, and `switchMode:<id>` actions, including resolution of relative `vscode-userdata:` paths for custom agent modes.
+
+5. **Show model name during streaming** (`ZP-05BF`) — Displays the active language model's name in the chat response footer while the response is still being generated, before `result.details` is available.
+
+6. **Show cost/usage in chat messages** (`ZP-2C20`) — Displays token usage (prompt tokens ↑ / completion tokens ↓) in each chat response footer, with a compact `kt`/`mt` format. Controlled by `chat.showMoreResponseDetails`.
+
+7. **Export all chat sessions** (`ZP-8B1A`) — Adds a "Export All Chat Sessions..." command (`workbench.action.chat.exportAll`) that bulk-exports every chat session in the workspace into individual JSON files in a chosen folder.
+
+8. **Customizable chat view foreground color** (`ZP-A612`) — Registers a `chat.foreground` theme color, allowing themes to customize the foreground color of the chat panel independently from the sidebar.
+
+### Editor Visual Refinements
+
+9. **Rounded corners for highlights** (`ZP-B47C`) — Applies `border-radius: 3px` to word highlights, find matches, squiggly decorations, search results, and ghost text, giving them a softer look.
+
+10. **Clean error/warning underlines (no squigglies)** (`ZP-0FE1`) — Replaces the wavy squiggly underlines for errors, warnings, info, and hints with clean straight underlines, resulting in a less noisy editor.
+
+11. **Dotted indent guides** (`ZP-162E`) — Replaces the default solid indent guides with dotted lines, for a subtler visual appearance.
+
+12. **Eye-catching folded code indicator** (`ZP-3B2F`) — Replaces the default `...` fold placeholder with a small rounded pill indicator (background-colored badge), inspired by Xcode and Sublime Text.
+
+13. **Bracket matching underline only** (`ZP-051C`) — Changes bracket matching highlight to underline-only, removing the background highlight for a cleaner look.
+
+14. **Responsive editor font size by window width** (`ZP-E468`) — A new `editor.fontSizeByMaxWindowWidth` setting (and `diffEditor.fontSizeByMaxWindowWidth`) that automatically adjusts font size based on breakpoints tied to window width. Example: `{"1440": 14.5, "1380": 14}` uses 14px when the window is ≤1380px wide.
+
+15. **Customizable diff editor font size** (`ZP-DEFS`) — Adds a standalone `diffEditor.fontSize` setting, allowing the diff editor to use a different font size than the main editor.
+
+16. **Git diff gutter on the left of line numbers** (`ZP-E30D`) — Moves the dirty diff (git change) gutter indicators to the left of the line numbers, similar to Sublime Text, so they don't collide with folding controls.
+
+17. **Customizable bookmark glyph icon** (`ZP-C057`, `ZP-8E77`) — Includes the decoration description in the glyph margin CSS class name, enabling CSS-based customization of bookmark icons via patch CSS.
+
+18. **Token background color fix** (`ZP-8A90`) — Backport of a fix ([PR #212294](https://github.com/microsoft/vscode/pull/212294)) for proper background color rendering in tokens.
+
+### UI / Layout Polish
+
+19. **Compact panel headers (28px)** (`ZP-3528`) — Reduces the height of sidebar/panel title headers from the default to 28px for a more compact UI.
+
+20. **No pointer cursor on non-interactive elements** (`ZP-0782`) — Removes the pointer cursor from many non-interactive elements (sticky scroll, find widget, folding icons, status bar, tree views, toggles, dirty diff decorations, etc.) for more accurate cursor feedback.
+
+21. **Hide remote icon when not connected** (`ZP-804C`) — Hides the remote indicator icon from the status bar when not connected to a remote, reducing visual noise.
+
+22. **Auto-hide sidebar top tab** (`ZP-AF32`) — CSS to hide the top Activity Bar tab in the sidebar when only one item is present (currently commented out but ready to enable).
+
+23. **Dimmed inactive toggle icons** (`ZP-A5E9`) — Dims toggle icons when they are not active, using the active border color as the inactive color, for clearer visual state.
+
+24. **Sidebar tree item opacity** (`ZP-73AF`) — Applies subtle opacity treatment to sidebar tree items (not affecting things like the command palette list), working with the Spacegray theme for a refined look.
+
+25. **Prioritize explorer pane on collapse** (`ZP-CF73`) — When collapsing a sidebar pane, redistributes the freed space to the Explorer pane instead of distributing it evenly, keeping the file tree maximally visible.
+
+26. **Cycle auxiliary bar widths** (`ZP-CA8A`) — A "Cycle Secondary Side Bar Display" command that cycles the auxiliary bar through configurable widths (including hiding at width 0). Supports breakpoint-based widths like `{"0": 300, "1440": 320}` via `workbench.secondarySideBar.cycleWidths`.
+
+27. **Inline chat border color fix** (`ZP-0221`) — Makes the inline chat border color properly configurable via theme colors.
+
+### Theming & Defaults
+
+28. **Spacegray theme suite** — A bundled first-party theme (`theme-spacegray`) providing:
+    - **Spacegray Dark** and **Spacegray Light** color themes (set as defaults)
+    - **Spacegray file icon theme** (default)
+    - **Carbon Icons product icon theme** (default)
+
+29. **Refined default settings** (`ZP-35AB`, `ZP-64AF`) — Opinionated out-of-the-box defaults:
+    - Default font size: **15px** on macOS (up from 12), **16px** on other platforms
+    - Default color theme: **Spacegray Dark/Light** instead of Default Dark/Light Modern
+    - Default file icon theme: **Spacegray**
+    - Default product icon theme: **Carbon Icons**
+    - Line highlight: **gutter only** instead of full line
+    - Minimap slider: **always visible** instead of on mouseover
+
+30. **"Set Syntax" label** (`ZP-BEF1`) — Renames "Change Language Mode" to "Change Language Mode (Set Syntax)" in the command palette, making it more discoverable for users coming from Sublime Text.
+
+31. **ThemeColors type generation** (`ZP-11FC`) — Auto-generates a TypeScript type definition (colors.ts) for all registered theme colors, providing type-safe access to color IDs for themed extensions.
+
+### Git Enhancements
+
+32. **Disable commit button without staged changes** (`ZP-0F44`) — Adds a `git.requireStagedChangesToCommit` setting. When enabled, the commit button is disabled if there are no staged changes, preventing accidental commits of all changes.
+
+### Remote Development
+
+33. **Copilot extensions run locally by default** (`ZP-86CE`) — Configures GitHub Copilot and Copilot Chat extensions to run on the local (UI) machine by default when connected to a remote, improving responsiveness.
+
+### Content Typography
+
+34. **Walkthrough content typography** (`ZP-FB7D`) — Applies enhanced typography styles to walkthrough/welcome content for better readability.
+
+35. **Inline code block font size adjustment** (`ZP-4DEA`) — Uses 12px as the default font size for inline code blocks in markdown tooltips/hovers (since the increased 15px macOS default would be too large in those compact contexts).
+
+
 ## Download
 
 Built binaries can be found in the [Releases page of the zetavg/vscode-build repo](https://github.com/zetavg/vscode-build/releases). You may need to click `Show all ... assets` to see all available downloads.
