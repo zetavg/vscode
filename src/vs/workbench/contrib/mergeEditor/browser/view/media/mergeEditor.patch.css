@@ -1,0 +1,4 @@
+/* [ZP-A124] Rounded corners for merge editor conflict block */
+.monaco-workbench .merge-editor .merge-editor-block {
+	border-radius: 4px;
+}

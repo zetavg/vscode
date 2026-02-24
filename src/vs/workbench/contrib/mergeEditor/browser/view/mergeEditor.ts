@@ -16,6 +16,7 @@ import { basename, isEqual } from '../../../../../base/common/resources.js';
 import { isDefined } from '../../../../../base/common/types.js';
 import { URI } from '../../../../../base/common/uri.js';
 import './media/mergeEditor.css';
+import './media/mergeEditor.patch.css';
 import { ICodeEditor, IViewZoneChangeAccessor } from '../../../../../editor/browser/editorBrowser.js';
 import { ICodeEditorService } from '../../../../../editor/browser/services/codeEditorService.js';
 import { IEditorOptions as ICodeEditorOptions } from '../../../../../editor/common/config/editorOptions.js';
