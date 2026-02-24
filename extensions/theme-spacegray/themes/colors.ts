@@ -1242,12 +1242,32 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	// 'editorOverviewRuler.commonContentForeground': '', // optional
 	// 'editorOverviewRuler.commentForeground': '', // optional
 	// 'editorOverviewRuler.commentUnresolvedForeground': '', // optional
-	'mergeEditor.change.background': '',
-	'mergeEditor.change.word.background': '',
-	'mergeEditor.conflict.unhandledUnfocused.border': '',
-	'mergeEditor.conflict.unhandledFocused.border': '',
-	'mergeEditor.conflict.handledUnfocused.border': '',
-	'mergeEditor.conflict.handledFocused.border': '',
+	// 'mergeEditor.change.background': '',
+	// 'mergeEditor.change.word.background': '',
+	'mergeEditor.change.background': {
+		dark: opacity(c.base0B, 0.05),
+		light: opacity(c.base0B, 0.2)
+	},
+	'mergeEditor.change.word.background': {
+		dark: opacity(c.base0B, 0.1),
+		light: opacity(c.base0B, 0.3)
+	},
+	'mergeEditor.conflict.unhandledUnfocused.border': {
+		dark: opacity(c.base0A, 0.6),
+		light: opacity(c.base0A, 1)
+	},
+	'mergeEditor.conflict.unhandledFocused.border': {
+		dark: opacity(c.base0A_a, 0.6),
+		light: opacity(c.base0A_a, 1)
+	},
+	'mergeEditor.conflict.handledUnfocused.border': {
+		dark: opacity(c.base04, 0.3),
+		light: opacity(c.base03, 0.3)
+	},
+	'mergeEditor.conflict.handledFocused.border': {
+		dark: opacity(c.base04, 0.5),
+		light: opacity(c.base03, 0.5)
+	},
 	'mergeEditor.conflict.handled.minimapOverViewRuler': '',
 	'mergeEditor.conflict.unhandled.minimapOverViewRuler': '',
 	'mergeEditor.conflictingLines.background': '',
