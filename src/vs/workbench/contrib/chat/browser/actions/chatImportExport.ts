@@ -19,6 +19,7 @@ import { isExportableSessionData } from '../../common/model/chatModel.js';
 import { IChatService } from '../../common/chatService/chatService.js';
 import { URI } from '../../../../../base/common/uri.js';
 import { revive } from '../../../../../base/common/marshalling.js';
+import { generateUuid } from '../../../../../base/common/uuid.js'; // [ZP-0EAA] Import and save a chat from a file into persistent history.
 // [ZP-8B1A] Provide a command to export all chat sessions from the current workspace
 import { IProgressService, ProgressLocation } from '../../../../../platform/progress/common/progress.js';
 
@@ -138,6 +139,71 @@ export function registerChatExportActions() {
 				}
 
 				await widgetService.openSession(sessionResource, resolvedTarget, options);
+			} catch (err) {
+				throw err;
+			}
+		}
+	});
+
+	// [ZP-0EAA] Import and save a chat from a file into persistent history.
+	// Reads a chat JSON file and creates a new persisted local session (like
+	// duplicating an existing session), so the imported chat survives tab close.
+	registerAction2(class ImportAndSaveChatAction extends Action2 {
+		constructor() {
+			super({
+				id: 'workbench.action.chat.importAndSave',
+				title: localize2('chat.importAndSave.label', "Import and Save Chat..."),
+				category: CHAT_CATEGORY,
+				precondition: ChatContextKeys.enabled,
+				f1: true,
+			});
+		}
+		async run(accessor: ServicesAccessor, opts?: ChatImportOptions) {
+			const fileService = accessor.get(IFileService);
+			const widgetService = accessor.get(IChatWidgetService);
+			const chatService = accessor.get(IChatService);
+			const fileDialogService = accessor.get(IFileDialogService);
+
+			let inputPath = opts?.inputPath;
+			if (!inputPath) {
+				const defaultUri = joinPath(await fileDialogService.defaultFilePath(), defaultFileName);
+				const result = await fileDialogService.showOpenDialog({
+					defaultUri,
+					canSelectFiles: true,
+					filters
+				});
+				if (!result) {
+					return;
+				}
+				inputPath = result[0];
+			}
+
+			const content = await fileService.readFile(inputPath);
+			try {
+				const data = revive(JSON.parse(content.value.toString()));
+				if (!isExportableSessionData(data)) {
+					throw new Error('Invalid chat session data');
+				}
+
+				// Assign a fresh sessionId and creationDate so the session is
+				// treated as a brand-new local session and persisted to storage,
+				// mirroring the behaviour of DuplicateAgentSessionAction.
+				const dataToPersist = {
+					...data,
+					sessionId: generateUuid(),
+					creationDate: Date.now(),
+				};
+
+				const modelRef = chatService.loadSessionFromContent(dataToPersist);
+				if (!modelRef) {
+					return;
+				}
+
+				try {
+					await widgetService.openSession(modelRef.object.sessionResource, ChatViewPaneTarget);
+				} finally {
+					modelRef.dispose();
+				}
 			} catch (err) {
 				throw err;
 			}
