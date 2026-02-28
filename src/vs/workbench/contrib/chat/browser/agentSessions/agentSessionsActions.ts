@@ -12,7 +12,9 @@ import { AGENT_SESSION_DELETE_ACTION_ID, AGENT_SESSION_RENAME_ACTION_ID, AgentSe
 import { IChatService } from '../../common/chatService/chatService.js';
 import { ChatContextKeys } from '../../common/actions/chatContextKeys.js';
 import { IChatEditorOptions } from '../widgetHosts/editor/chatEditor.js';
-import { ChatViewId, IChatWidgetService } from '../chat.js';
+// [ZP-B525] Support duplicating chat sessions.
+// import { ChatViewId, IChatWidgetService } from '../chat.js';
+import { ChatViewId, ChatViewPaneTarget, IChatWidgetService } from '../chat.js';
 import { ACTIVE_GROUP, AUX_WINDOW_GROUP, PreferredGroup, SIDE_GROUP } from '../../../../services/editor/common/editorService.js';
 import { IViewDescriptorService, ViewContainerLocation } from '../../../../common/views.js';
 import { IWorkbenchLayoutService, Position } from '../../../../services/layout/browser/layoutService.js';
@@ -33,6 +35,7 @@ import { IQuickInputService } from '../../../../../platform/quickinput/common/qu
 import { KeybindingWeight } from '../../../../../platform/keybinding/common/keybindingsRegistry.js';
 import { KeyCode, KeyMod } from '../../../../../base/common/keyCodes.js';
 import { coalesce } from '../../../../../base/common/arrays.js';
+import { generateUuid } from '../../../../../base/common/uuid.js'; // [ZP-B525] Support duplicating chat sessions.
 import { IStorageService, StorageScope, StorageTarget } from '../../../../../platform/storage/common/storage.js';
 import { IPaneCompositePartService } from '../../../../services/panecomposite/browser/panecomposite.js';
 import { IWorkbenchEnvironmentService } from '../../../../services/environment/common/environmentService.js';
@@ -626,6 +629,65 @@ export class DeleteAgentSessionAction extends BaseAgentSessionAction {
 
 			// Remove from storage
 			await chatService.removeHistoryEntry(session.resource);
+		}
+	}
+}
+
+// [ZP-B525] Support duplicating chat sessions.
+export class DuplicateAgentSessionAction extends BaseAgentSessionAction {
+
+	constructor() {
+		super({
+			id: 'agentSession.duplicate',
+			title: localize2('duplicate', "Duplicate"),
+			precondition: ChatContextKeys.hasMultipleAgentSessionsSelected.negate(),
+			menu: {
+				id: MenuId.AgentSessionsContext,
+				group: '1_edit',
+				order: 5,
+				when: ChatContextKeys.agentSessionType.isEqualTo(AgentSessionProviders.Local)
+			}
+		});
+	}
+
+	async runWithSessions(sessions: IAgentSession[], accessor: ServicesAccessor): Promise<void> {
+		const session = sessions.at(0);
+		if (!session) {
+			return;
+		}
+
+		const chatService = accessor.get(IChatService);
+		const chatWidgetService = accessor.get(IChatWidgetService);
+
+		// Use getOrRestoreSession to load the session from storage if it is not
+		// already active in memory.
+		const sourceRef = await chatService.getOrRestoreSession(session.resource);
+		if (!sourceRef) {
+			return;
+		}
+
+		try {
+			// Export full serialized data (title, creationDate, etc.) and assign a
+			// new sessionId + creationDate so the duplicate is treated as a fresh
+			// local session (not "imported") and is properly persisted to storage.
+			const fullData = sourceRef.object.toJSON();
+			const dataToDuplicate = {
+				...fullData,
+				sessionId: generateUuid(),
+				creationDate: Date.now(),
+			};
+			const newRef = chatService.loadSessionFromContent(dataToDuplicate);
+			if (!newRef) {
+				return;
+			}
+
+			try {
+				await chatWidgetService.openSession(newRef.object.sessionResource, ChatViewPaneTarget);
+			} finally {
+				newRef.dispose();
+			}
+		} finally {
+			sourceRef.dispose();
 		}
 	}
 }
