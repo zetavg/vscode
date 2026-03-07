@@ -31,7 +31,7 @@ import { ChatEntitlement, ChatEntitlementContext, ChatEntitlementRequests, isPro
 import { CHAT_OPEN_ACTION_ID } from '../actions/chatActions.js';
 // [ZP-GCS1] Do not try to install the extension during login
 import { /* ChatViewId, */ ChatViewContainerId } from '../chat.js';
-import { ChatSetupAnonymous, ChatSetupStep, ChatSetupResultValue, InstallChatEvent, InstallChatClassification, refreshTokens, maybeEnableAuthExtension } from './chatSetup.js';
+import { ChatSetupAnonymous, ChatSetupStep, ChatSetupResultValue, InstallChatEvent, InstallChatClassification, refreshTokens, /* maybeEnableAuthExtension */ } from './chatSetup.js';
 import { IDefaultAccount } from '../../../../../base/common/defaultAccount.js';
 import { IDefaultAccountService } from '../../../../../platform/defaultAccount/common/defaultAccount.js';
 
@@ -157,10 +157,11 @@ export class ChatSetupController extends Disposable {
 	}
 
 	private async signIn(options: IChatSetupControllerOptions): Promise<{ defaultAccount: IDefaultAccount | undefined; entitlement: ChatEntitlement | undefined }> {
-		const authExtensionReEnabled = await maybeEnableAuthExtension(this.extensionsWorkbenchService, this.logService);
-		if (authExtensionReEnabled) {
-			refreshTokens(this.commandService);
-		}
+		// [ZP-GCS1] Do not try to install the extension during login
+		// const authExtensionReEnabled = await maybeEnableAuthExtension(this.extensionsWorkbenchService, this.logService);
+		// if (authExtensionReEnabled) {
+		// 	refreshTokens(this.commandService);
+		// }
 
 		let entitlements;
 		let defaultAccount;
