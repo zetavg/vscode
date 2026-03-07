@@ -751,8 +751,9 @@ export class ChatListItemRenderer extends Disposable implements ITreeRenderer<Ch
 		}
 
 		// [ZP-2C20] Show cost/usage in chat messages
-		if (isResponseVM(element) && element.isComplete && element.result?.usage) {
-			const usage = element.result.usage;
+		const resultUsage = isResponseVM(element) && element.isComplete ? (element.result?.metadata as { usage?: { promptTokens: number; completionTokens: number } } | undefined)?.usage : undefined;
+		if (resultUsage) {
+			const usage = resultUsage;
 
 			const costDetailsText = `\u2191 ${formatTokenCount(usage.promptTokens)} \u2193 ${formatTokenCount(usage.completionTokens)}`;
 
