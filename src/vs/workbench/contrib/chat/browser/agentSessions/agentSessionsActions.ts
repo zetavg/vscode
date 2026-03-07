@@ -676,7 +676,7 @@ export class DuplicateAgentSessionAction extends BaseAgentSessionAction {
 				sessionId: generateUuid(),
 				creationDate: Date.now(),
 			};
-			const newRef = chatService.loadSessionFromContent(dataToDuplicate);
+			const newRef = chatService.loadSessionFromData(dataToDuplicate);
 			if (!newRef) {
 				return;
 			}
