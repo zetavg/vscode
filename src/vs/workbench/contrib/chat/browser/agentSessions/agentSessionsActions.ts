@@ -23,7 +23,7 @@ import { ContextKeyExpr } from '../../../../../platform/contextkey/common/contex
 import { ChatEditorInput, showClearEditingSessionConfirmation } from '../widgetHosts/editor/chatEditorInput.js';
 import { IDialogService } from '../../../../../platform/dialogs/common/dialogs.js';
 import { IConfigurationService } from '../../../../../platform/configuration/common/configuration.js';
-import { ChatConfiguration } from '../../common/constants.js';
+import { ChatAgentLocation /* [ZP-B525] */, ChatConfiguration } from '../../common/constants.js';
 import { ACTION_ID_NEW_CHAT } from '../actions/chatActions.js';
 import { IViewsService } from '../../../../services/views/common/viewsService.js';
 import { ChatViewPane } from '../widgetHosts/viewPane/chatViewPane.js';
@@ -36,6 +36,7 @@ import { KeybindingWeight } from '../../../../../platform/keybinding/common/keyb
 import { KeyCode, KeyMod } from '../../../../../base/common/keyCodes.js';
 import { coalesce } from '../../../../../base/common/arrays.js';
 import { generateUuid } from '../../../../../base/common/uuid.js'; // [ZP-B525] Support duplicating chat sessions.
+import { CancellationToken } from '../../../../../base/common/cancellation.js'; // [ZP-B525] Support duplicating chat sessions.
 import { IStorageService, StorageScope, StorageTarget } from '../../../../../platform/storage/common/storage.js';
 import { IPaneCompositePartService } from '../../../../services/panecomposite/browser/panecomposite.js';
 import { IWorkbenchEnvironmentService } from '../../../../services/environment/common/environmentService.js';
@@ -659,9 +660,9 @@ export class DuplicateAgentSessionAction extends BaseAgentSessionAction {
 		const chatService = accessor.get(IChatService);
 		const chatWidgetService = accessor.get(IChatWidgetService);
 
-		// Use getOrRestoreSession to load the session from storage if it is not
+		// Use acquireOrLoadSession to load the session from storage if it is not
 		// already active in memory.
-		const sourceRef = await chatService.getOrRestoreSession(session.resource);
+		const sourceRef = await chatService.acquireOrLoadSession(session.resource, ChatAgentLocation.Chat, CancellationToken.None);
 		if (!sourceRef) {
 			return;
 		}
