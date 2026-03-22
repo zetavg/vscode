@@ -1142,6 +1142,12 @@ ${formatRule(Codicon.menuSubmenu)}
 	border-radius: var(--vscode-cornerRadius-medium);
 }
 
+/* [ZP-CD74] Use selection background color for monaco-action-bar hovered items. */
+/* Because the Spacegray theme the action bar (context menu) have a dark background, and the default hover background color is also dark, so we use the selection background color which is lighter to make it visible. */
+.monaco-menu .monaco-action-bar {
+	--vscode-list-hoverBackground: color-mix(in srgb, var(--vscode-menu-selectionBackground) 60%, transparent);
+}
+
 .monaco-menu .monaco-action-bar.vertical .action-menu-item:hover .keybinding,
 .monaco-menu .monaco-action-bar.vertical .action-menu-item:focus .keybinding {
 	opacity: unset;
