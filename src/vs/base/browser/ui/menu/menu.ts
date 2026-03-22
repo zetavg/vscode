@@ -1056,6 +1056,11 @@ ${formatRule(Codicon.menuSubmenu)}
 	position: relative;  /* DO NOT REMOVE - this is the key to preventing the ghosting icon bug in Chrome 42 */
 }
 
+/* [ZP-0782] No pointer. */
+.monaco-menu .monaco-action-bar .action-item {
+	cursor: default;
+}
+
 .monaco-menu .monaco-action-bar .action-item.disabled {
 	cursor: default;
 }
@@ -1329,6 +1334,11 @@ ${formatRule(Codicon.menuSubmenu)}
 			.monaco-scrollable-element > .scrollbar > .scra {
 				cursor: pointer;
 				font-size: 11px !important;
+			}
+
+			/* [ZP-0782] No pointer. */
+			.monaco-scrollable-element > .scrollbar > .scra {
+				cursor: default;
 			}
 
 			.monaco-scrollable-element > .visible {
