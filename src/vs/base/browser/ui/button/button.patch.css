@@ -2,3 +2,13 @@
 	font-family: var(--monaco-narrow-font);
 	font-weight: 500;
 }
+
+/* [ZP-0782] No pointer. */
+.monaco-text-button {
+	cursor: default;
+}
+
+/* [ZP-0782] No pointer. */
+.monaco-button-dropdown {
+	cursor: default;
+}
