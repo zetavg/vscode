@@ -1378,7 +1378,10 @@ export const colors: ThemeColors<string | { light: string; dark: string }> & Rec
 	// 'menu.selectionForeground': '', // optional
 	// 'menu.selectionBackground': '', // optional
 	// 'menu.selectionBorder': '', // optional
-	'menu.separatorBackground': '',
+	'menu.separatorBackground': {
+		dark: opacity(c.base01, 0.5),
+		light: opacity(c.base05, 0.5),
+	},
 	// 'menu.border': '', // optional
 
 	//
