@@ -63,6 +63,9 @@ export namespace ThemeSettingDefaults {
 	export const PRODUCT_ICON_THEME = 'spacegray-icons-carbon';
 }
 
+// [ZP-35AB] Defaults.
+if (isOSS) { /* We need to use isOSS to make TypeScript happy, as patches may remove the usage of all isOSS values. */ }
+
 export const COLOR_THEME_DARK_INITIAL_COLORS = {
 	'actionBar.toggledBackground': '#383a49',
 	'activityBar.activeBorder': '#0078D4',
