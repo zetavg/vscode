@@ -91,6 +91,11 @@ export class WebviewThemeDataProvider extends Disposable {
 				'vscode-editor-font-feature-settings': editorFontLigatures,
 			};
 
+			// [ZP-CD74] Use selection background color for monaco-action-bar hovered items.
+			// Since plugins will use this for hover color in a menu as well.
+			// eslint-disable-next-line local/code-no-any-casts, @typescript-eslint/no-explicit-any
+			(styles as any)['vscode-list-hoverBackground'] = 'color-mix(in srgb, var(--vscode-menu-selectionBackground) 60%, transparent)';
+
 			const activeTheme = ApiThemeClassName.fromTheme(theme);
 			this._cachedWebViewThemeData = { styles, activeTheme, themeLabel: theme.label, themeId: theme.settingsId };
 		}
