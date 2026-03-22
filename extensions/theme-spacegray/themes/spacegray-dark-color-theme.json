@@ -254,6 +254,7 @@
         "statusBarItem.remoteHoverForeground": "#343d46",
         "statusBarItem.compactHoverBackground": "#0000",
         "statusBarItem.offlineBackground": "#0000",
+        "menu.separatorBackground": "#343d4680",
         "pickerGroup.border": "#343d46",
         "pickerGroup.foreground": "#65737e",
         "keybindingLabel.background": "#8287922b",
