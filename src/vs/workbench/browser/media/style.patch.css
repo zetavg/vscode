@@ -57,3 +57,8 @@ body:not(.disable-patch-7EF2) {
 		}
 	}
 }
+
+/* [ZP-0782] No pointer. */
+.monaco-workbench label {
+	cursor: default;
+}
