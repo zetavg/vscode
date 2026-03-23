@@ -9,6 +9,7 @@ import { IAction } from '../../../base/common/actions.js';
 import { KeyCode, KeyMod } from '../../../base/common/keyCodes.js';
 import { Disposable, DisposableStore, IDisposable, MutableDisposable } from '../../../base/common/lifecycle.js';
 import './actionWidget.css';
+import './actionWidget.patch.css';
 import { localize, localize2 } from '../../../nls.js';
 import { acceptSelectedActionCommand, ActionList, IActionListDelegate, IActionListItem, IActionListOptions, previewSelectedActionCommand } from './actionList.js';
 import { Action2, registerAction2 } from '../../actions/common/actions.js';
