@@ -1,0 +1,4 @@
+/* [ZP-DD2B] More obvious background color for focused action widget items */
+.action-widget .monaco-list .monaco-list-row.action.focused:not(.option-disabled) {
+	background-color: color-mix(in srgb, var(--vscode-menu-selectionBackground) 60%, transparent) !important;
+}
