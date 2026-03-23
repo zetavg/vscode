@@ -5,6 +5,7 @@
 .monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab .file-icon::before {
 	width: 0;
 	opacity: 0;
+	visibility: hidden;
 }
 
 .monaco-workbench .part.editor > .content .editor-group-container.active > .title .tabs-container > .tab > .tab-actions .action-label,
