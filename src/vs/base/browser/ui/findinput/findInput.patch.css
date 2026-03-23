@@ -1,0 +1,39 @@
+/* [ZP-B084] Better find input options highlight animation (for addSelectionToNextFindMatch) */
+.monaco-findInput.highlight-0 .controls,
+.hc-light .monaco-findInput.highlight-0 .controls {
+	border-radius: 4px;
+	animation: monaco-findInput-highlight-0 100ms linear 0s;
+}
+.monaco-findInput.highlight-1 .controls,
+.hc-light .monaco-findInput.highlight-1 .controls {
+	border-radius: 4px;
+	animation: monaco-findInput-highlight-1 100ms linear 0s;
+}
+.hc-black .monaco-findInput.highlight-0 .controls,
+.vs-dark  .monaco-findInput.highlight-0 .controls {
+	border-radius: 4px;
+	animation: monaco-findInput-highlight-dark-0 100ms linear 0s;
+}
+.hc-black .monaco-findInput.highlight-1 .controls,
+.vs-dark  .monaco-findInput.highlight-1 .controls {
+	border-radius: 4px;
+	animation: monaco-findInput-highlight-dark-1 100ms linear 0s;
+}
+@keyframes monaco-findInput-highlight-0 {
+	0% { background: color-mix(in srgb, var(--vscode-inputOption-activeForeground) 30%, transparent); }
+	100% { background: transparent; }
+}
+@keyframes monaco-findInput-highlight-1 {
+	0% { background: color-mix(in srgb, var(--vscode-inputOption-activeForeground) 30%, transparent); }
+	/* Made intentionally different such that the CSS minifier does not collapse the two animations into a single one*/
+	99% { background: transparent; }
+}
+@keyframes monaco-findInput-highlight-dark-0 {
+	0% { background: color-mix(in srgb, var(--vscode-inputOption-activeForeground) 30%, transparent); }
+	100% { background: transparent; }
+}
+@keyframes monaco-findInput-highlight-dark-1 {
+	0% { background: color-mix(in srgb, var(--vscode-inputOption-activeForeground) 30%, transparent); }
+	/* Made intentionally different such that the CSS minifier does not collapse the two animations into a single one*/
+	99% { background: transparent; }
+}

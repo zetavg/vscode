@@ -15,6 +15,7 @@ import { Codicon } from '../../../common/codicons.js';
 import { Emitter, Event } from '../../../common/event.js';
 import { KeyCode } from '../../../common/keyCodes.js';
 import './findInput.css';
+import './findInput.patch.css';
 import * as nls from '../../../../nls.js';
 import { IHistory } from '../../../common/history.js';
 import { type IHoverLifecycleOptions } from '../hover/hover.js';

@@ -16,6 +16,7 @@ import { KeyCode } from '../../../common/keyCodes.js';
 import { IAction } from '../../../common/actions.js';
 import type { IActionViewItemProvider } from '../actionbar/actionbar.js';
 import './findInput.css';
+import './findInput.patch.css';
 import * as nls from '../../../../nls.js';
 import { DisposableStore, MutableDisposable } from '../../../common/lifecycle.js';
 import { IHistory } from '../../../common/history.js';
