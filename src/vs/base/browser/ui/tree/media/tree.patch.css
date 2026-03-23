@@ -18,15 +18,21 @@
 .vs-dark .part.sidebar .monaco-tl-contents .outline-element-icon,
 .vs-dark .part.sidebar .monaco-tl-contents .monaco-icon-label::before,
 .vs-dark .part.sidebar .monaco-tl-contents .monaco-icon-label::after,
+.vs-dark .part.sidebar .monaco-tl-contents .monaco-icon-label .monaco-icon-label-iconpath,
 .vs-dark .part.sidebar .monaco-tl-contents .codicon::before,
 .vs-dark .part.sidebar .monaco-tl-contents .codicon::after,
 .vs-dark .part.auxiliarybar .monaco-tl-contents .outline-element-icon,
 .vs-dark .part.auxiliarybar .monaco-tl-contents .monaco-icon-label::before,
 .vs-dark .part.auxiliarybar .monaco-tl-contents .monaco-icon-label::after,
+.vs-dark .part.auxiliarybar .monaco-tl-contents .monaco-icon-label .monaco-icon-label-iconpath,
 .vs-dark .part.auxiliarybar .monaco-tl-contents .codicon::before,
 .vs-dark .part.auxiliarybar .monaco-tl-contents .codicon::after,
 .vs-dark .open-editors .monaco-list-row .monaco-icon-label::before,
-.vs-dark .open-editors .monaco-list-row .monaco-icon-label::after {
+.vs-dark .open-editors .monaco-list-row .monaco-icon-label::after,
+.vs-dark .open-editors .monaco-list-row .monaco-icon-label .monaco-icon-label-iconpath,
+.vs-dark .tabs-container .monaco-icon-label::before,
+.vs-dark .tabs-container .monaco-icon-label::after,
+.vs-dark .tabs-container .monaco-icon-label .monaco-icon-label-iconpath {
 	opacity: 0.6 !important;
 }
 
