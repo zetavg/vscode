@@ -6,6 +6,7 @@
 import * as nls from '../../../../nls.js';
 
 import './media/dirtydiffDecorator.css';
+import './media/dirtydiffDecorator.patch.css';
 import { Disposable, DisposableStore, DisposableMap, IReference } from '../../../../base/common/lifecycle.js';
 import { Event } from '../../../../base/common/event.js';
 import { IConfigurationService } from '../../../../platform/configuration/common/configuration.js';
