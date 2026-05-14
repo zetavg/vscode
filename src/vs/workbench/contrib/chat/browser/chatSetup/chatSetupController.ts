@@ -23,7 +23,8 @@ import { Registry } from '../../../../../platform/registry/common/platform.js';
 import { ITelemetryService } from '../../../../../platform/telemetry/common/telemetry.js';
 import { IActivityService, ProgressBadge } from '../../../../services/activity/common/activity.js';
 import { ILifecycleService } from '../../../../services/lifecycle/common/lifecycle.js';
-import { IExtensionsWorkbenchService } from '../../../extensions/common/extensions.js';
+// [ZP-GCS1] Do not try to install the extension during login
+// import { IExtensionsWorkbenchService } from '../../../extensions/common/extensions.js';
 import { ChatEntitlement, ChatEntitlementContext, ChatEntitlementRequests, isProUser } from '../../../../services/chat/common/chatEntitlementService.js';
 import { CHAT_OPEN_ACTION_ID } from '../actions/chatActions.js';
 // [ZP-GCS1] Do not try to install the extension during login
