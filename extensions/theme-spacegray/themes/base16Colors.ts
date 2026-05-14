@@ -1,0 +1,45 @@
+/* eslint-disable header/header */
+
+import { chroma, lighten } from './utils';
+
+export const base16Colors = {
+	'base00_a': 'rgb(28, 31, 38)',
+	'base01_a': 'rgb(35, 40, 48)',
+	// 'base01_a': 'rgb(34, 40, 49)',
+	'base00': 'rgb(43, 48, 59)',
+	'base01': 'rgb(52, 61, 70)',
+	'base02': 'rgb(79, 91, 102)',
+	'base03': 'rgb(101, 115, 126)',
+	'base03_a': 'rgb(140, 145, 156)',
+	'base04': 'rgb(167, 173, 186)',
+	'base05': 'rgb(192, 197, 206)',
+	'base06': 'rgb(223, 225, 232)',
+	'base06_a': 'rgb(230, 233, 240)',
+	'base07': 'rgb(239, 241, 245)',
+	'base07_a': 'rgb(249, 250, 251)',
+	'base02_l': 'rgb(126, 128, 129)',
+	'base07_l': 'rgb(237, 239, 242)',
+	'base08': 'rgb(191, 97, 106)',
+	'base09': 'rgb(208, 135, 112)',
+	'base0A': 'rgb(235, 203, 139)',
+	'base0B': 'rgb(163, 190, 140)',
+	'base0C': 'rgb(150, 181, 180)',
+	'base0D': 'rgb(143, 161, 179)',
+	'base0E': 'rgb(180, 142, 173)',
+	'base0F': 'rgb(171, 121, 103)',
+	'base08_a': 'rgb(241, 76, 76)',
+	'base0A_a': 'rgb(254, 204, 102)',
+	'base0C_a': 'rgb(140, 182, 182)',
+	// 'base0A_l': 'rgb(230, 197, 138)',
+	// 'base0B_l': 'rgb(149, 171, 128)',
+	// 'base0C_l': 'rgb(142, 171, 170)',
+	// 'base0D_l': 'rgb(137, 154, 171)',
+	// 'base0E_l': 'rgb(171, 135, 164)',
+	'base0A_l': chroma(lighten('rgb(230, 197, 138)', -0.1), 0.1),
+	'base0B_l': chroma(lighten('rgb(149, 171, 128)', -0.1), 0.1),
+	'base0C_l': chroma(lighten('rgb(142, 171, 170)', -0.1), 0.1),
+	'base0D_l': chroma(lighten('rgb(137, 154, 171)', -0.1), 0.1),
+	'base0E_l': chroma(lighten('rgb(171, 135, 164)', -0.1), 0.1),
+} as const;
+
+export default base16Colors;
