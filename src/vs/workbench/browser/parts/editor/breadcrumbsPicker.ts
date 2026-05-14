@@ -13,6 +13,7 @@ import { posix, relative } from '../../../../base/common/path.js';
 import { basename, dirname, isEqual } from '../../../../base/common/resources.js';
 import { URI } from '../../../../base/common/uri.js';
 import './media/breadcrumbscontrol.css';
+import './media/breadcrumbscontrol.patch.css';
 import { IConfigurationService } from '../../../../platform/configuration/common/configuration.js';
 import { FileKind, FileSystemProviderCapabilities, IFileService, IFileStat } from '../../../../platform/files/common/files.js';
 import { IInstantiationService } from '../../../../platform/instantiation/common/instantiation.js';

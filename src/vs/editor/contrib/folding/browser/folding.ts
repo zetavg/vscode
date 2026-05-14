@@ -11,6 +11,7 @@ import { Disposable, DisposableStore, IDisposable } from '../../../../base/commo
 import { escapeRegExpCharacters } from '../../../../base/common/strings.js';
 import * as types from '../../../../base/common/types.js';
 import './folding.css';
+import './folding.patch.css';
 import { StableEditorScrollState } from '../../../browser/stableEditorScroll.js';
 import { ICodeEditor, IEditorMouseEvent, MouseTargetType } from '../../../browser/editorBrowser.js';
 import { EditorAction, EditorContributionInstantiation, registerEditorAction, registerEditorContribution, registerInstantiatedEditorAction, ServicesAccessor } from '../../../browser/editorExtensions.js';

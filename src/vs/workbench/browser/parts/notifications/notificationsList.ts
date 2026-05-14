@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import './media/notificationsList.css';
+import './media/notificationsList.patch.css';
 import { localize } from '../../../../nls.js';
 import { $, getWindow, isAncestorOfActiveElement, trackFocus } from '../../../../base/browser/dom.js';
 import { WorkbenchList } from '../../../../platform/list/browser/listService.js';
