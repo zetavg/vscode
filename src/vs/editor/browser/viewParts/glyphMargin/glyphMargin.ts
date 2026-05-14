@@ -6,6 +6,7 @@
 import { FastDomNode, createFastDomNode } from '../../../../base/browser/fastDomNode.js';
 import { ArrayQueue } from '../../../../base/common/arrays.js';
 import './glyphMargin.css';
+import './glyphMargin.patch.css';
 import { IGlyphMarginWidget, IGlyphMarginWidgetPosition } from '../../editorBrowser.js';
 import { DynamicViewOverlay } from '../../view/dynamicViewOverlay.js';
 import { RenderingContext, RestrictedRenderingContext } from '../../view/renderingContext.js';
