@@ -704,10 +704,12 @@ export class QuickDiffEditorController extends Disposable implements IEditorCont
 		const offsetLeftInGutter = e.target.element.offsetLeft;
 		const gutterOffsetX = data.offsetX - offsetLeftInGutter;
 
-		// TODO@joao TODO@alex TODO@martin this is such that we don't collide with folding
-		if (gutterOffsetX < -3 || gutterOffsetX > 3) { // dirty diff decoration on hover is 6px wide
-			return;
-		}
+		// [ZP-E30D] Because we moved the dirty diff decoration to the left, it won't collide with folding now
+		if (gutterOffsetX > 999) { return; } // Just making TypeScript happy by making sure gutterOffsetX is used.
+		// // TODO@joao TODO@alex TODO@martin this is such that we don't collide with folding
+		// if (gutterOffsetX < -3 || gutterOffsetX > 3) { // dirty diff decoration on hover is 6px wide
+		// 	return;
+		// }
 
 		this.mouseDownInfo = { lineNumber: range.startLineNumber };
 	}

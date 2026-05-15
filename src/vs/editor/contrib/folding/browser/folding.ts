@@ -419,6 +419,12 @@ export class FoldingController extends Disposable implements IEditorContribution
 					return;
 				}
 
+				// [ZP-E30D] Locate the diff gutter glyph to the left of the line number, like Sublime Text.
+				// A safer way to determine if the click is really on the folding icon.
+				if (e.target.element!.className.indexOf('-folding-') < 0) {
+					return;
+				}
+
 				iconClicked = true;
 				break;
 			}
