@@ -5,3 +5,10 @@ body:not(.disable-patch-302B) {
 		width: 4px !important;
 	}
 }
+
+/* [ZP-E353] Peek view zone widget polish. */
+body:not(.disable-patch-E353) {
+	.monaco-editor .peekview-widget .decorationsOverviewRuler {
+		opacity: 0.8;
+	}
+}

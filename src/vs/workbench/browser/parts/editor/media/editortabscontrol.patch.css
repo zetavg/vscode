@@ -23,3 +23,11 @@ body:not(.disable-patch-FID7) {
 		font-size: 12px;
 	}
 }
+
+/* [ZP-TL0C] Do not let error or warnings affect the title label color. */
+body:not(.disable-patch-TL0C) {
+	.monaco-workbench .part.editor > .content .editor-group-container > .title .title-label a,
+	.monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab .tab-label {
+		color: inherit;
+	}
+}

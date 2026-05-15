@@ -4,3 +4,21 @@ body:not(.disable-patch-FID7) {
 		font-family: var(--monaco-condensed-font);
 	}
 }
+
+/* [ZP-5BB3] Search panel result match rounded corners. */
+body:not(.disable-patch-5BB3) {
+	.search-view .findInFileMatch {
+		border-radius: 3px;
+	}
+}
+
+/* [ZP-6C2C] Panel filter input + search widget spacing. */
+body:not(.disable-patch-6C2C) {
+	.search-view .search-widgets-container {
+		padding-top: 2px;
+		padding-bottom: 2px;
+	}
+	.search-view .search-widgets-container:has(.query-details.more) {
+		padding-bottom: 8px;
+	}
+}

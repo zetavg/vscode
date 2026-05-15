@@ -1,0 +1,10 @@
+/* [ZP-CCB2] Titlebar right-side controls fade. */
+body:not(.disable-patch-CCB2) {
+	.monaco-workbench .part.titlebar > .titlebar-container > .titlebar-right {
+		opacity: 0.75;
+		transition: opacity 0.2s;
+	}
+	.monaco-workbench .part.titlebar > .titlebar-container > .titlebar-right:hover {
+		opacity: 1;
+	}
+}

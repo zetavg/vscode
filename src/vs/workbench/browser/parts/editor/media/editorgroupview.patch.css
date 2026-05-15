@@ -4,3 +4,10 @@ body:not(.disable-patch-FID7) {
 		font-weight: 300;
 	}
 }
+
+/* [ZP-41F8] Hide editor empty-view watermark logo. */
+body:not(.disable-patch-41F8) {
+	.monaco-workbench .part.editor > .content .editor-group-container > .editor-group-watermark .letterpress {
+		display: none;
+	}
+}
