@@ -124,6 +124,8 @@ export class TokenMetadata {
 
 	public static getClassNameFromMetadata(metadata: number): string {
 		const foreground = this.getForeground(metadata);
+		// [ZP-8A90] Add semantic token background color support (vscode#212294).
+		const background = this.getBackground(metadata);
 		let className = 'mtk' + foreground;
 
 		const fontStyle = this.getFontStyle(metadata);
@@ -138,6 +140,12 @@ export class TokenMetadata {
 		}
 		if (fontStyle & FontStyle.Strikethrough) {
 			className += ' mtks';
+		}
+
+		// [ZP-8A90] Add semantic token background color support (vscode#212294).
+		// https://github.com/microsoft/vscode/pull/212294
+		if (background !== ColorId.None && background !== ColorId.DefaultBackground) {
+			className += ' mtkbg' + background;
 		}
 
 		return className;
