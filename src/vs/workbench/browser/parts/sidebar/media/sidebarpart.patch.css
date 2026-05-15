@@ -1,0 +1,7 @@
+/* [ZP-FID7] use Input font */
+body:not(.disable-patch-FID7) {
+	.monaco-workbench .part.sidebar > .title > .title-label h2,
+	.monaco-workbench .part.auxiliarybar > .title > .title-label h2 {
+		font-weight: 500;
+	}
+}

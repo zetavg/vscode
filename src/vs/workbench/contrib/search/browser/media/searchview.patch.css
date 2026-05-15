@@ -1,0 +1,6 @@
+/* [ZP-FID7] use Input font */
+body:not(.disable-patch-FID7) {
+	.search-view .monaco-icon-label > .monaco-icon-label-container > .monaco-icon-description-container > .label-description {
+		font-family: var(--monaco-condensed-font);
+	}
+}

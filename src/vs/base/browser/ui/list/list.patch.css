@@ -4,3 +4,29 @@ body:not(.disable-patch-0782) {
 		cursor: default;
 	}
 }
+
+/* [ZP-FID7] use Input font */
+body:not(.disable-patch-FID7) {
+	.part.sidebar .monaco-list-row,
+	.part.auxiliarybar .monaco-list-row {
+		font-family: var(--monaco-condensed-font);
+		font-weight: 300;
+		font-size: 11px;
+	}
+
+	.part.sidebar .extensions-list .monaco-list-row,
+	.part.auxiliarybar .extensions-list .monaco-list-row {
+		font-size: 12px;
+	}
+
+	.part.sidebar .extensions-list .monaco-list-row .name,
+	.part.auxiliarybar .extensions-list .monaco-list-row .name {
+		font-size: 13px;
+	}
+
+	/* Copilot Chat */
+	.part.sidebar .interactive-session .monaco-list-row,
+	.part.auxiliarybar .interactive-session .monaco-list-row {
+		font-size: 13px;
+	}
+}

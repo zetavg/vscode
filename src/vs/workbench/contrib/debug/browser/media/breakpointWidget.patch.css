@@ -1,0 +1,8 @@
+/* [ZP-FID7] use Input font */
+body:not(.disable-patch-FID7) {
+	.monaco-editor .zone-widget .zone-widget-container.breakpoint-widget {
+		.monaco-select-box {
+			font-family: var(--monaco-condensed-font);
+		}
+	}
+}

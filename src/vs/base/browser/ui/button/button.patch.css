@@ -8,3 +8,11 @@ body:not(.disable-patch-0782) {
 		cursor: default;
 	}
 }
+
+/* [ZP-FID7] use Input font */
+body:not(.disable-patch-FID7) {
+	.monaco-text-button {
+		font-family: var(--monaco-narrow-font);
+		font-weight: 500;
+	}
+}
