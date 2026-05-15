@@ -3437,7 +3437,9 @@ class EditorMinimap extends BaseEditorOption<EditorOption.minimap, IEditorMinima
 			enabled: true,
 			size: 'proportional',
 			side: 'right',
-			showSlider: 'mouseover',
+			// [ZP-64AF] Default minimap slider to always visible.
+			// showSlider: 'mouseover',
+			showSlider: 'always',
 			autohide: 'none',
 			renderCharacters: true,
 			maxColumn: 120,
