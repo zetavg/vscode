@@ -39,13 +39,19 @@ export enum ThemeSettings {
 }
 
 export namespace ThemeSettingDefaults {
-	export const COLOR_THEME_DARK = 'Dark 2026';
-	export const COLOR_THEME_LIGHT = 'Light 2026';
+	// [ZP-35AB] Defaults.
+	// export const COLOR_THEME_DARK = 'Dark 2026';
+	// export const COLOR_THEME_LIGHT = 'Light 2026';
+	export const COLOR_THEME_DARK = 'Spacegray Dark';
+	export const COLOR_THEME_LIGHT = 'Spacegray Light';
 	export const COLOR_THEME_HC_DARK = 'Default High Contrast';
 	export const COLOR_THEME_HC_LIGHT = 'Default High Contrast Light';
 
-	export const FILE_ICON_THEME = 'vs-seti';
-	export const PRODUCT_ICON_THEME = 'Default';
+	// [ZP-35AB] Defaults.
+	// export const FILE_ICON_THEME = 'vs-seti';
+	// export const PRODUCT_ICON_THEME = 'Default';
+	export const FILE_ICON_THEME = 'spacegray';
+	export const PRODUCT_ICON_THEME = 'spacegray-icons-carbon';
 }
 
 /**

@@ -237,7 +237,9 @@ export const EDITOR_FONT_DEFAULTS = {
 	),
 	fontWeight: 'normal',
 	fontSize: (
-		platform.isMacintosh ? 12 : 14
+		// [ZP-35AB] Defaults.
+		// platform.isMacintosh ? 12 : 14
+		platform.isMacintosh ? 15 : 16
 	),
 	lineHeight: 0,
 	letterSpacing: 0,
