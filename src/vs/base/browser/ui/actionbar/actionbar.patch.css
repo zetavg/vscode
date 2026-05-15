@@ -4,15 +4,3 @@ body:not(.disable-patch-0782) {
 		cursor: default;
 	}
 }
-
-/* [ZP-CPA0] Hide copilot icon in title bar */
-body:not(.disable-patch-CPA0) {
-	.window-title .command-center-center ~ .action-item {
-		opacity: 0;
-		transition: opacity 0.2s ease-in-out;
-	}
-
-	.window-title:hover .command-center-center ~ .action-item {
-		opacity: 0.8;
-	}
-}
