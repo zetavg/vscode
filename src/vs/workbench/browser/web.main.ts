@@ -100,6 +100,13 @@ import { IDefaultAccountService } from '../../platform/defaultAccount/common/def
 import { DefaultAccountService } from '../services/accounts/browser/defaultAccount.js';
 import { AccountPolicyService } from '../services/policies/common/accountPolicyService.js';
 
+// [ZP-D15A] User-disable-able patches infrastructure.
+// eslint-disable-next-line local/code-import-patterns
+import { registerConfiguration as registerDisablePatchesConfiguration } from '../../z-customizations/disable-patches/register-configuration.js';
+// eslint-disable-next-line local/code-import-patterns
+import '../../z-customizations/disable-patches/disablePatchesContribution.js';
+registerDisablePatchesConfiguration();
+
 export interface IBrowserMainWorkbench {
 	startup(): IInstantiationService;
 	readonly onWillShutdown: Event<WillShutdownEvent>;

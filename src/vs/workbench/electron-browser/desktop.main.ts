@@ -69,6 +69,13 @@ import { MultiplexPolicyService } from '../services/policies/common/multiplexPol
 // [ZP-D03B] Globally accessible configuration service.
 import { setConfigurationService } from '../../z-customizations/configurationService.js';
 
+// [ZP-D15A] User-disable-able patches infrastructure.
+// eslint-disable-next-line local/code-import-patterns
+import { registerConfiguration as registerDisablePatchesConfiguration } from '../../z-customizations/disable-patches/register-configuration.js';
+// eslint-disable-next-line local/code-import-patterns
+import '../../z-customizations/disable-patches/disablePatchesContribution.js';
+registerDisablePatchesConfiguration();
+
 export class DesktopMain extends Disposable {
 
 	constructor(

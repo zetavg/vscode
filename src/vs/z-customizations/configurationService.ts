@@ -1,3 +1,4 @@
+/* eslint-disable local/code-import-patterns */
 /* eslint-disable header/header */
 
 // [ZP-D03B] Globally accessible configuration service.
