@@ -111,7 +111,7 @@ const productIconThemeSettingSchema: IConfigurationPropertySchema = {
 	type: ['string', 'null'],
 	default: ThemeSettingDefaults.PRODUCT_ICON_THEME,
 	description: nls.localize('productIconTheme', "Specifies the product icon theme used."),
-	enum: [ThemeSettingDefaults.PRODUCT_ICON_THEME],
+	enum: [ThemeSettingDefaults.PRODUCT_ICON_THEME, 'VSCode Default' /* [ZP-35AB] We expect this to add an option for the user to switch back to VSCode's default product icon theme, but this does not actually work. */],
 	enumItemLabels: [nls.localize('defaultProductIconThemeLabel', 'Default')],
 	enumDescriptions: [nls.localize('defaultProductIconThemeDesc', 'Default')],
 	errorMessage: nls.localize('productIconThemeError', "Product icon theme is unknown or not installed.")

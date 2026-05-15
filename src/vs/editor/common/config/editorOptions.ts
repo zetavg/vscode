@@ -6542,7 +6542,9 @@ export const EditorOptions = {
 	)),
 	renderLineHighlight: register(new EditorStringEnumOption(
 		EditorOption.renderLineHighlight, 'renderLineHighlight',
-		'line' as 'none' | 'gutter' | 'line' | 'all',
+		// [ZP-35AB] Defaults.
+		// 'line' as 'none' | 'gutter' | 'line' | 'all',
+		'gutter' as 'none' | 'gutter' | 'line' | 'all',
 		['none', 'gutter', 'line', 'all'] as const,
 		{
 			enumDescriptions: [
