@@ -1,0 +1,7 @@
+/* [ZP-302B] Thin default scrollbars (4px). */
+body:not(.disable-patch-302B) {
+	.monaco-editor .peekview-widget .decorationsOverviewRuler,
+	.monaco-editor .peekview-widget .scrollbar.vertical {
+		width: 4px !important;
+	}
+}
