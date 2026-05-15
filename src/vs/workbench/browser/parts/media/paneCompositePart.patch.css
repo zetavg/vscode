@@ -25,3 +25,19 @@ body:not(.disable-patch-3528) {
 		top: 12px;
 	}
 }
+
+/* [ZP-7EF2] Action icon hover/active color polish. */
+body:not(.disable-patch-7EF2) {
+	.monaco-workbench .pane-composite-part > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-label.codicon-more,
+	.monaco-workbench .pane-composite-part > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-label.codicon-more {
+		color: var(--vscode-scrollbarSlider-activeBackground) !important;
+	}
+}
+
+/* [ZP-ED16] Composite-bar active tab badge restyle. */
+body:not(.disable-patch-ED16) {
+	.monaco-workbench .pane-composite-part > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked .badge-content {
+		color: var(--vscode-panelTitle-activeForeground) !important;
+		opacity: 0.9;
+	}
+}

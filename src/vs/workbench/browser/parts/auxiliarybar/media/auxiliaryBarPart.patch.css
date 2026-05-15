@@ -1,0 +1,7 @@
+/* [ZP-FT0E] Fix hover color for top bar items contributed by extensions (non-`.action-label.codicon` items also set background). */
+body:not(.disable-patch-FT0E) {
+	.monaco-workbench .part.auxiliarybar > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:hover .action-label:not(.codicon),
+	.monaco-workbench .part.auxiliarybar > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:focus .action-label:not(.codicon) {
+		background-color: var(--vscode-activityBarTop-foreground) !important;
+	}
+}

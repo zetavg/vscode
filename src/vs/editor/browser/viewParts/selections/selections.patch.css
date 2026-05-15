@@ -1,0 +1,7 @@
+/* [ZP-DC85] Tweak inactive selection visual (currently commented out, kept for future activation). */
+body:not(.disable-patch-DC85) {
+	/* .vs-light .monaco-editor .selected-text {
+		background-color: var(--vscode-editor-inactiveSelectionBackground);
+		border: 1px solid var(--vscode-editor-selectionHighlightBorder);
+	} */
+}

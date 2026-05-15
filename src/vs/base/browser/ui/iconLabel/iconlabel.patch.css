@@ -4,3 +4,16 @@ body:not(.disable-patch-FID7) {
 		font-family: var(--monaco-condensed-font);
 	}
 }
+
+/* [ZP-0736] Secondary text/icon tone dampening. */
+body:not(.disable-patch-0736) {
+	.monaco-icon-label > .monaco-icon-label-container > .monaco-icon-description-container > .label-description {
+		opacity: .6;
+	}
+
+	.active > .monaco-icon-label > .monaco-icon-label-container > .monaco-icon-description-container > .label-description,
+	.selected > .monaco-icon-label > .monaco-icon-label-container > .monaco-icon-description-container > .label-description,
+	*:hover > .monaco-icon-label > .monaco-icon-label-container > .monaco-icon-description-container > .label-description {
+		opacity: .4;
+	}
+}
