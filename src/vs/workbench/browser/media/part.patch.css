@@ -1,0 +1,24 @@
+/* [ZP-3528] Header height 28px. */
+body:not(.disable-patch-3528) {
+	.monaco-workbench .part > .title,
+	.monaco-workbench .part > .header-or-footer {
+		height: 28px;
+	}
+	.monaco-workbench .part > .title > .title-label {
+		line-height: 28px;
+	}
+	.monaco-workbench .part > .title > .title-actions {
+		height: 28px;
+	}
+	.monaco-workbench .part > .content > .monaco-progress-container,
+	.monaco-workbench .part.editor > .content .editor-group-container > .monaco-progress-container {
+		top: 26px; /* at the bottom of the 28px height title container */
+	}
+	/* Visual spacing adjustments */
+	.monaco-workbench .part > .header-or-footer {
+		margin-bottom: 1px;
+	}
+	.monaco-workbench .part > .header-or-footer + * {
+		margin-bottom: -1px;
+	}
+}
