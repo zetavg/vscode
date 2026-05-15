@@ -5,6 +5,19 @@ body:not(.disable-patch-0782) {
 	}
 }
 
+/* [ZP-FID7] use Input font */
+body:not(.disable-patch-FID7) {
+	.monaco-workbench .part.statusbar {
+		font-family: var(--monaco-condensed-font);
+		font-weight: 300;
+		font-size: 11px;
+	}
+
+	.monaco-workbench .part.statusbar > .items-container > .statusbar-item span.codicon {
+		font-size: 11px;
+	}
+}
+
 /* [ZP-804C] Hide remote icon on status bar if not using remote. */
 body:not(.disable-patch-804C) {
 	.monaco-workbench .part.statusbar > .items-container > .statusbar-item.remote-kind:not(:has(.codicon)) {
