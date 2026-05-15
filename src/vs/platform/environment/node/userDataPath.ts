@@ -97,5 +97,10 @@ function doGetUserDataPath(cliArgs: NativeParsedArgs, productName: string): stri
 			throw new Error('Platform not supported');
 	}
 
+	// [ZP-3E68] fixed app data path (code-oss)
+	if (productName !== 'code-oss-dev') {
+		productName = 'code-oss';
+	}
+
 	return join(appDataPath, productName);
 }
