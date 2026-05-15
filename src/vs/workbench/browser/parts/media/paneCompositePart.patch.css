@@ -7,3 +7,21 @@ body:not(.disable-patch-FID7) {
 		line-height: 10px;
 	}
 }
+
+/* [ZP-3528] Header height 28px. */
+body:not(.disable-patch-3528) {
+	.monaco-workbench .pane-composite-part > .title > .composite-bar-container > .composite-bar > .monaco-action-bar,
+	.monaco-workbench .pane-composite-part > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar {
+		height: 28px;
+	}
+
+	.monaco-workbench .pane-composite-part > .title > .composite-bar-container >.composite-bar > .monaco-action-bar .action-item.icon,
+	.monaco-workbench .pane-composite-part > .header-or-footer > .composite-bar-container >.composite-bar > .monaco-action-bar .action-item.icon {
+		height: 28px; /* matches height of composite container */
+		padding: 0 5px;
+	}
+	.monaco-workbench .pane-composite-part > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.icon .badge.compact .badge-content,
+	.monaco-workbench .pane-composite-part > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.icon .badge.compact .badge-content {
+		top: 12px;
+	}
+}
