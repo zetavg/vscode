@@ -1,0 +1,6 @@
+/* [ZP-0782] No pointer. */
+body:not(.disable-patch-0782) {
+	.monaco-editor .sticky-widget .sticky-line-content:hover {
+		cursor: default;
+	}
+}

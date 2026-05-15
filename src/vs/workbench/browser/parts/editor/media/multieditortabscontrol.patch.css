@@ -1,0 +1,6 @@
+/* [ZP-0782] No pointer. */
+body:not(.disable-patch-0782) {
+	.monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab {
+		cursor: default !important;
+	}
+}
