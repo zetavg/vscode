@@ -1,0 +1,7 @@
+/* [ZP-6D5F] getting start page */
+body:not(.disable-patch-6D5F) {
+	/* Fix header title got cut off in getting started page */
+	.monaco-workbench .part.editor > .content .gettingStartedContainer .gettingStartedSlideCategories > .gettingStartedCategoriesContainer .header {
+		overflow: visible;
+	}
+}
