@@ -1,6 +1,6 @@
 /* [ZP-FID7] use Input font */
 body:not(.disable-patch-FID7) {
-	.monaco-workbench .part.editor > .content .editor-group-container > .editor-group-watermark > .shortcuts > .watermark-box {
+	.monaco-workbench .part.editor > .content .editor-group-container > .editor-group-watermark .shortcuts > .watermark-box {
 		font-weight: 300;
 	}
 }
