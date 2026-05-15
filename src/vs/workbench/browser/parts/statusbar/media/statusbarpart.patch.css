@@ -4,3 +4,16 @@ body:not(.disable-patch-0782) {
 		cursor: default !important;
 	}
 }
+
+/* [ZP-FID7] use Input font */
+body:not(.disable-patch-FID7) {
+	.monaco-workbench .part.statusbar {
+		font-family: var(--monaco-condensed-font);
+		font-weight: 300;
+		font-size: 11px;
+	}
+
+	.monaco-workbench .part.statusbar > .items-container > .statusbar-item span.codicon {
+		font-size: 11px;
+	}
+}
