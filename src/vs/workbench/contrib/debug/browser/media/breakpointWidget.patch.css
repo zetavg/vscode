@@ -6,3 +6,10 @@ body:not(.disable-patch-FID7) {
 		}
 	}
 }
+
+/* [ZP-E353] Peek view zone widget polish. */
+body:not(.disable-patch-E353) {
+	.monaco-editor .zone-widget .zone-widget-container.breakpoint-widget {
+		border-color: var(--vscode-peekView-border) !important;
+	}
+}

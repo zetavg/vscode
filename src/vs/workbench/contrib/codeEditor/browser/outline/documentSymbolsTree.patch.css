@@ -1,0 +1,6 @@
+/* [ZP-TL0C] Do not let error or warnings affect the title label color. */
+body:not(.disable-patch-TL0C) {
+	.monaco-list .outline-element .monaco-highlighted-label {
+		color: inherit;
+	}
+}

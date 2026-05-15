@@ -4,3 +4,25 @@ body:not(.disable-patch-FID7) {
 		font-weight: 500;
 	}
 }
+
+/* [ZP-6C2C] Panel filter input + search widget spacing. */
+body:not(.disable-patch-6C2C) {
+	.monaco-workbench .part.panel .monaco-inputbox > .ibwrapper {
+		/* Make space for .viewpane-filter-badge */
+		padding-right: 8px;
+		width: auto;
+	}
+}
+
+/* [ZP-A99C] Hide panel active tab indicator underline. */
+body:not(.disable-patch-A99C) {
+	/* .monaco-workbench .part.panel > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked:not(:focus),
+	.monaco-workbench .part.panel > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked.clicked:focus {
+		border-top-color: transparent !important;
+	} */
+
+	.monaco-workbench .part.panel > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked:not(:focus) .active-item-indicator,
+	.monaco-workbench .part.panel > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked.clicked:focus .active-item-indicator {
+		opacity: 0;
+	}
+}

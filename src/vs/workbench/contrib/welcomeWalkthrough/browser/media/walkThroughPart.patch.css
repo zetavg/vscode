@@ -1,0 +1,8 @@
+/* [ZP-FB7D] Walkthrough content typography (bolder headings). */
+body:not(.disable-patch-FB7D) {
+	.monaco-workbench .part.editor > .content .walkThroughContent h1,
+	.monaco-workbench .part.editor > .content .walkThroughContent h2,
+	.monaco-workbench .part.editor > .content .walkThroughContent h3 {
+		font-weight: bolder;
+	}
+}

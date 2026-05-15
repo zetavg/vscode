@@ -4,3 +4,11 @@ body:not(.disable-patch-FID7) {
 		font-weight: 200;
 	}
 }
+
+/* [ZP-0736] Secondary text/icon tone dampening. */
+body:not(.disable-patch-0736) {
+	.monaco-workbench .part.editor > .content .editor-group-container .breadcrumbs-control .file-icon,
+	.monaco-workbench .part.editor > .content .editor-group-container .breadcrumbs-control .outline-element-icon {
+		opacity: 0.8;
+	}
+}
