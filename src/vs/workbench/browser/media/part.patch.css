@@ -22,11 +22,3 @@ body:not(.disable-patch-3528) {
 		margin-bottom: -1px;
 	}
 }
-
-/* [ZP-AF32] Hide sidebar top tab (top Activity Bar) if only one item is present. */
-/* Currently commented out, kept for future activation. */
-body:not(.disable-patch-AF32) {
-	/* .monaco-workbench .part.sidebar > .header-or-footer.header:has(> *:only-child) {
-		display: none;
-	} */
-}
