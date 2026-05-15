@@ -1,0 +1,6 @@
+/* [ZP-0782] No pointer. */
+body:not(.disable-patch-0782) {
+	.monaco-action-bar .action-item {
+		cursor: default;
+	}
+}

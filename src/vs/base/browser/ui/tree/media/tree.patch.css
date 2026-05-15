@@ -1,0 +1,6 @@
+/* [ZP-0782] No pointer. */
+body:not(.disable-patch-0782) {
+	.monaco-list .monaco-scrollable-element .monaco-tree-sticky-container .monaco-tree-sticky-row:hover {
+		cursor: default;
+	}
+}

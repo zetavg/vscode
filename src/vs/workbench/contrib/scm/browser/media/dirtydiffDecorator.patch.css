@@ -1,0 +1,9 @@
+/* [ZP-0782] No pointer. */
+body:not(.disable-patch-0782) {
+	.monaco-editor .dirty-diff-glyph {
+		cursor: default !important;
+	}
+	.dirty-diff .peekview-title .dropdown .monaco-select-box {
+		cursor: default !important;
+	}
+}
