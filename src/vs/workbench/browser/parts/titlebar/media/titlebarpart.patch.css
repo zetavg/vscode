@@ -1,0 +1,17 @@
+/* [ZP-CCB2] Titlebar right-side controls fade. */
+body:not(.disable-patch-CCB2) {
+	.monaco-workbench .part.titlebar > .titlebar-container > .titlebar-right {
+		opacity: 0.75;
+		transition: opacity 0.2s;
+	}
+	.monaco-workbench .part.titlebar > .titlebar-container > .titlebar-right:hover {
+		opacity: 1;
+	}
+}
+
+/* [ZP-33CC] Small adjustment to make the content of the title bar look more vertically centered while using the Spacegrey theme */
+body:not(.disable-patch-33CC) {
+	.monaco-workbench .part.titlebar > .titlebar-container {
+		padding-top: 1px;
+	}
+}

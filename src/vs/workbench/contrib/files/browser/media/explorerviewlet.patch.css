@@ -1,0 +1,25 @@
+/* [ZP-TL0C] Do not let error or warnings affect the title label color. */
+body:not(.disable-patch-TL0C) {
+	.explorer-folders-view .monaco-list-row:hover .explorer-item,
+	.search-view .monaco-list-row:hover .explorer-item,
+	.explorer-folders-view .explorer-item:not(.monaco-decoration-itemColor--9ieymw /* private static Decoration: FileDecoration = { color: new ThemeColor('gitDecoration.ignoredResourceForeground') }; */),
+	.search-view .explorer-item:not(.monaco-decoration-itemColor--9ieymw /* private static Decoration: FileDecoration = { color: new ThemeColor('gitDecoration.ignoredResourceForeground') }; */) {
+		color: inherit !important;
+	}
+	.open-editors .monaco-list-row .monaco-icon-label-container,
+	.search-view .monaco-list-row .monaco-icon-label-container {
+		color: var(--vscode-sideBar-foreground) !important;
+	}
+	.open-editors .monaco-list-row:hover .monaco-icon-label-container,
+	.search-view .monaco-list-row:hover .monaco-icon-label-container {
+		color: var(--vscode-list-hoverForeground) !important;
+	}
+	.open-editors .monaco-list-row.selected .monaco-icon-label-container,
+	.search-view .monaco-list-row.selected .monaco-icon-label-container {
+		color: var(--vscode-list-inactiveSelectionForeground) !important;
+	}
+	.open-editors .monaco-list-row:hover .action-label:not(:hover):not(:active),
+	.search-view .monaco-list-row:hover .action-label:not(:hover):not(:active) {
+		opacity: 0.5;
+	}
+}
