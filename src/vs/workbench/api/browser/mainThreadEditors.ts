@@ -358,7 +358,10 @@ export class MainThreadTextEditors implements MainThreadTextEditorsShape {
 	$registerTextEditorDecorationType(extensionId: ExtensionIdentifier, key: string, options: IDecorationRenderOptions): void {
 		key = `${this._instanceId}-${key}`;
 		this._registeredDecorationTypes[key] = true;
-		this._codeEditorService.registerDecorationType(`exthost-api-${extensionId}`, key, options);
+		// [ZP-8E77] Include the description in the class name so that we can customize it with CSS.
+		// `extensionId` will become "[object Object]" so we should get the value out of it?
+		// this._codeEditorService.registerDecorationType(`exthost-api-${extensionId}`, key, options);
+		this._codeEditorService.registerDecorationType(`exthost-api-${extensionId.value}`, key, options);
 	}
 
 	$removeTextEditorDecorationType(key: string): void {
