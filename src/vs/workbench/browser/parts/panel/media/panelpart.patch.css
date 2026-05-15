@@ -1,0 +1,6 @@
+/* [ZP-FID7] use Input font */
+body:not(.disable-patch-FID7) {
+	.monaco-workbench .part.panel > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item {
+		font-weight: 500;
+	}
+}

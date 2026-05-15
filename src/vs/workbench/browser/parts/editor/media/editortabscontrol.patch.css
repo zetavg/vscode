@@ -9,3 +9,16 @@ body:not(.disable-patch-0782) {
 		cursor: default;
 	}
 }
+
+/* [ZP-FID7] use Input font */
+body:not(.disable-patch-FID7) {
+	.monaco-workbench .part.editor > .content .editor-group-container > .title .title-label a,
+	.monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab .tab-label {
+		font-weight: 200;
+	}
+
+	.monaco-workbench .part.editor > .content .editor-group-container > .title .title-label a,
+	.monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab .tab-label a {
+		font-size: 12px;
+	}
+}
