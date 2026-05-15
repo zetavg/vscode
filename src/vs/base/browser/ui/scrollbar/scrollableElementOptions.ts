@@ -90,6 +90,9 @@ export interface ScrollableElementCreationOptions {
 	/**
 	 * Height (in px) of the horizontal scrollbar.
 	 * Defaults to 10.
+	 *
+	 * [ZP-302B] Thin default scrollbars (4px).
+	 * Defaults to 4.
 	 */
 	horizontalScrollbarSize?: number;
 	/**
@@ -111,6 +114,9 @@ export interface ScrollableElementCreationOptions {
 	/**
 	 * Width (in px) of the vertical scrollbar.
 	 * Defaults to 10.
+	 *
+	 * [ZP-302B] Thin default scrollbars (4px).
+	 * Defaults to 4.
 	 */
 	verticalScrollbarSize?: number;
 	/**
