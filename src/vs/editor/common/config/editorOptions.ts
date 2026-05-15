@@ -2928,6 +2928,9 @@ export class EditorLayoutInfoComputer extends ComputedEditorOption<EditorOption.
 
 		const remainingWidth = outerWidth - glyphMarginWidth - lineNumbersWidth - lineDecorationsWidth;
 
+		// [ZP-E30D] Locate the diff gutter glyph to the left of the line number, like Sublime Text.
+		glyphMarginLeft += 4;
+
 		let isWordWrapMinified = false;
 		let isViewportWrapping = false;
 		let wrappingColumn = -1;
