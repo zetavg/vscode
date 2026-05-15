@@ -1,0 +1,13 @@
+/* [ZP-0782] No pointer. */
+body:not(.disable-patch-0782) {
+	.monaco-editor .margin-view-overlays .codicon-folding-manual-collapsed,
+	.monaco-editor .margin-view-overlays .codicon-folding-manual-expanded,
+	.monaco-editor .margin-view-overlays .codicon-folding-expanded,
+	.monaco-editor .margin-view-overlays .codicon-folding-collapsed {
+		cursor: default;
+	}
+
+	.monaco-editor .inline-folded:after {
+		cursor: default !important;
+	}
+}

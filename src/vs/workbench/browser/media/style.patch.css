@@ -1,0 +1,5 @@
+
+/* [ZP-0782] No pointer. */
+.monaco-workbench label {
+	cursor: default;
+}
