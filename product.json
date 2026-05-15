@@ -149,12 +149,11 @@
 		"mcpRegistryDataUrl": "https://api.github.com/copilot/mcp_registry"
 	},
 	"trustedExtensionAuthAccess": {
-		"github": [
-			"GitHub.copilot-chat"
-		],
-		"github-enterprise": [
-			"GitHub.copilot-chat"
-		]
+		"github": ["vscode.github", "github.remotehub", "ms-vscode.remote-server", "github.vscode-pull-request-github", "github.codespaces", "github.copilot", "github.copilot-chat", "ms-vsliveshare.vsliveshare", "ms-azuretools.vscode-azure-github-copilot"],
+		"github-enterprise": ["vscode.github", "github.remotehub", "ms-vscode.remote-server", "github.vscode-pull-request-github", "github.codespaces", "github.copilot", "github.copilot-chat", "ms-vsliveshare.vsliveshare", "ms-azuretools.vscode-azure-github-copilot"],
+		"microsoft": ["github.copilot-chat", "ms-vscode.azure-repos", "ms-vscode.remote-server", "ms-vsliveshare.vsliveshare", "ms-azuretools.vscode-azure-github-copilot", "ms-azuretools.vscode-azureresourcegroups", "ms-azuretools.vscode-dev-azurecloudshell", "ms-edu.vscode-learning", "ms-toolsai.vscode-ai", "ms-toolsai.vscode-ai-remote"],
+		"microsoft-sovereign-cloud": ["ms-vscode.azure-repos", "ms-vscode.remote-server", "ms-vsliveshare.vsliveshare", "ms-azuretools.vscode-azure-github-copilot", "ms-azuretools.vscode-azureresourcegroups", "ms-azuretools.vscode-dev-azurecloudshell", "ms-edu.vscode-learning", "ms-toolsai.vscode-ai", "ms-toolsai.vscode-ai-remote"],
+		"__GitHub.copilot-chat": ["ms-azuretools.vscode-azure-github-copilot", "github.vscode-pull-request-github"]
 	},
 	"onboardingKeymaps": [
 		{
