@@ -49,9 +49,13 @@ import { toAction } from '../../../../base/common/actions.js';
 
 // implementation
 
-const defaultThemeExtensionId = 'vscode-theme-defaults';
+// [ZP-35AB] Defaults.
+// const defaultThemeExtensionId = 'vscode-theme-defaults';
+const defaultThemeExtensionId = 'vscode-theme-spacegray';
 
-const DEFAULT_FILE_ICON_THEME_ID = 'vscode.vscode-theme-seti-vs-seti';
+// [ZP-35AB] Defaults.
+// const DEFAULT_FILE_ICON_THEME_ID = 'vscode.vscode-theme-seti-vs-seti';
+const DEFAULT_FILE_ICON_THEME_ID = 'spacegray';
 const fileIconsEnabledClass = 'file-icons-enabled';
 
 const colorThemeRulesClassName = 'contributedColorTheme';
