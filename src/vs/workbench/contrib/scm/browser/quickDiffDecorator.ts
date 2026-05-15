@@ -40,6 +40,8 @@ class QuickDiffDecorator extends Disposable {
 
 		if (options.gutter) {
 			decorationOptions.linesDecorationsClassName = `dirty-diff-glyph ${className}`;
+			// [ZP-E30D] Locate the diff gutter glyph to the left of the line number, like Sublime Text.
+			decorationOptions.linesDecorationsClassName += ' head-side';
 			decorationOptions.linesDecorationsTooltip = tooltip;
 		}
 
