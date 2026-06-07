@@ -138,6 +138,9 @@ export class OpenAIEndpoint extends ChatEndpoint {
 		this._customHeaders = this._sanitizeCustomHeaders(_modelMetadata.requestHeaders);
 	}
 
+	// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+	public readonly ownsAuthorization = true;
+
 	private _sanitizeCustomHeaders(headers: Readonly<Record<string, string>> | undefined): Record<string, string> {
 		if (!headers) {
 			return {};

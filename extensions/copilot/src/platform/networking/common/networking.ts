@@ -305,6 +305,8 @@ export interface IChatEndpoint extends IEndpoint {
 	readonly customModel?: CustomModel;
 	readonly isExtensionContributed?: boolean;
 	readonly maxPromptImages?: number;
+	// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+	readonly ownsAuthorization?: boolean;
 	/**
 	 * Handles processing of responses from a chat endpoint. Each endpoint can have different response formats.
 	 * @param telemetryService The telemetry service
@@ -383,7 +385,9 @@ export function createCapiRequestBody(options: ICreateEndpointBodyOptions, model
 export interface INetworkRequestOptions {
 	readonly requestType: 'GET' | 'POST';
 	readonly endpointOrUrl: IEndpoint | string | RequestMetadata;
-	readonly secretKey: string;
+	// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+	// readonly secretKey: string;
+	readonly secretKey: string | undefined;
 	readonly intent: string;
 	readonly requestId: string;
 	readonly body?: IEndpointBody;
@@ -435,7 +439,9 @@ function networkRequest(
 	const agentInteractionType = options.interactionTypeOverride ?? intent;
 
 	const headers: ReqHeaders = {
-		Authorization: `Bearer ${secretKey}`,
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		// Authorization: `Bearer ${secretKey}`,
+		...(secretKey ? { Authorization: `Bearer ${secretKey}` } : {}),
 		'X-Request-Id': requestId,
 		'OpenAI-Intent': intent, // Tells CAPI who flighted this request. Helps find buggy features
 		'X-GitHub-Api-Version': '2026-01-09',

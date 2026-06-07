@@ -86,31 +86,86 @@ export class ConversationFeature implements IExtensionContribution {
 		this._activated = false;
 
 		// Register Copilot token listener
-		this.registerCopilotTokenListener();
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		// this.registerCopilotTokenListener();
 
 		const activationBlockerDeferred = new DeferredPromise<void>();
 		this.activationBlocker = activationBlockerDeferred.p;
+
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		// if (authenticationService.copilotToken) {
+		// 	this.logService.info(`ConversationFeature: Copilot token already available`);
+		// 	this.activated = true;
+		// 	activationBlockerDeferred.complete();
+		// } else {
+		// 	markChatExtGlobal(ChatExtGlobalPerfMark.WillWaitForCopilotToken);
+		// 	this.logService.info(`ConversationFeature: Waiting for copilot token to activate conversation feature`);
+		// }
+		//
+		// this._disposables.add(authenticationService.onDidAuthenticationChange(async () => {
+		// 	const hasSession = !!authenticationService.copilotToken;
+		// 	this.logService.info(`ConversationFeature: onDidAuthenticationChange has token: ${hasSession}`);
+		// 	if (hasSession) {
+		// 		markChatExtGlobal(ChatExtGlobalPerfMark.DidWaitForCopilotToken);
+		// 		this.activated = true;
+		// 	} else {
+		// 		this.activated = false;
+		// 	}
+		//
+		// 	activationBlockerDeferred.complete();
+		// }));
+		let hasByokModels = false;
+		const reevaluate = () => {
+			const hasToken = !!authenticationService.copilotToken;
+			const shouldActivate = hasToken || hasByokModels;
+			if (hasToken) {
+				this.logService.info(`copilot token sku: ${authenticationService.copilotToken?.sku ?? ''}`);
+			}
+			this.enabled = shouldActivate;
+			this.activated = shouldActivate;
+			if (shouldActivate && !activationBlockerDeferred.isSettled) {
+				if (hasToken) {
+					markChatExtGlobal(ChatExtGlobalPerfMark.DidWaitForCopilotToken);
+				}
+				activationBlockerDeferred.complete();
+			}
+		};
+
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
 		if (authenticationService.copilotToken) {
 			this.logService.info(`ConversationFeature: Copilot token already available`);
-			this.activated = true;
-			activationBlockerDeferred.complete();
 		} else {
 			markChatExtGlobal(ChatExtGlobalPerfMark.WillWaitForCopilotToken);
-			this.logService.info(`ConversationFeature: Waiting for copilot token to activate conversation feature`);
+			// this.logService.info(`ConversationFeature: Waiting for copilot token to activate conversation feature`);
+			this.logService.info(`ConversationFeature: Waiting for copilot token or BYOK model to activate conversation feature`);
 		}
 
-		this._disposables.add(authenticationService.onDidAuthenticationChange(async () => {
-			const hasSession = !!authenticationService.copilotToken;
-			this.logService.info(`ConversationFeature: onDidAuthenticationChange has token: ${hasSession}`);
-			if (hasSession) {
-				markChatExtGlobal(ChatExtGlobalPerfMark.DidWaitForCopilotToken);
-				this.activated = true;
-			} else {
-				this.activated = false;
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		const refreshHasByokModels = async () => {
+			try {
+				const models = await vscode.lm.selectChatModels({});
+				const value = models.some(model => model.vendor !== 'copilot');
+				if (value !== hasByokModels) {
+					hasByokModels = value;
+					this.logService.info(`ConversationFeature: BYOK models ${value ? 'available' : 'unavailable'}`);
+					reevaluate();
+				}
+			} catch (error) {
+				this.logService.warn(`ConversationFeature: failed to query language models: ${error}`);
 			}
+		};
+		void refreshHasByokModels();
+		this._disposables.add(vscode.lm.onDidChangeChatModels(() => void refreshHasByokModels()));
 
-			activationBlockerDeferred.complete();
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		this._disposables.add(authenticationService.onDidAuthenticationChange(() => {
+			reevaluate();
+			if (!activationBlockerDeferred.isSettled) {
+				activationBlockerDeferred.complete();
+			}
 		}));
+
+		reevaluate();
 	}
 
 	get enabled() {
@@ -170,8 +225,10 @@ export class ConversationFeature implements IExtensionContribution {
 		} else {
 			this._searchProviderRegistered = true;
 
+			// [ZP-26CA] Let BYOK models work without GitHub sign-in.
 			// Don't register for no auth user
-			if (this.authenticationService.copilotToken?.isNoAuthUser) {
+			// if (this.authenticationService.copilotToken?.isNoAuthUser) {
+			if (!this.authenticationService.anyGitHubSession || this.authenticationService.copilotToken?.isNoAuthUser) {
 				this.logService.debug('ConversationFeature: Skipping search provider registration - no GitHub session available');
 				return;
 			}
@@ -190,6 +247,13 @@ export class ConversationFeature implements IExtensionContribution {
 		}
 
 		this._settingsSearchProviderRegistered = true;
+
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		if (!this.authenticationService.anyGitHubSession || this.authenticationService.copilotToken?.isNoAuthUser) {
+			this.logService.debug('ConversationFeature: Skipping settings search provider registration - no GitHub session available');
+			return;
+		}
+
 		return vscode.ai.registerSettingsSearchProvider(this.settingsEditorSearchService);
 	}
 
@@ -217,6 +281,11 @@ export class ConversationFeature implements IExtensionContribution {
 	}
 
 	private registerParticipantDetectionProvider() {
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		if (!this.authenticationService.anyGitHubSession) {
+			return;
+		}
+
 		if ('registerChatParticipantDetectionProvider' in vscode.chat) {
 			const provider = this.instantiationService.createInstance(IntentDetector);
 			return vscode.chat.registerChatParticipantDetectionProvider(provider);
@@ -344,13 +413,14 @@ export class ConversationFeature implements IExtensionContribution {
 		return disposables;
 	}
 
-	private registerCopilotTokenListener() {
-		this._disposables.add(this.authenticationService.onDidAuthenticationChange(() => {
-			const chatEnabled = this.authenticationService.copilotToken !== undefined;
-			this.logService.info(`copilot token sku: ${this.authenticationService.copilotToken?.sku ?? ''}`);
-			this.enabled = chatEnabled ?? false;
-		}));
-	}
+	// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+	// private registerCopilotTokenListener() {
+	// 	this._disposables.add(this.authenticationService.onDidAuthenticationChange(() => {
+	// 		const chatEnabled = this.authenticationService.copilotToken !== undefined;
+	// 		this.logService.info(`copilot token sku: ${this.authenticationService.copilotToken?.sku ?? ''}`);
+	// 		this.enabled = chatEnabled ?? false;
+	// 	}));
+	// }
 
 	private registerTerminalQuickFixProviders() {
 		const isEnabled = () => this.enabled;

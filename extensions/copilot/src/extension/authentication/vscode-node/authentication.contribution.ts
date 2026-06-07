@@ -50,6 +50,11 @@ class AuthUpgradeAsk extends Disposable {
 	}
 
 	private async waitForChatEnabled() {
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		if (!this._authenticationService.anyGitHubSession) {
+			return;
+		}
+
 		try {
 			await this._authenticationService.getCopilotToken();
 		} catch (error) {

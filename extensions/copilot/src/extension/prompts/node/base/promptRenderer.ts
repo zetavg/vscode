@@ -213,9 +213,33 @@ export async function renderPromptElementJSON<P extends BasePromptElementProps>(
 	// todo@lramos15: We should pass in endpoint provider rather than doing invoke function, but this was easier
 	const endpoint = await instantiationService.invokeFunction(async (accessor) => {
 		const endpointProvider = accessor.get(IEndpointProvider);
-		return await endpointProvider.getChatEndpoint('copilot-utility');
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		// return await endpointProvider.getChatEndpoint('copilot-utility');
+		try {
+			return await endpointProvider.getChatEndpoint('copilot-utility');
+		} catch {
+			return createStubPromptEndpoint();
+		}
 	});
 	const hydratedInstaService = instantiationService.createChild(new ServiceCollection([IPromptEndpoint, endpoint]));
 	const renderer = new PromptRendererForJSON(ctor as any, props, tokenOptions, endpoint, hydratedInstaService);
 	return await renderer.renderElementJSON(token);
+}
+
+// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+function createStubPromptEndpoint(): IChatEndpoint {
+	const notImplemented = () => { throw new Error('No utility model available.'); };
+	return {
+		modelMaxPromptTokens: 8192,
+		name: 'utility',
+		family: 'unknown',
+		model: 'copilot-utility',
+		isFallback: true,
+		acquireTokenizer: notImplemented,
+		makeChatRequest: notImplemented,
+		makeChatRequest2: notImplemented,
+		createRequestBody: notImplemented,
+		cloneWithTokenOverride: notImplemented,
+		processResponseFromChatEndpoint: notImplemented,
+	} as unknown as IChatEndpoint;
 }

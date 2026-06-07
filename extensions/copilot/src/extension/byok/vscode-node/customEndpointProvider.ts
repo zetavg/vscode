@@ -210,12 +210,19 @@ export class CustomEndpointOAIEndpoint extends OpenAIEndpoint {
 			'Content-Type': 'application/json'
 		};
 		if (this.useMessagesApi) {
-			headers['x-api-key'] = this._apiKey;
+			// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+			if (this._apiKey) {
+				headers['x-api-key'] = this._apiKey;
+			}
 			headers['anthropic-version'] = '2023-06-01';
 			Object.assign(headers, this.getAnthropicBetaHeader());
-		} else if (this._modelUrl.includes('openai.azure')) {
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		// } else if (this._modelUrl.includes('openai.azure')) {
+		} else if (this._apiKey && this._modelUrl.includes('openai.azure')) {
 			headers['api-key'] = this._apiKey;
-		} else {
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		// } else {
+		} else if (this._apiKey) {
 			headers['Authorization'] = `Bearer ${this._apiKey}`;
 		}
 		for (const [key, value] of Object.entries(this._customHeaders)) {

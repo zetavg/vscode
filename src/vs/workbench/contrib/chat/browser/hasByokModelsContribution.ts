@@ -123,8 +123,10 @@ export class HasByokModelsContribution extends Disposable implements IWorkbenchC
 		}
 
 		const hasByokVendor = this._languageModelsConfigurationService.getLanguageModelsProviderGroups().some(g => g.vendor !== COPILOT_VENDOR_ID);
-		if (!hasByokVendor) {
-			this._setResult(false);
-		}
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		// if (!hasByokVendor) {
+		// 	this._setResult(false);
+		// }
+		this._setResult(hasByokVendor);
 	}
 }

@@ -218,8 +218,16 @@ export class ChatMLFetcherImpl extends AbstractChatMLFetcher {
 			} else {
 				let tokenCountPromise: Promise<number> | undefined;
 				const countTokens = () => tokenCountPromise ??= chatEndpoint.acquireTokenizer().countMessagesTokens(messages);
-				const copilotToken = await this._authenticationService.getCopilotToken();
-				usernameToScrub = copilotToken.username;
+				// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+				// const copilotToken = await this._authenticationService.getCopilotToken();
+				// usernameToScrub = copilotToken.username;
+				let copilotToken: CopilotToken | undefined;
+				try {
+					copilotToken = await this._authenticationService.getCopilotToken();
+				} catch {
+					// A client-owned BYOK endpoint does not need a Copilot token.
+				}
+				usernameToScrub = copilotToken?.username ?? this._authenticationService.copilotToken?.username;
 
 				const fetchResult = await this._fetchAndStreamChat(
 					chatEndpoint,
@@ -886,7 +894,9 @@ export class ChatMLFetcherImpl extends AbstractChatMLFetcher {
 		baseTelemetryData: TelemetryData,
 		finishedCb: FinishedCallback,
 		secretKey: string | undefined,
-		copilotToken: CopilotToken,
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		// copilotToken: CopilotToken,
+		copilotToken: CopilotToken | undefined,
 		location: ChatLocation,
 		ourRequestId: string,
 		nChoices: number | undefined,
@@ -965,7 +975,9 @@ export class ChatMLFetcherImpl extends AbstractChatMLFetcher {
 		baseTelemetryData: TelemetryData,
 		finishedCb: FinishedCallback,
 		secretKey: string | undefined,
-		copilotToken: CopilotToken,
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		// copilotToken: CopilotToken,
+		copilotToken: CopilotToken | undefined,
 		location: ChatLocation,
 		ourRequestId: string,
 		nChoices: number | undefined,
@@ -1020,8 +1032,13 @@ export class ChatMLFetcherImpl extends AbstractChatMLFetcher {
 			this._logService.debug(`modelMaxResponseTokens ${request.max_tokens ?? 2048}`);
 			this._logService.debug(`chat model ${chatEndpointInfo.model}`);
 
-			secretKey ??= copilotToken.token;
-			if (!secretKey) {
+			// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+			// secretKey ??= copilotToken.token;
+			// if (!secretKey) {
+			if (!chatEndpointInfo.ownsAuthorization) {
+				secretKey ??= copilotToken?.token;
+			}
+			if (!secretKey && !chatEndpointInfo.ownsAuthorization) {
 				// If no key is set we error
 				const urlOrRequestMetadata = stringifyUrlOrRequestMetadata(chatEndpointInfo.urlOrRequestMetadata);
 				this._logService.error(`Failed to send request to ${urlOrRequestMetadata} due to missing key`);
@@ -1102,7 +1119,9 @@ export class ChatMLFetcherImpl extends AbstractChatMLFetcher {
 		request: IEndpointBody,
 		baseTelemetryData: TelemetryData,
 		finishedCb: FinishedCallback,
-		secretKey: string,
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		// secretKey: string,
+		secretKey: string | undefined,
 		location: ChatLocation,
 		ourRequestId: string,
 		turnId: string,
@@ -1118,7 +1137,9 @@ export class ChatMLFetcherImpl extends AbstractChatMLFetcher {
 		const intent = locationToIntent(location);
 		const agentInteractionType = interactionTypeOverride ?? intent;
 		const additionalHeaders: Record<string, string> = {
-			'Authorization': `Bearer ${secretKey}`,
+			// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+			// 'Authorization': `Bearer ${secretKey}`,
+			...(secretKey ? { 'Authorization': `Bearer ${secretKey}` } : {}),
 			'X-Request-Id': ourRequestId,
 			'OpenAI-Intent': intent,
 			'X-GitHub-Api-Version': '2025-05-01',
@@ -1288,7 +1309,9 @@ export class ChatMLFetcherImpl extends AbstractChatMLFetcher {
 		request: IEndpointBody,
 		baseTelemetryData: TelemetryData,
 		finishedCb: FinishedCallback,
-		secretKey: string,
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		// secretKey: string,
+		secretKey: string | undefined,
 		location: ChatLocation,
 		ourRequestId: string,
 		nChoices: number | undefined,
@@ -1405,7 +1428,9 @@ export class ChatMLFetcherImpl extends AbstractChatMLFetcher {
 		chatEndpoint: IChatEndpoint,
 		ourRequestId: string,
 		request: IEndpointBody,
-		secretKey: string,
+		// [ZP-26CA] Let BYOK models work without GitHub sign-in.
+		// secretKey: string,
+		secretKey: string | undefined,
 		location: ChatLocation,
 		cancellationToken: CancellationToken,
 		userInitiatedRequest?: boolean,
